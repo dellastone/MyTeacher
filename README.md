@@ -1,2 +1,2 @@
 # MyTeacher
-Progetto ingegneria del software 2021/2022
+Progetto ingegneria del software 2021/22
