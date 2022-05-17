@@ -4,16 +4,15 @@ function login()
     //get the form object
     var email = document.getElementById("loginEmail").value;
     var password = document.getElementById("loginPassword").value;
-    // console.log(email);
 
-    fetch('../api/v1/authentications', {
+    fetch('../api/v1/users/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( { email: email, password: password } ),
     })
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) { // Here you get the data to modify as you please
-        console.log(data.message)
+        console.log(data)
         loggedUser.token = data.token;
         loggedUser.email = data.email;
         loggedUser.id = data.id;
