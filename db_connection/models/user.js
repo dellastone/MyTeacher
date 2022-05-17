@@ -9,7 +9,7 @@ module.exports = mongoose.model('Student', new Schema({
     professore: Boolean,
 	email: String,
     phone: Boolean,
-    image: Image,
+    //image: Image,
 	password: String,
     materie: [String],
     argomenti: [String],
