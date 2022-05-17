@@ -18,3 +18,5 @@ app.locals.db = mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, use
     });
     
 }).catch(err => errorHandler(err));
+
+

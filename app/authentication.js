@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../db_connection/models/user'); // get our mongoose model
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
+
 router.post('', async function(req, res) {
 	
 	// find the user
@@ -12,6 +13,23 @@ router.post('', async function(req, res) {
 	
 	// user not found
 	if (!user) {
+		//test
+		const User = require("../db_connection/models/user")
+		let user = new User({
+			username: "marioR",
+			nome: "Mario",
+			cognome: "Rossi",
+			professore: false,
+			email: req.body.email,
+			phone: "3122222112",
+			//image: Image,
+			password: req.body.password,
+			materie: [""],
+			argomenti: [""],
+			prezzo: 0
+		});
+		user = await user.save();
+		//test
 		return res.json({ success: false, message: 'Authentication failed. User not found.' });
 	}
 	
