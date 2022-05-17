@@ -1,6 +1,7 @@
 require("dotenv").config();
 const app = require("./app/app");
 const mongoose = require('mongoose');
+const errorHandler = require("./errorHandler")
 
 const port = process.env.PORT || 8080;
 
@@ -16,4 +17,4 @@ app.locals.db = mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, use
         console.log('Server listening on port ' + port);
     });
     
-});
+}).catch(err => errorHandler(err));
