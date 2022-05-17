@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // mongoose model that desribes the user of the platform
-module.exports = mongoose.model('Student', new Schema({ 
+module.exports = mongoose.model('Users', new Schema({ 
     username: String,
     nome: String,
     cognome: String,

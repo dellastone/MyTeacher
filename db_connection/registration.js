@@ -62,14 +62,44 @@ router.post(
             
         }
         let argomenti = [];
-        for(let i=0; i<req.body.materie.argomenti; i++){
+        for(let i=0; i<req.body.argomenti.length; i++){
             argomenti[i] = req.sanitize(req.body.argomenti[i]);
         }
 
         if(!wrong_data){
             if(checkSamePassword(password, repeatpassword))
             {
-                
+                let search_username = await User.findOne({ username: username }).exec();
+                if(search_username != null){
+                    message = "Username non disponibile";
+                    wrong_data = true;
+                }
+                else{
+                    let search_email = await User.findOne({ email: email }).exec();
+                    if(search_email != null){
+                        message = "Esiste già un utente registrato con questo indirizzo email";
+                        wrong_data = true;
+                    }else{
+                        console.log("Adding the user to the db ...");
+                        const newUser = new User({
+                            username: username,
+                            nome: name,
+                            cognome: surname,
+                            indirizzo: address,
+                            professore: professor,
+                            email: email,
+                            phone: phone,
+                            image: image,
+                            materie: materie,
+                            argomenti: argomenti,
+                            prezzo: price
+                        });
+                        await newUser.save(function (){
+                            server_error = true;
+                            console.log("Errore nell'inserimento dell'utente nel database");
+                        });
+                    }
+                }
             }
             else{
                 wrong_data = true;
@@ -77,12 +107,15 @@ router.post(
             }
         }
         if(wrong_data){
+            console.log("L'utente ha inserito dei dati non validi nell'input");
             res.status(400).json({ message: message });
         }
         else if (server_error){
+            console.log("Si è verificato un errore nel salvataggio nel database del nuovo utente");
             res.status(500).json({ message: message });
         }
         else{
+            console.log("Utente creato con successo e aggiunto al database");
             res.status(201).json({ location: "/api/v1/users/" + username });
         }
     }); 
