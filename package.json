@@ -4,7 +4,14 @@
   "description": "Progetto del corso ingegneria del software 2021/2022",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest",
+    "start": "node index.js",
+    "start_local": "echo use: $ npm run dev",
+    "dev": "node -r dotenv/config index.js"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true
   },
   "repository": {
     "type": "git",
@@ -18,5 +25,10 @@
   "bugs": {
     "url": "https://github.com/dellastone/MyTeacher/issues"
   },
-  "homepage": "https://github.com/dellastone/MyTeacher#readme"
+  "homepage": "https://github.com/dellastone/MyTeacher#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.3"
+  }
 }
