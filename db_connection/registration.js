@@ -35,7 +35,7 @@ router.post(
         body('professore').exists().withMessage("E' obbligatorio scegliere se creare un account professore o studente"),
         body('prezzo').optional().isNumeric().withMessage("Il prezzo inserito non è valido")
     ], async (req, res) =>{
-        var errors = validationResult(req).array();
+        let errors = validationResult(req).array();
         let message = "Si è verificato un errore nella registrazione, la preghiamo di riprovare.";
         let wrong_data = false;
         let server_error = false;
@@ -94,9 +94,13 @@ router.post(
                             argomenti: argomenti,
                             prezzo: price
                         });
-                        await newUser.save(function (){
-                            server_error = true;
-                            console.log("Errore nell'inserimento dell'utente nel database");
+                        newUser.setPassword(password);
+                        console.log(newUser);
+                        await newUser.save(function (err){
+                            if(err){
+                                server_error = true;
+                                console.log("Errore nell'inserimento dell'utente nel database");
+                            }
                         });
                     }
                 }

@@ -27,11 +27,13 @@
   },
   "homepage": "https://github.com/dellastone/MyTeacher#readme",
   "dependencies": {
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-json-validator-middleware": "^3.0.0",
     "express-sanitizer": "^1.0.6",
     "express-validator": "^6.14.0",
-    "mongoose": "^6.3.3"
+    "mongoose": "^6.3.3",
+    "run": "^1.4.0"
   }
 }
