@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container mt-1">
+
+        <div class="d-flex justify-content-center">
+            <p>
+                <button class="btn btn-danger" type="button"
+                    onclick="showCollapse('collapseStudent','collapseProfessor', 'student')">
+                    Student
+                </button>
+                <button class="btn btn-danger" type="button"
+                    onclick="showCollapse('collapseProfessor','collapseStudent', 'professor')">
+                    Professor
+                </button>
+            </p>
+        </div>
+        <div class="collapse" id="collapseStudent">
+            <div class="card card-body">
+                <div class="d-flex justify-content-center">
+                    <form class="row g-3 needs-validation" novalidate>
+                        <div class="col-md-4">
+                            <label for="firstnameValidation" class="form-label">First name</label>
+                            <input type="text" class="form-control" id="firstnameValidation" required>
+                            <div class="invalid-feedback">
+                                Please insert your first name.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="lastnameValidation" class="form-label">Last name</label>
+                            <input type="text" class="form-control" id="lastnameValidation" required>
+                            <div class="invalid-feedback">
+                                Please insert your last name.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="usernameValidation" class="form-label">Username</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                <input type="text" class="form-control" id="usernameValidation"
+                                    aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    Please choose a username.
+                                </div>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="emailValidation" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="emailValidation" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid email.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="phoneValidation" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="phoneValidation">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="pwValidation" class="form-label">Password</label>
+                            <input type="text" class="form-control" id="pwValidation" required>
+                            <div class="invalid-feedback">
+                                Please insert a password.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="rpwValidation" class="form-label">Repeat password</label>
+                            <input type="text" class="form-control" id="rpwValidation" required>
+                            <div class="invalid-feedback">
+                                Please repeat your password.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountPhoto" class="form-label">Choose a profile photo</label>
+                            <input class="form-control" type="file" id="accountPhoto">
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit">Submit form</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="collapse" id="collapseProfessor">
+            <div class="card card-body">
+                <div class="d-flex justify-content-center">
+                    <form class="row g-3 needs-validation" novalidate>
+                        <div class="col-md-4">
+                            <label for="firstnameValidation" class="form-label">First name</label>
+                            <input type="text" class="form-control" id="firstnameValidation" required>
+                            <div class="invalid-feedback">
+                                Please insert your first name.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="lastnameValidation" class="form-label">Last name</label>
+                            <input type="text" class="form-control" id="lastnameValidation" required>
+                            <div class="invalid-feedback">
+                                Please insert your last name.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="usernameValidation" class="form-label">Username</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                <input type="text" class="form-control" id="usernameValidation"
+                                    aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    Please choose a username.
+                                </div>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="emailValidation" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="emailValidation" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid email.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="phoneValidation" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="phoneValidation">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="pwValidation" class="form-label">Password</label>
+                            <input type="text" class="form-control" id="pwValidation" required>
+                            <div class="invalid-feedback">
+                                Please insert a password.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="rpwValidation" class="form-label">Repeat password</label>
+                            <input type="text" class="form-control" id="rpwValidation" required>
+                            <div class="invalid-feedback">
+                                Please repeat your password.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountPhoto" class="form-label">Choose a profile photo</label>
+                            <input class="form-control" type="file" id="accountPhoto">
+                        </div>
+                        <div class="col-md-6">
+                            <form id="subject-form">
+                                <text id="subjects">What subjects do you teach?</text>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkAlgebra"
+                                        checked="false">
+                                    <label class="form-check-label" for="checkAlgebra">
+                                        Algebra
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkBiologia">
+                                    <label class="form-check-label" for="checkBiologia">
+                                        Biologia
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkChimica">
+                                    <label class="form-check-label" for="checkChimica">
+                                        Chimica
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkInformatica">
+                                    <label class="form-check-label" for="checkInformatica">
+                                        Informatica
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form id="topics-form">
+                                <text id="topics">What topics do you teach?</text>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkAnalisi1">
+                                    <label class="form-check-label" for="checkAnalisi1">
+                                        Analisi 1
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkPython">
+                                    <label class="form-check-label" for="checkPython">
+                                        Python
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkCellule">
+                                    <label class="form-check-label" for="checkCellule">
+                                        Cellule
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkTavola">
+                                    <label class="form-check-label" for="checkTavola">
+                                        Tavola periodica
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="priceValidation" class="form-label">What is your price?</label>
+                            <div class="input-group has-validation">
+                                <input type="text" class="form-control" id="priceValidation" value="0,00">
+                                <span class="input-group-text" id="inputGroupPrepend">€</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary" onclick="sendJSON()">Submit form</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+</body>
+
+<script>
+    aSubjects = []
+    aTopics = []
+    professorAccount = false;
+    function showCollapse(showName, hideName, type) {
+        var showElemCollapse = document.getElementById(showName)
+        var showbsCollapse = new bootstrap.Collapse(showElemCollapse, {
+            toggle: true,
+            show: true, //useless
+            hide: false //useless
+        })
+        showbsCollapse.show();
+
+        var hideElemCollapse = document.getElementById(hideName)
+        var hidebsCollapse = new bootstrap.Collapse(hideElemCollapse, {
+            toggle: false,
+            show: false, //useless
+            hide: true //useless
+        })
+        hidebsCollapse.hide()
+
+
+
+        if (type == "professor") {
+            professorAccount = true;
+        } else {
+            professorAccount = false;
+        }
+
+    }
+
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+
+    $('#subject-form').submit(function (e) {
+        e.preventDefault();
+        
+        $(this).find("input:checkbox:checked").each(function (e) {
+            aSubjects.push($(this).val())
+
+        })
+
+    })
+
+    $('#topics-form').submit(function (e) {
+        e.preventDefault();
+        
+        $(this).find("input:checkbox:checked").each(function (e) {
+            aTopics.push($(this).val())
+
+        })
+
+    })
+
+    function sendJSON() {
+
+        /*aSubjects = []
+        if (document.getElementById("checkAlgebra").getAttribute("checked") == "true") {
+            aSubjects.push("Algebra")
+            alert(Algbra)
+        }
+        if (document.getElementById("checkBiologia").getAttribute("checked")) {
+            aSubjects.push("Biologia")
+        }
+        if (document.getElementById("checkChimica").getAttribute("checked")) {
+            aSubjects.push("Chimica")
+        }
+        if (document.getElementById("checkInformatica").getAttribute("checked")) {
+            aSubjects.push("Informatica")
+        }
+
+        aTopics = []
+        if (document.getElementById("checkAnalisi1").getAttribute("checked")) {
+            aSubjects.push("Analisi 1")
+        }
+        if (document.getElementById("checkPython").getAttribute("checked")) {
+            aSubjects.push("Python")
+        }
+        if (document.getElementById("checkCellule").getAttribute("checked")) {
+            aSubjects.push("Cellule")
+        }
+        if (document.getElementById("checkTavola").getAttribute("checked")) {
+            aSubjects.push("Tavola periodica")
+        }*/
+
+        alert(aSubjects)
+        alert(aTopics)
+
+        dataJSON = {
+            /*username: document.getElementById("usernameValidation").innerHTML,
+            nome: document.getElementById("nameValidation").innerHTML,
+            cognome: document.getElementById("cognomeValidation").innerHTML,
+            professore: professorAccount,
+            email: document.getElementById("emailValidation").innerHTML,
+            phone: document.getElementById("phoneValidation").innerHTML,
+            password: document.getElementById("pwValidation").innerHTML,
+            repeatpassword: document.getElementById("rpwValidation").innerHTML,
+            image: document.getElementById("accountPhoto").innerHTML,
+            materie: [aSubjects],
+            argomenti: [aTopics],*/
+            prezzo: document.getElementById("priceValidation").innerHTML
+        }
+
+        jsonToSend = JSON.stringify(dataJSON)
+
+
+    }
+</script>
+
+
+
+</html>
