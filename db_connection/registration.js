@@ -5,10 +5,10 @@ const { body, validationResult } = require('express-validator');
 const User = require('./models/user');
 
 //controlla se le due password inserite dall'utente corrispondono
-function checkSamePassword(pass1, pass2){
-    if(pass1 === pass2){
+function checkSamePassword(pass1, pass2) {
+    if (pass1 === pass2) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
@@ -26,21 +26,22 @@ nel database ritorna un errore con codice 500.
 router.post(
     '',
     [
-        body('username').isAlphanumeric().exists().withMessage("Username non valido"),
+        body('username').exists().withMessage("Scegli uno username").isAlphanumeric().withMessage("Username non valido"),
         body('email').isEmail().withMessage("L'email inserita non è valida"),
-        body('nome').exists().isAlpha().withMessage("Nome non valido"),
-        body('cognome').exists().isAlpha().withMessage("Cognome non valido"),
+        body('nome').exists().withMessage("Inserisci il tuo nome prima di continuare").isAlpha().withMessage("Nome non valido"),
+        body('cognome').exists().withMessage("Inserisci il tuo cognome prima di continuare").isAlpha().withMessage("Cognome non valido"),
         body('phone').optional().isMobilePhone().withMessage("Numero di telefono non valido"),
-        body('password').isStrongPassword().withMessage("La password inserita non è sicura, deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale"),
+        body('password').exists().withMessage("Inserisci una password prima di continuare").isStrongPassword().withMessage("La password inserita non è sicura, deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale"),
+        body('repeatpassword').exists().withMessage("Completa il campo ripeti password per continuare"),
         body('professore').exists().withMessage("E' obbligatorio scegliere se creare un account professore o studente"),
         body('prezzo').optional().isNumeric().withMessage("Il prezzo inserito non è valido")
-    ], async (req, res) =>{
+    ], async (req, res) => {
         let errors = validationResult(req).array();
         let message = "Si è verificato un errore nella registrazione, la preghiamo di riprovare.";
         let wrong_data = false;
         let server_error = false;
 
-        if(errors.length>0){
+        if (errors.length > 0) {
             wrong_data = true;
             message = errors[0].msg;
         }
@@ -57,47 +58,65 @@ router.post(
         const image = req.sanitize(req.body.image);
         const price = req.sanitize(req.body.prezzo);
         let materie = [];
-        for(let i=0; i<req.body.materie.length; i++){
-            materie[i] = req.sanitize(req.body.materie[i]);
-            
+        if(req.body.materie != undefined){
+            for (let i = 0; i < req.body.materie.length; i++) {
+                materie[i] = req.sanitize(req.body.materie[i]);
+
+            }
         }
         let argomenti = [];
-        for(let i=0; i<req.body.argomenti.length; i++){
-            argomenti[i] = req.sanitize(req.body.argomenti[i]);
+        if(req.body.argomenti != undefined){
+            for (let i = 0; i < req.body.argomenti.length; i++) {
+                argomenti[i] = req.sanitize(req.body.argomenti[i]);
+            }
         }
-
-        if(!wrong_data){
-            if(checkSamePassword(password, repeatpassword))
-            {
+        if (!wrong_data) {
+            if (checkSamePassword(password, repeatpassword)) {
                 let search_username = await User.findOne({ username: username }).exec();
-                if(search_username != null){
+                if (search_username != null) {
                     message = "Username non disponibile";
                     wrong_data = true;
                 }
-                else{
+                else {
                     let search_email = await User.findOne({ email: email }).exec();
-                    if(search_email != null){
+                    if (search_email != null) {
                         message = "Esiste già un utente registrato con questo indirizzo email";
                         wrong_data = true;
-                    }else{
+                    } else {
                         console.log("Adding the user to the db ...");
-                        const newUser = new User({
-                            username: username,
-                            nome: name,
-                            cognome: surname,
-                            indirizzo: address,
-                            professore: professor,
-                            email: email,
-                            phone: phone,
-                            image: image,
-                            materie: materie,
-                            argomenti: argomenti,
-                            prezzo: price
-                        });
+                        let newUser;
+                        if (professor == "true") {
+                            newUser = new User({
+                                username: username,
+                                nome: name,
+                                cognome: surname,
+                                indirizzo: address,
+                                professore: professor,
+                                email: email,
+                                phone: phone,
+                                image: image,
+                                materie: materie,
+                                argomenti: argomenti,
+                                prezzo: Number(price)
+                            });
+                        }
+                        else {
+                            console.log("false");
+                            newUser = new User({
+                                username: username,
+                                nome: name,
+                                cognome: surname,
+                                indirizzo: address,
+                                professore: professor,
+                                email: email,
+                                phone: phone,
+                                image: image
+                            });
+                        }
                         newUser.setPassword(password);
                         console.log(newUser);
-                        await newUser.save(function (err){
-                            if(err){
+                        await newUser.save(function (err) {
+                            if (err) {
                                 server_error = true;
                                 console.log("Errore nell'inserimento dell'utente nel database");
                             }
@@ -105,23 +124,23 @@ router.post(
                     }
                 }
             }
-            else{
+            else {
                 wrong_data = true;
                 message = "Le due password inserite non corrispondono";
             }
         }
-        if(wrong_data){
+        if (wrong_data) {
             console.log("L'utente ha inserito dei dati non validi nell'input");
             res.status(400).json({ message: message });
         }
-        else if (server_error){
+        else if (server_error) {
             console.log("Si è verificato un errore nel salvataggio nel database del nuovo utente");
             res.status(500).json({ message: message });
         }
-        else{
+        else {
             console.log("Utente creato con successo e aggiunto al database");
             res.status(201).json({ location: "/api/v1/users/" + username });
         }
-    }); 
+    });
 
 module.exports = router;
