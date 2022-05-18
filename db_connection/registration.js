@@ -23,11 +23,18 @@ e un messaggio per spiegare all'utente quale delle informazioni inserite
 Se si verifica un errore del server o un errore nell'inserimento
 nel database ritorna un errore con codice 500.
 */
+/*
+Lista controlli:
+- controlla che lo username, il nome, il cognome, la mail, le password e il campo professore siano presenti
+- controlla che la mail sia valida, che il numero di telefono sia valido (se presente)
+- controlla che l'immagine sia in base64 
+- controlla che il prezzo sia un numero
+*/
 router.post(
     '',
     [
         body('username').exists().withMessage("Scegli uno username").isAlphanumeric().withMessage("Username non valido"),
-        body('email').isEmail().withMessage("L'email inserita non è valida"),
+        body('email').exists().withMessage("Inserisi un indirizzo email per continuare").isEmail().withMessage("L'email inserita non è valida"),
         body('nome').exists().withMessage("Inserisci il tuo nome prima di continuare").isAlpha().withMessage("Nome non valido"),
         body('cognome').exists().withMessage("Inserisci il tuo cognome prima di continuare").isAlpha().withMessage("Cognome non valido"),
         body('phone').optional().isMobilePhone().withMessage("Numero di telefono non valido"),
@@ -37,8 +44,10 @@ router.post(
         body('professore').exists().withMessage("E' obbligatorio scegliere se creare un account professore o studente"),
         body('prezzo').optional().isNumeric().withMessage("Il prezzo inserito non è valido")
     ], async (req, res) => {
+        //messaggio che viene ritornato all'utente in caso di errore
         let message = "Si è verificato un errore nella registrazione, la preghiamo di riprovare.";
         try{
+            //se uno dei controlli non è andato a buon fine viene settato un errore
             let errors = validationResult(req).array();
             let wrong_data = false;
 
@@ -46,7 +55,7 @@ router.post(
                 wrong_data = true;
                 message = errors[0].msg;
             }
-
+            //sanificazione dell'input
             const username = req.sanitize(req.body.username);
             const name = req.sanitize(req.body.nome);
             const surname = req.sanitize(req.body.cognome);
@@ -72,6 +81,8 @@ router.post(
                 }
             }
             if (!wrong_data) {
+                //controlla se le due password inserite dall'utente sono uguali 
+                //controlla se esite già un utente con lo stesso username o con la stessa mail
                 if (checkSamePassword(password, repeatpassword)) {
                     let search_username = await User.findOne({ username: username }).exec();
                     if (search_username != null) {
@@ -84,6 +95,8 @@ router.post(
                             message = "Esiste già un utente registrato con questo indirizzo email";
                             wrong_data = true;
                         } else {
+                            //l'utente viene aggiunto al database
+                            //i campi variano in base al tipo di utente: (studente o professore)
                             console.log("Adding the user to the db ...");
                             let newUser;
                             if (professor == "true") {
@@ -114,6 +127,7 @@ router.post(
                                     image: image
                                 });
                             }
+                            //la password dell'utente viene settata calcolandone l'hash
                             newUser.setPassword(password);
                             console.log(newUser);
                             await newUser.save();
@@ -126,14 +140,17 @@ router.post(
                 }
             }
             if (wrong_data) {
+                //nel caso in cui l'utente abbia inserito degli input errati gli viene inviato un codice 400 con un messaggio di errore
                 console.log("L'utente ha inserito dei dati non validi nell'input");
                 res.status(400).json({ message: message });
             }
             else {
+                //nel caso in cui l'utente sia stato correttamente creato viene ritornato un codice 201
                 console.log("Utente creato con successo e aggiunto al database");
                 res.status(201).json({ location: "/api/v1/users/" + username });
             }
         }catch(err){
+            //nel caso di errore del server viene ritornato un errore con codice 500
             res.status(500).json({ message: message });
         }
     });
