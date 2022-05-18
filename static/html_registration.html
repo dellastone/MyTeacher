@@ -52,7 +52,7 @@
         <div class="collapse" id="collapseStudent">
             <div class="card card-body">
                 <div class="d-flex justify-content-center">
-                    <div class="row g-3 needs-validation" novalidate>
+                    <form class="row g-3 needs-validation" novalidate>
                         <div class="col-md-4">
                             <label for="sfirstnameValidation" class="form-label">First name</label>
                             <input type="text" class="form-control" id="sfirstnameValidation" required>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="spwValidation" class="form-label">Password</label>
-                            <input type="text" class="form-control" id="spwValidation" required>
+                            <input type="password" class="form-control" id="spwValidation" required>
                             <div class="invalid-feedback">
                                 Please insert a password.
                             </div>
@@ -113,7 +113,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="srpwValidation" class="form-label">Repeat password</label>
-                            <input type="text" class="form-control" id="srpwValidation" required>
+                            <input type="password" class="form-control" id="srpwValidation" required>
                             <div class="invalid-feedback">
                                 Please repeat your password.
                             </div>
@@ -128,14 +128,14 @@
                         <div class="col-12">
                             <button class="btn btn-primary" onclick="encodeImageFileAsURL()">Submit form</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
         <div class="collapse" id="collapseProfessor">
             <div class="card card-body">
                 <div class="d-flex justify-content-center">
-                    <div id="professor-form" class="row g-3 needs-validation" novalidate>
+                    <form id="professor-form" class="row g-3 needs-validation" novalidate>
                         <div class="col-md-4">
                             <label for="firstnameValidation" class="form-label">First name</label>
                             <input type="text" class="form-control" id="firstnameValidation" value="" required>
@@ -186,7 +186,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="pwValidation" class="form-label">Password</label>
-                            <input type="text" class="form-control" id="pwValidation" value="" required>
+                            <input type="password" class="form-control" id="pwValidation" value="" required>
                             <div class="invalid-feedback">
                                 Please insert a password.
                             </div>
@@ -196,7 +196,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="rpwValidation" class="form-label">Repeat password</label>
-                            <input type="text" class="form-control" id="rpwValidation" value="" required>
+                            <input type="password" class="form-control" id="rpwValidation" value="" required>
                             <div class="invalid-feedback">
                                 Please repeat your password.
                             </div>
@@ -279,7 +279,7 @@
                         <div class="col-12">
                             <button class="btn btn-primary" onclick="encodeImageFileAsURL()">Submit form</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -486,6 +486,7 @@
                 var jsonData = JSON.stringify(json);
                 const jsondoc = JSON.parse(json);
                 //link to new user
+                alert("NEW USER OK")
                 linkNewUser = jsondoc.location;
 
 
