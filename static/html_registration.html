@@ -8,11 +8,35 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        .myTeacherlogo {
+
+            position: absolute;
+            width: 266px;
+            height: 63px;
+            left: 90px;
+            top: 10px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 900;
+            font-size: 50px;
+            line-height: 63px;
+            /* identical to box height */
+            text-align: center;
+
+            color: #F40000;
+
+
+        }
+
+    </style>
 </head>
 
 <body>
-    <div class="container mt-1">
 
+    <div class="container mt-1">
+        <text id="logo" class="myTeacherlogo">MyTeacher</text><br><br>
         <div class="d-flex justify-content-center">
             <p>
                 <button class="btn btn-danger" type="button"
@@ -28,10 +52,10 @@
         <div class="collapse" id="collapseStudent">
             <div class="card card-body">
                 <div class="d-flex justify-content-center">
-                    <form class="row g-3 needs-validation" novalidate>
+                    <div class="row g-3 needs-validation" novalidate>
                         <div class="col-md-4">
-                            <label for="firstnameValidation" class="form-label">First name</label>
-                            <input type="text" class="form-control" id="firstnameValidation" required>
+                            <label for="sfirstnameValidation" class="form-label">First name</label>
+                            <input type="text" class="form-control" id="sfirstnameValidation" required>
                             <div class="invalid-feedback">
                                 Please insert your first name.
                             </div>
@@ -40,8 +64,8 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="lastnameValidation" class="form-label">Last name</label>
-                            <input type="text" class="form-control" id="lastnameValidation" required>
+                            <label for="slastnameValidation" class="form-label">Last name</label>
+                            <input type="text" class="form-control" id="slastnameValidation" required>
                             <div class="invalid-feedback">
                                 Please insert your last name.
                             </div>
@@ -50,10 +74,10 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="usernameValidation" class="form-label">Username</label>
+                            <label for="susernameValidation" class="form-label">Username</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                <input type="text" class="form-control" id="usernameValidation"
+                                <input type="text" class="form-control" id="susernameValidation"
                                     aria-describedby="inputGroupPrepend" required>
                                 <div class="invalid-feedback">
                                     Please choose a username.
@@ -64,8 +88,8 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="emailValidation" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="emailValidation" required>
+                            <label for="semailValidation" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="semailValidation" required>
                             <div class="invalid-feedback">
                                 Please provide a valid email.
                             </div>
@@ -74,12 +98,12 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label for="phoneValidation" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="phoneValidation">
+                            <label for="sphoneValidation" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="sphoneValidation">
                         </div>
                         <div class="col-md-4">
-                            <label for="pwValidation" class="form-label">Password</label>
-                            <input type="text" class="form-control" id="pwValidation" required>
+                            <label for="spwValidation" class="form-label">Password</label>
+                            <input type="text" class="form-control" id="spwValidation" required>
                             <div class="invalid-feedback">
                                 Please insert a password.
                             </div>
@@ -88,8 +112,8 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="rpwValidation" class="form-label">Repeat password</label>
-                            <input type="text" class="form-control" id="rpwValidation" required>
+                            <label for="srpwValidation" class="form-label">Repeat password</label>
+                            <input type="text" class="form-control" id="srpwValidation" required>
                             <div class="invalid-feedback">
                                 Please repeat your password.
                             </div>
@@ -98,23 +122,23 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="accountPhoto" class="form-label">Choose a profile photo</label>
-                            <input class="form-control" type="file" id="accountPhoto">
+                            <label for="saccountPhoto" class="form-label">Choose a profile photo</label>
+                            <input class="form-control" type="file" id="sinputFileToLoad">
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary" type="submit">Submit form</button>
+                            <button class="btn btn-primary" onclick="encodeImageFileAsURL()">Submit form</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="collapse" id="collapseProfessor">
             <div class="card card-body">
                 <div class="d-flex justify-content-center">
-                    <form class="row g-3 needs-validation" novalidate>
+                    <div id="professor-form" class="row g-3 needs-validation" novalidate>
                         <div class="col-md-4">
                             <label for="firstnameValidation" class="form-label">First name</label>
-                            <input type="text" class="form-control" id="firstnameValidation" required>
+                            <input type="text" class="form-control" id="firstnameValidation" value="" required>
                             <div class="invalid-feedback">
                                 Please insert your first name.
                             </div>
@@ -124,7 +148,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="lastnameValidation" class="form-label">Last name</label>
-                            <input type="text" class="form-control" id="lastnameValidation" required>
+                            <input type="text" class="form-control" id="lastnameValidation" value="" required>
                             <div class="invalid-feedback">
                                 Please insert your last name.
                             </div>
@@ -137,7 +161,7 @@
                             <div class="input-group has-validation">
                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
                                 <input type="text" class="form-control" id="usernameValidation"
-                                    aria-describedby="inputGroupPrepend" required>
+                                    aria-describedby="inputGroupPrepend" value="" required>
                                 <div class="invalid-feedback">
                                     Please choose a username.
                                 </div>
@@ -148,7 +172,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="emailValidation" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="emailValidation" required>
+                            <input type="text" class="form-control" id="emailValidation" value="" required>
                             <div class="invalid-feedback">
                                 Please provide a valid email.
                             </div>
@@ -158,11 +182,11 @@
                         </div>
                         <div class="col-md-3">
                             <label for="phoneValidation" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="phoneValidation">
+                            <input type="text" class="form-control" id="phoneValidation" value="">
                         </div>
                         <div class="col-md-4">
                             <label for="pwValidation" class="form-label">Password</label>
-                            <input type="text" class="form-control" id="pwValidation" required>
+                            <input type="text" class="form-control" id="pwValidation" value="" required>
                             <div class="invalid-feedback">
                                 Please insert a password.
                             </div>
@@ -172,7 +196,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="rpwValidation" class="form-label">Repeat password</label>
-                            <input type="text" class="form-control" id="rpwValidation" required>
+                            <input type="text" class="form-control" id="rpwValidation" value="" required>
                             <div class="invalid-feedback">
                                 Please repeat your password.
                             </div>
@@ -182,66 +206,68 @@
                         </div>
                         <div class="mb-3">
                             <label for="accountPhoto" class="form-label">Choose a profile photo</label>
-                            <input class="form-control" type="file" id="accountPhoto">
+                            <input class="form-control" type="file" id="inputFileToLoad" value="">
                         </div>
                         <div class="col-md-6">
-                            <form id="subject-form">
+                            <div id="subject-form">
                                 <text id="subjects">What subjects do you teach?</text>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkAlgebra"
-                                        checked="false">
+                                    <input class="form-check-input" type="checkbox" value="Algebra" id="checkAlgebra">
                                     <label class="form-check-label" for="checkAlgebra">
                                         Algebra
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkBiologia">
+                                    <input class="form-check-input" type="checkbox" value="Biologia" id="checkBiologia">
                                     <label class="form-check-label" for="checkBiologia">
                                         Biologia
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkChimica">
+                                    <input class="form-check-input" type="checkbox" value="Chimica" id="checkChimica">
                                     <label class="form-check-label" for="checkChimica">
                                         Chimica
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkInformatica">
+                                    <input class="form-check-input" type="checkbox" value="Informatica"
+                                        id="checkInformatica">
                                     <label class="form-check-label" for="checkInformatica">
                                         Informatica
                                     </label>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <form id="topics-form">
+                            <div id="topics-form">
                                 <text id="topics">What topics do you teach?</text>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkAnalisi1">
+                                    <input class="form-check-input" type="checkbox" value="Analisi 1"
+                                        id="checkAnalisi1">
                                     <label class="form-check-label" for="checkAnalisi1">
                                         Analisi 1
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkPython">
+                                    <input class="form-check-input" type="checkbox" value="Python" id="checkPython">
                                     <label class="form-check-label" for="checkPython">
                                         Python
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkCellule">
+                                    <input class="form-check-input" type="checkbox" value="Cellule" id="checkCellule">
                                     <label class="form-check-label" for="checkCellule">
                                         Cellule
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkTavola">
+                                    <input class="form-check-input" type="checkbox" value="Tavola periodica"
+                                        id="checkTavola">
                                     <label class="form-check-label" for="checkTavola">
                                         Tavola periodica
                                     </label>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for="priceValidation" class="form-label">What is your price?</label>
@@ -251,9 +277,9 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary" onclick="sendJSON()">Submit form</button>
+                            <button class="btn btn-primary" onclick="encodeImageFileAsURL()">Submit form</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -263,12 +289,9 @@
 
 
 
-
 </body>
 
 <script>
-    aSubjects = []
-    aTopics = []
     professorAccount = false;
     function showCollapse(showName, hideName, type) {
         var showElemCollapse = document.getElementById(showName)
@@ -317,79 +340,171 @@
             })
     })()
 
-    $('#subject-form').submit(function (e) {
-        e.preventDefault();
-        
-        $(this).find("input:checkbox:checked").each(function (e) {
-            aSubjects.push($(this).val())
 
-        })
-
-    })
-
-    $('#topics-form').submit(function (e) {
-        e.preventDefault();
-        
-        $(this).find("input:checkbox:checked").each(function (e) {
-            aTopics.push($(this).val())
-
-        })
-
-    })
-
-    function sendJSON() {
-
-        /*aSubjects = []
-        if (document.getElementById("checkAlgebra").getAttribute("checked") == "true") {
-            aSubjects.push("Algebra")
-            alert(Algbra)
-        }
-        if (document.getElementById("checkBiologia").getAttribute("checked")) {
-            aSubjects.push("Biologia")
-        }
-        if (document.getElementById("checkChimica").getAttribute("checked")) {
-            aSubjects.push("Chimica")
-        }
-        if (document.getElementById("checkInformatica").getAttribute("checked")) {
-            aSubjects.push("Informatica")
+    function encodeImageFileAsURL() {
+        convertedPic = "";
+        var filesSelected
+        if (professorAccount) {
+            filesSelected = document.getElementById("inputFileToLoad").files;
+        } else {
+            filesSelected = document.getElementById("sinputFileToLoad").files;
         }
 
-        aTopics = []
-        if (document.getElementById("checkAnalisi1").getAttribute("checked")) {
-            aSubjects.push("Analisi 1")
-        }
-        if (document.getElementById("checkPython").getAttribute("checked")) {
-            aSubjects.push("Python")
-        }
-        if (document.getElementById("checkCellule").getAttribute("checked")) {
-            aSubjects.push("Cellule")
-        }
-        if (document.getElementById("checkTavola").getAttribute("checked")) {
-            aSubjects.push("Tavola periodica")
-        }*/
+        if (filesSelected.length > 0) {
+            var fileToLoad = filesSelected[0];
 
-        alert(aSubjects)
-        alert(aTopics)
+            var fileReader = new FileReader();
 
-        dataJSON = {
-            /*username: document.getElementById("usernameValidation").innerHTML,
-            nome: document.getElementById("nameValidation").innerHTML,
-            cognome: document.getElementById("cognomeValidation").innerHTML,
-            professore: professorAccount,
-            email: document.getElementById("emailValidation").innerHTML,
-            phone: document.getElementById("phoneValidation").innerHTML,
-            password: document.getElementById("pwValidation").innerHTML,
-            repeatpassword: document.getElementById("rpwValidation").innerHTML,
-            image: document.getElementById("accountPhoto").innerHTML,
-            materie: [aSubjects],
-            argomenti: [aTopics],*/
-            prezzo: document.getElementById("priceValidation").innerHTML
+            fileReader.onload = function (fileLoadedEvent) {
+                var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+                var newImage = document.createElement('img');
+                newImage.src = srcData;
+
+                convertedPic = newImage.outerHTML;
+                //document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+                //alert("Converted Base64 version is " + convertedPic);
+                //console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+                createJSON(convertedPic);
+            }
+            fileReader.readAsDataURL(fileToLoad);
+
         }
-
-        jsonToSend = JSON.stringify(dataJSON)
 
 
     }
+
+
+
+    function createJSON(imgBase64) {
+        dataJSON = "";
+        if (professorAccount) {
+            aSubjects = []
+            if (document.getElementById("checkAlgebra").checked) {
+                aSubjects.push("Algebra")
+            }
+            if (document.getElementById("checkBiologia").checked) {
+                aSubjects.push("Biologia")
+            }
+            if (document.getElementById("checkChimica").checked) {
+                aSubjects.push("Chimica")
+            }
+            if (document.getElementById("checkInformatica").checked) {
+                aSubjects.push("Informatica")
+            }
+
+            aTopics = []
+            if (document.getElementById("checkAnalisi1").checked) {
+                aTopics.push("Analisi 1")
+            }
+            if (document.getElementById("checkPython").checked) {
+                aTopics.push("Python")
+            }
+            if (document.getElementById("checkCellule").checked) {
+                aTopics.push("Cellule")
+            }
+            if (document.getElementById("checkTavola").checked) {
+                aTopics.push("Tavola periodica")
+            }
+            alert("Img: " + imgBase64)
+            alert("Subjects: " + aSubjects)
+            alert("Topics: " + aTopics)
+
+            fusername = document.getElementById("usernameValidation").value;
+            fnome = document.getElementById("firstnameValidation").value;
+            fcognome = document.getElementById("lastnameValidation").value;
+            fprofessore = "" + professorAccount;
+            femail = document.getElementById("emailValidation").value;
+            fphone = document.getElementById("phoneValidation").value;
+            fpassword = document.getElementById("pwValidation").value;
+            frpassword = document.getElementById("rpwValidation").value;
+            fimage = imgBase64;
+            fsubject = "" + aSubjects;
+            ftopic = "" + aTopics;
+            fprezzo = document.getElementById("priceValidation").value;
+
+
+
+
+            dataJSON = '{"username": "' + fusername +
+                '", "nome": "' + fnome +
+                '", "cognome": "' + fcognome +
+                '", "professore": "' + fprofessore +
+                '", "email": "' + femail +
+                '", "phone": "' + fphone +
+                '", "password": "' + fpassword +
+                '", "repeatpassword": "' + frpassword +
+                '", "image": "' + fimage +
+                '", "materie": "' + fsubject +
+                '", "argomenti": "' + ftopic +
+                '", "prezzo": "' + fprezzo +
+                '"}'
+                console.log(fimage);
+        } else {
+
+            fusername = document.getElementById("susernameValidation").value;
+            fnome = document.getElementById("sfirstnameValidation").value;
+            fcognome = document.getElementById("slastnameValidation").value;
+            fprofessore = "" + professorAccount;
+            femail = document.getElementById("semailValidation").value;
+            fphone = document.getElementById("sphoneValidation").value;
+            fpassword = document.getElementById("spwValidation").value;
+            frpassword = document.getElementById("srpwValidation").value;
+            fimage = imgBase64;
+
+            console.log(fimage);
+
+
+
+
+            dataJSON = '{"username": "' + fusername +
+                '", "nome": "' + fnome +
+                '", "cognome": "' + fcognome +
+                '", "professore": "' + fprofessore +
+                '", "email": "' + femail +
+                '", "phone": "' + fphone +
+                '", "password": "' + fpassword +
+                '", "repeatpassword": "' + frpassword +
+                '", "image": "' + fimage +
+                '"}'
+        }
+
+
+        alert(dataJSON)
+        registerNewUser(jsonToSend)
+
+
+
+    }
+
+    function registerNewUser(json) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            //ALL OK, new user registered
+            if (this.readyState == 4 && this.status == 201) {
+                const json = this.responseText;
+                var jsonData = JSON.stringify(json);
+                const jsondoc = JSON.parse(json);
+                //link to new user
+                linkNewUser = jsondoc.location;
+
+
+            } else if (this.readyState == 4 && this.status == 400) {
+                const json = this.responseText;
+                var jsonData = JSON.stringify(json);
+                const jsondoc = JSON.parse(json);
+                //error msg
+                alert(jsondoc.message)
+            }
+        }
+
+
+        xhttp.open("POST", "/api/v1/users", true);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(json);
+    }
+
+
 </script>
 
 
