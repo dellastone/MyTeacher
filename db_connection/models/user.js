@@ -2,10 +2,6 @@ var mongoose = require('mongoose');
 const crypto = require('crypto');
 var Schema = mongoose.Schema;
 
-var mongoose = require('mongoose');
-const crypto = require('crypto');
-var Schema = mongoose.Schema;
-
 // mongoose model that desribes the user of the platform
 const UserSchema = mongoose.Schema({ 
     username: {
