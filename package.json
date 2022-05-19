@@ -27,14 +27,15 @@
   },
   "homepage": "https://github.com/dellastone/MyTeacher#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.3.3",
     "express-json-validator-middleware": "^3.0.0",
     "express-sanitizer": "^1.0.6",
     "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
     "run": "^1.4.0"
   }
 }
