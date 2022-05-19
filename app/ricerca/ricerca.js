@@ -107,8 +107,11 @@ router.get(
                 const professors = await User.find(
                     {
                         professore: true,
-                        nome: new RegExp(name, 'i'),
+                        $or: [{nome: new RegExp(name, 'i'),
                         cognome: new RegExp(surname, 'i')
+                        }, { nome: new RegExp(surname, 'i'),
+                        cognome: new RegExp(name, 'i')
+                        }]
                     },
                     ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
 
@@ -126,7 +129,5 @@ router.get(
             res.status(500).json({ message: message });
         }
     });
-
-
 
 module.exports = router;
