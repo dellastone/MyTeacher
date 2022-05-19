@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const User = require('./models/user');
+const user = require('./models/user');
 
 //controlla se le due password inserite dall'utente corrispondono
 function checkSamePassword(pass1, pass2) {
@@ -154,5 +155,23 @@ router.post(
             res.status(500).json({ message: message });
         }
     });
+
+router.get('', async (req, res) => {
+    let message = "Si è verificato un errore durante la ricerca utenti, la preghiamo di riprovare";
+    try{
+        //ricerca dei professori nel database, solo i campi da ritornare vengono recuperati 
+        //non viene ritornato l'_id creato da mongoDB, l'hash della password e il salt
+        console.log("Ricerca utenti nel database ...");
+        
+        const users = await User.find({ }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+
+        //dati ritornati all'utente
+        console.log("Lista utenti ritornata correttamente all'utente");
+        res.status(200).json(users);
+    }catch(err){
+        console.log(err);
+        res.status(500).json({ message: message});
+    }
+});
 
 module.exports = router;
