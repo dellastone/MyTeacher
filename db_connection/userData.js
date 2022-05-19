@@ -56,6 +56,7 @@ router.post(
                 wrong_data = true;
                 message = errors[0].msg;
             }
+
             //sanificazione dell'input
             const username = req.sanitize(req.body.username);
             const name = req.sanitize(req.body.nome);
@@ -67,7 +68,14 @@ router.post(
             const address = req.sanitize(req.body.address);
             const phone = req.sanitize(req.body.phone);
             const image = req.sanitize(req.body.image);
-            const price = req.sanitize(req.body.prezzo);
+            let price = req.sanitize(req.body.prezzo);
+            if( price == undefined ){
+                price = 0;
+            }else{
+                price = Number(price);
+            }
+            console.log(price);
+
             let materie = [];
             if(req.body.materie != undefined){
                 for (let i = 0; i < req.body.materie.length; i++) {
@@ -81,6 +89,7 @@ router.post(
                     argomenti[i] = req.sanitize(req.body.argomenti[i]);
                 }
             }
+
             if (!wrong_data) {
                 //controlla se le due password inserite dall'utente sono uguali 
                 //controlla se esite già un utente con lo stesso username o con la stessa mail
@@ -112,7 +121,7 @@ router.post(
                                     image: image,
                                     materie: materie,
                                     argomenti: argomenti,
-                                    prezzo: Number(price)
+                                    prezzo: price
                                 });
                             }
                             else {
