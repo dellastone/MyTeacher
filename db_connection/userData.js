@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const User = require('./models/user');
+const user = require('./models/user');
 
 //controlla se le due password inserite dall'utente corrispondono
 function checkSamePassword(pass1, pass2) {
@@ -33,7 +34,7 @@ Lista controlli:
 router.post(
     '',
     [
-        body('username').exists().withMessage("Scegli uno username").isAlphanumeric().withMessage("Username non valido"),
+        body('username').exists().withMessage("Scegli uno username").isAlphanumeric().withMessage("Username non valido, deve essere una stringa alfanumerica"),
         body('email').exists().withMessage("Inserisi un indirizzo email per continuare").isEmail().withMessage("L'email inserita non è valida"),
         body('nome').exists().withMessage("Inserisci il tuo nome prima di continuare").isAlpha().withMessage("Nome non valido"),
         body('cognome').exists().withMessage("Inserisci il tuo cognome prima di continuare").isAlpha().withMessage("Cognome non valido"),
@@ -154,5 +155,58 @@ router.post(
             res.status(500).json({ message: message });
         }
     });
+
+router.get('', async (req, res) => {
+    let message = "Si è verificato un errore durante la ricerca utenti, la preghiamo di riprovare";
+    try{
+        //ricerca drgli utenti nel database, solo i campi da ritornare vengono recuperati 
+        //non viene ritornato l'_id creato da mongoDB, l'hash della password e il salt
+        console.log("Ricerca utenti nel database ...");
+        
+        const users = await User.find({ }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+
+        //dati ritornati all'utente
+        console.log("Lista utenti ritornata correttamente all'utente");
+        res.status(200).json(users);
+    }catch(err){
+        console.log(err);
+        res.status(500).json({ message: message});
+    }
+});
+
+router.get('/:username', async (req, res) => {
+
+    let message = "Si è verificato un errore nel recupero dei dati dell'utente, si prega di ricaricare la pagina";
+
+    try{
+
+        const username = req.params.username;
+        if(username == null || username == undefined){
+            message = "E' necessario specificare uno username valido";
+            res.status(400).json({ message: message });
+        }
+        else{
+            //recupero dei dati dell'utente dal database 
+            //non viene ritornato l'_id creato da mongoDB, l'hash della password e il salt
+            console.log("Ricerca dell'utente con username " + username + " nel database ...");
+
+            const user = await User.findOne({ username: username }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+            console.log(user);
+            if(user == null){
+                //utente non trovato nel database, viene ritornato un errore all'utente
+                message = "Utente non presente nel database";
+                res.status(400).json({ message: message });
+            }
+            else{
+                //dati ritornati all'utente
+                console.log("Dati utente recuperati correttamente");
+                res.status(200).json(user);
+            }
+    }
+    }catch(err){
+        console.log(err);
+        res.status(500).json({ message: message });
+    }
+});
 
 module.exports = router;
