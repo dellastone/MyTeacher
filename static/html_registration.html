@@ -29,7 +29,6 @@
 
 
         }
-
     </style>
 </head>
 
@@ -48,6 +47,15 @@
                     Professor
                 </button>
             </p>
+        </div>
+        <div id="hidden_div" style="display: none">
+            <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                    <use xlink:href="#exclamation-triangle-fill" />
+                </svg>
+                <text id="alert_msg"></text>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         </div>
         <div class="collapse" id="collapseStudent">
             <div class="card card-body">
@@ -126,7 +134,7 @@
                             <input class="form-control" type="file" id="sinputFileToLoad">
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary" onclick="encodeImageFileAsURL()">Submit form</button>
+                            <button class="btn btn-primary" type="submit" onclick="encodeImageFileAsURL()">Submit form</button>
                         </div>
                     </form>
                 </div>
@@ -272,12 +280,12 @@
                         <div class="col-md-4">
                             <label for="priceValidation" class="form-label">What is your price?</label>
                             <div class="input-group has-validation">
-                                <input type="text" class="form-control" id="priceValidation" value="0,00">
+                                <input type="text" class="form-control" id="priceValidation" value="0.00">
                                 <span class="input-group-text" id="inputGroupPrepend">€</span>
                             </div>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary" onclick="encodeImageFileAsURL()">Submit form</button>
+                            <button class="btn btn-primary" type="submit" onclick="encodeImageFileAsURL()">Submit form</button>
                         </div>
                     </form>
                 </div>
@@ -320,28 +328,29 @@
 
     }
 
-    (function () {
-        'use strict'
 
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
 
 
     function encodeImageFileAsURL() {
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
         convertedPic = "";
         var filesSelected
         if (professorAccount) {
@@ -430,16 +439,20 @@
                 '", "nome": "' + fnome +
                 '", "cognome": "' + fcognome +
                 '", "professore": "' + fprofessore +
-                '", "email": "' + femail +
-                '", "phone": "' + fphone +
+                '", "email": "' + femail;
+
+            if (fphone != "") {
+                dataJSON = dataJSON + '", "phone": "' + fphone;
+            }
+            dataJSON = dataJSON +
                 '", "password": "' + fpassword +
                 '", "repeatpassword": "' + frpassword +
-                '", "image": "' + fimage +
-                '", "materie": "' + fsubject +
-                '", "argomenti": "' + ftopic +
-                '", "prezzo": "' + fprezzo +
+                '", "image": "' + "test" +
+                '", "materie": ["' + fsubject +
+                '"], "argomenti": ["' + ftopic +
+                '"], "prezzo": "' + fprezzo +
                 '"}'
-                console.log(fimage);
+            console.log(fimage);
         } else {
 
             fusername = document.getElementById("susernameValidation").value;
@@ -461,17 +474,21 @@
                 '", "nome": "' + fnome +
                 '", "cognome": "' + fcognome +
                 '", "professore": "' + fprofessore +
-                '", "email": "' + femail +
-                '", "phone": "' + fphone +
+                '", "email": "' + femail;
+
+            if (fphone != "") {
+                dataJSON = dataJSON + '", "phone": "' + fphone;
+            }
+            dataJSON = dataJSON +
                 '", "password": "' + fpassword +
                 '", "repeatpassword": "' + frpassword +
-                '", "image": "' + fimage +
+                '", "image": "' + "test" +
                 '"}'
         }
 
 
         alert(dataJSON)
-        registerNewUser(jsonToSend)
+        registerNewUser(dataJSON)
 
 
 
@@ -480,22 +497,55 @@
     function registerNewUser(json) {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
+            const json = this.responseText;
+            var jsonData = JSON.stringify(json);
+            const jsondoc = JSON.parse(json);
             //ALL OK, new user registered
             if (this.readyState == 4 && this.status == 201) {
-                const json = this.responseText;
-                var jsonData = JSON.stringify(json);
-                const jsondoc = JSON.parse(json);
+
                 //link to new user
-                alert("NEW USER OK")
+
                 linkNewUser = jsondoc.location;
+                alert("Link to new user: " + linkNewUser)
 
 
             } else if (this.readyState == 4 && this.status == 400) {
-                const json = this.responseText;
-                var jsonData = JSON.stringify(json);
-                const jsondoc = JSON.parse(json);
-                //error msg
-                alert(jsondoc.message)
+
+                //invalid request
+                msg = jsondoc.message
+                alert(typeof (msg))
+                document.getElementById("hidden_div").setAttribute("style", "display: block");
+                document.getElementById("alert_msg").innerHTML = msg
+
+
+
+                /*
+                if (msg == "Username non valido") {
+
+                } else if (msg == "L'email inserita non è valida") {
+
+                } else if (msg == "Nome non valido") {
+
+                } else if (msg == "Cognome non valido") {
+
+                } else if (msg == "Numero di telefono non valido") {
+
+                } else if (msg == "L'immagine non è stata caricata correttamente") {
+
+                } else if (msg == "La password inserita non è sicura, deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale") {
+
+                } else if (msg == "Il prezzo inserito non è valido") {
+
+                }*/
+
+            } else if (this.readyState == 4 && this.status == 500) {
+
+                //internal server error
+                //alert(jsondoc.message)
+                document.getElementById("hidden_div").setAttribute("style", "display: block");
+                document.getElementById("alert_msg").innerHTML = msg
+
+
             }
         }
 
