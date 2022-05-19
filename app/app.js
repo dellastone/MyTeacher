@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const authentication = require('./authentication.js');
 const expressSanitizer = require('express-sanitizer');
-const registration = require('../db_connection/registration');
+const registration = require('../db_connection/userData');
 const ricerca = require('./ricerca/ricerca');
 
 //configuring expressJS middleware
