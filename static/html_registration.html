@@ -29,7 +29,6 @@
 
 
         }
-
     </style>
 </head>
 
@@ -41,36 +40,47 @@
             <p>
                 <button class="btn btn-danger" type="button"
                     onclick="showCollapse('collapseStudent','collapseProfessor', 'student')">
-                    Student
+                    Studente
                 </button>
                 <button class="btn btn-danger" type="button"
                     onclick="showCollapse('collapseProfessor','collapseStudent', 'professor')">
-                    Professor
+                    Professore
                 </button>
             </p>
+        </div>
+        <div id="hidden_div" style="display: none">
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+                <text style="color: hsla(0, 0%, 100%, 0)">12</text>
+                <text id="alert_msg"></text>
+            </div>
         </div>
         <div class="collapse" id="collapseStudent">
             <div class="card card-body">
                 <div class="d-flex justify-content-center">
-                    <form class="row g-3 needs-validation" novalidate>
+                    <div id="student_form" class="row g-3 needs-validation" novalidate>
                         <div class="col-md-4">
-                            <label for="sfirstnameValidation" class="form-label">First name</label>
+                            <label for="sfirstnameValidation" class="form-label">Nome</label>
                             <input type="text" class="form-control" id="sfirstnameValidation" required>
                             <div class="invalid-feedback">
-                                Please insert your first name.
+                                Per favore inserisci il tuo nome.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="slastnameValidation" class="form-label">Last name</label>
+                            <label for="slastnameValidation" class="form-label">Cognome</label>
                             <input type="text" class="form-control" id="slastnameValidation" required>
                             <div class="invalid-feedback">
-                                Please insert your last name.
+                                Per favore inserisci il tuo cognome.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -80,10 +90,10 @@
                                 <input type="text" class="form-control" id="susernameValidation"
                                     aria-describedby="inputGroupPrepend" required>
                                 <div class="invalid-feedback">
-                                    Please choose a username.
+                                    Per favore scegli uno username valido.
                                 </div>
                                 <div class="valid-feedback">
-                                    Looks good!
+                                    Va bene!
                                 </div>
                             </div>
                         </div>
@@ -91,69 +101,81 @@
                             <label for="semailValidation" class="form-label">Email</label>
                             <input type="text" class="form-control" id="semailValidation" required>
                             <div class="invalid-feedback">
-                                Please provide a valid email.
+                                Per favore inserisci un indirizzo email valido.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label for="sphoneValidation" class="form-label">Phone</label>
+                            <label for="sphoneValidation" class="form-label">Telefono</label>
                             <input type="text" class="form-control" id="sphoneValidation">
+                            <div class="invalid-feedback">
+                                Per favore inserisci un numero di telefono valido.
+                            </div>
+                            <div class="valid-feedback">
+                                Va bene!
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for="spwValidation" class="form-label">Password</label>
                             <input type="password" class="form-control" id="spwValidation" required>
                             <div class="invalid-feedback">
-                                Please insert a password.
+                                Per favore inserisci una password valida.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="srpwValidation" class="form-label">Repeat password</label>
+                            <label for="srpwValidation" class="form-label">Ripeti la password</label>
                             <input type="password" class="form-control" id="srpwValidation" required>
                             <div class="invalid-feedback">
-                                Please repeat your password.
+                                Per favore ripeti la password.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="saccountPhoto" class="form-label">Choose a profile photo</label>
+                            <label for="saccountPhoto" class="form-label">Scegli una foto profilo</label>
                             <input class="form-control" type="file" id="sinputFileToLoad">
+                            <div class="invalid-feedback">
+                                Per favore inserisci un file valido.
+                            </div>
+                            <div class="valid-feedback">
+                                Va bene!
+                            </div>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary" onclick="encodeImageFileAsURL()">Submit form</button>
+                            <button class="btn btn-danger" type="submit" onclick="resetFieldError()">Registrati</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="collapse" id="collapseProfessor">
             <div class="card card-body">
                 <div class="d-flex justify-content-center">
-                    <form id="professor-form" class="row g-3 needs-validation" novalidate>
+                    <div id="professor_form" class="row g-3 needs-validation" novalidate>
                         <div class="col-md-4">
-                            <label for="firstnameValidation" class="form-label">First name</label>
+                            <label for="firstnameValidation" class="form-label">Nome</label>
                             <input type="text" class="form-control" id="firstnameValidation" value="" required>
                             <div class="invalid-feedback">
-                                Please insert your first name.
+                                Per favore inserisci il tuo nome.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="lastnameValidation" class="form-label">Last name</label>
+                            <label for="lastnameValidation" class="form-label">Cognome</label>
                             <input type="text" class="form-control" id="lastnameValidation" value="" required>
                             <div class="invalid-feedback">
-                                Please insert your last name.
+                                Per favore inserisci il tuo cognome.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -163,10 +185,10 @@
                                 <input type="text" class="form-control" id="usernameValidation"
                                     aria-describedby="inputGroupPrepend" value="" required>
                                 <div class="invalid-feedback">
-                                    Please choose a username.
+                                    Per favore scegli uno username valido.
                                 </div>
                                 <div class="valid-feedback">
-                                    Looks good!
+                                    Va bene!
                                 </div>
                             </div>
                         </div>
@@ -174,43 +196,55 @@
                             <label for="emailValidation" class="form-label">Email</label>
                             <input type="text" class="form-control" id="emailValidation" value="" required>
                             <div class="invalid-feedback">
-                                Please provide a valid email.
+                                Per favore inserisci un indirizzo email valido.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label for="phoneValidation" class="form-label">Phone</label>
+                            <label for="phoneValidation" class="form-label">Telefono</label>
                             <input type="text" class="form-control" id="phoneValidation" value="">
+                            <div class="invalid-feedback">
+                                Per favore inserisci un numero di telefono valido.
+                            </div>
+                            <div class="valid-feedback">
+                                Va bene!
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for="pwValidation" class="form-label">Password</label>
                             <input type="password" class="form-control" id="pwValidation" value="" required>
                             <div class="invalid-feedback">
-                                Please insert a password.
+                                Per favore inserisci una password valida.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="rpwValidation" class="form-label">Repeat password</label>
+                            <label for="rpwValidation" class="form-label">Ripeti la password</label>
                             <input type="password" class="form-control" id="rpwValidation" value="" required>
                             <div class="invalid-feedback">
-                                Please repeat your password.
+                                Per favore ripeti la password.
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Va bene!
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="accountPhoto" class="form-label">Choose a profile photo</label>
+                            <label for="accountPhoto" class="form-label">Scegli un immagine profilo</label>
                             <input class="form-control" type="file" id="inputFileToLoad" value="">
+                            <div class="invalid-feedback">
+                                Per favore inserisci un file valido.
+                            </div>
+                            <div class="valid-feedback">
+                                Va bene!
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div id="subject-form">
-                                <text id="subjects">What subjects do you teach?</text>
+                                <text id="subjects">Quali materie insegni?</text>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="Algebra" id="checkAlgebra">
                                     <label class="form-check-label" for="checkAlgebra">
@@ -240,7 +274,7 @@
                         </div>
                         <div class="col-md-6">
                             <div id="topics-form">
-                                <text id="topics">What topics do you teach?</text>
+                                <text id="topics">Quali argomenti insegni?</text>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="Analisi 1"
                                         id="checkAnalisi1">
@@ -270,16 +304,23 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="priceValidation" class="form-label">What is your price?</label>
+                            <label for="priceValidation" class="form-label">Inserisci un prezzo orario per le tue lezioni</label>
                             <div class="input-group has-validation">
-                                <input type="text" class="form-control" id="priceValidation" value="0,00">
+                                <input type="text" class="form-control" id="priceValidation" value="0.00">
                                 <span class="input-group-text" id="inputGroupPrepend">€</span>
+                                <div class="invalid-feedback">
+                                    Per favore inserisci un prezzo valido.
+                                </div>
+                                <div class="valid-feedback">
+                                    Va bene!
+                                </div>
                             </div>
+                            
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary" onclick="encodeImageFileAsURL()">Submit form</button>
+                            <button class="btn btn-danger" type="submit" onclick="resetFieldError()">Registrati</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,6 +334,10 @@
 
 <script>
     professorAccount = false;
+
+    /**
+     * Show the proper form for the account to register
+    **/
     function showCollapse(showName, hideName, type) {
         var showElemCollapse = document.getElementById(showName)
         var showbsCollapse = new bootstrap.Collapse(showElemCollapse, {
@@ -319,36 +364,35 @@
         }
 
     }
+    /**
+     * Remove the error message from all the field before the new request
+     * Then call the encodeImageFileURL function
+    **/
+    function resetFieldError() {
+        var fields = document.getElementsByClassName("form-control is-invalid");
+        for (var i = 0; i < fields.length; i++) {
+            fields.item(i).className = "form-control";
+        }
 
-    (function () {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
+        encodeImageFileAsURL();
+    }
 
 
+    /**
+     * Convert an image in its Base64 version
+     * Call the createJSON to create a JSON to send to the DB
+    **/
     function encodeImageFileAsURL() {
+
         convertedPic = "";
         var filesSelected
         if (professorAccount) {
             filesSelected = document.getElementById("inputFileToLoad").files;
         } else {
             filesSelected = document.getElementById("sinputFileToLoad").files;
+
         }
+
 
         if (filesSelected.length > 0) {
             var fileToLoad = filesSelected[0];
@@ -369,13 +413,18 @@
             }
             fileReader.readAsDataURL(fileToLoad);
 
+        } else {
+            createJSON("");
         }
 
 
     }
 
 
-
+    /**
+     * Create a JSON with all the account data
+     * Call registerNewUser to send the data to the DB
+    **/
     function createJSON(imgBase64) {
         dataJSON = "";
         if (professorAccount) {
@@ -406,9 +455,7 @@
             if (document.getElementById("checkTavola").checked) {
                 aTopics.push("Tavola periodica")
             }
-            alert("Img: " + imgBase64)
-            alert("Subjects: " + aSubjects)
-            alert("Topics: " + aTopics)
+            
 
             fusername = document.getElementById("usernameValidation").value;
             fnome = document.getElementById("firstnameValidation").value;
@@ -430,16 +477,20 @@
                 '", "nome": "' + fnome +
                 '", "cognome": "' + fcognome +
                 '", "professore": "' + fprofessore +
-                '", "email": "' + femail +
-                '", "phone": "' + fphone +
+                '", "email": "' + femail;
+
+            if (fphone != "") {
+                dataJSON = dataJSON + '", "phone": "' + fphone;
+            }
+            dataJSON = dataJSON +
                 '", "password": "' + fpassword +
                 '", "repeatpassword": "' + frpassword +
                 '", "image": "' + fimage +
-                '", "materie": "' + fsubject +
-                '", "argomenti": "' + ftopic +
-                '", "prezzo": "' + fprezzo +
+                '", "materie": ["' + fsubject +
+                '"], "argomenti": ["' + ftopic +
+                '"], "prezzo": "' + fprezzo +
                 '"}'
-                console.log(fimage);
+            console.log(fimage);
         } else {
 
             fusername = document.getElementById("susernameValidation").value;
@@ -461,8 +512,12 @@
                 '", "nome": "' + fnome +
                 '", "cognome": "' + fcognome +
                 '", "professore": "' + fprofessore +
-                '", "email": "' + femail +
-                '", "phone": "' + fphone +
+                '", "email": "' + femail;
+
+            if (fphone != "") {
+                dataJSON = dataJSON + '", "phone": "' + fphone;
+            }
+            dataJSON = dataJSON +
                 '", "password": "' + fpassword +
                 '", "repeatpassword": "' + frpassword +
                 '", "image": "' + fimage +
@@ -470,32 +525,122 @@
         }
 
 
-        alert(dataJSON)
-        registerNewUser(jsonToSend)
+        
+        registerNewUser(dataJSON)
 
 
 
     }
 
+    /**
+     * Send the new user data to the DB
+     * Wait the confirmation or error response from the DB
+    **/
     function registerNewUser(json) {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
+            const json = this.responseText;
+            var jsonData = JSON.stringify(json);
+            const jsondoc = JSON.parse(json);
             //ALL OK, new user registered
             if (this.readyState == 4 && this.status == 201) {
-                const json = this.responseText;
-                var jsonData = JSON.stringify(json);
-                const jsondoc = JSON.parse(json);
+
                 //link to new user
-                alert("NEW USER OK")
+
                 linkNewUser = jsondoc.location;
+                //alert("Link to new user: " + linkNewUser)
 
 
             } else if (this.readyState == 4 && this.status == 400) {
-                const json = this.responseText;
-                var jsonData = JSON.stringify(json);
-                const jsondoc = JSON.parse(json);
-                //error msg
-                alert(jsondoc.message)
+
+                //invalid request
+                msg = jsondoc.message
+                document.getElementById("hidden_div").setAttribute("style", "display: block");
+                document.getElementById("alert_msg").innerHTML = msg
+
+
+
+                if (msg == "Username non valido") {
+                    if (professorAccount) {
+                        document.getElementById("usernameValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("susernameValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "L'email inserita non è valida") {
+                    if (professorAccount) {
+                        document.getElementById("emailValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("semailValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "Nome non valido") {
+                    if (professorAccount) {
+                        document.getElementById("firstnameValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("sfirstnameValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "Cognome non valido") {
+                    if (professorAccount) {
+                        document.getElementById("lastnameValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("slastnameValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "Numero di telefono non valido") {
+                    if (professorAccount) {
+                        document.getElementById("phoneValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("sphoneValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "L'immagine non è stata caricata correttamente") {
+                    if (professorAccount) {
+                        document.getElementById("inputFileToLoad").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("sinputFileToLoad").classList.add("is-invalid")
+                    }
+                } else if (msg == "La password inserita non è sicura, deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale") {
+                    if (professorAccount) {
+                        document.getElementById("pwValidation").classList.add("is-invalid")
+                        document.getElementById("rpwValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("spwValidation").classList.add("is-invalid")
+                        document.getElementById("srpwValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "Il prezzo inserito non è valido") {
+                    document.getElementById("priceValidation").classList.add("is-invalid")
+                } else if (msg == "Completa il campo ripeti password per continuare") {
+                    if (professorAccount) {
+                        document.getElementById("rpwValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("srpwValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "Username non disponibile") {
+                    if (professorAccount) {
+                        document.getElementById("usernameValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("susernameValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "Le due password inserite non corrispondono") {
+                    if (professorAccount) {
+                        document.getElementById("pwValidation").classList.add("is-invalid")
+                        document.getElementById("rpwValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("spwValidation").classList.add("is-invalid")
+                        document.getElementById("srpwValidation").classList.add("is-invalid")
+                    }
+                } else if (msg == "Esiste già un utente registrato con questo indirizzo email") {
+                    if (professorAccount) {
+                        document.getElementById("emailValidation").classList.add("is-invalid")
+                    } else {
+                        document.getElementById("semailValidation").classList.add("is-invalid")
+                    }
+                }
+
+            } else if (this.readyState == 4 && this.status == 500) {
+
+                //internal server error
+                document.getElementById("hidden_div").setAttribute("style", "display: block");
+                document.getElementById("alert_msg").innerHTML = msg
+
+
             }
         }
 
