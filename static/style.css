@@ -1,0 +1,50 @@
+.background {
+    background-color: #F6F7EB;
+    width: 100%;
+}
+
+.header-background{
+    background-color: #1b1b1b;
+}
+
+.header-pill{
+    background-color: #F6F7EB;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Tahoma';
+    font-weight: 400;
+    font-size: 1.4rem;
+}
+
+div a:link{
+    color: black;
+}
+div a:visited{
+    color: black;
+}
+div a:hover{
+    color: #F40000;
+}
+
+.title {
+    width: 266px;
+    height: 63px;
+
+    font-family: 'Tahoma';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 3rem;
+    line-height: 63px;
+    /* identical to box height */
+    text-align: center;
+
+    color: #F40000;
+
+    -webkit-text-stroke: 1px black;
+    
+}
+
+.search-space{
+    max-width: 50%;
+}
