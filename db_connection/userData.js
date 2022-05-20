@@ -39,7 +39,7 @@ router.post(
         body('nome').exists().withMessage("Inserisci il tuo nome prima di continuare").isAlpha().withMessage("Nome non valido"),
         body('cognome').exists().withMessage("Inserisci il tuo cognome prima di continuare").isAlpha().withMessage("Cognome non valido"),
         body('phone').optional().isMobilePhone().withMessage("Numero di telefono non valido"),
-        body('image').optional().isBase64().withMessage("L'immagine non è stata caricata correttamente"),
+        body('image').optional().isBase64().withMessage("L'immagine non è stata caricata correttamente. File accettati: JPG"),
         body('password').exists().withMessage("Inserisci una password prima di continuare").isStrongPassword().withMessage("La password inserita non è sicura, deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale"),
         body('repeatpassword').exists().withMessage("Completa il campo ripeti password per continuare"),
         body('professore').exists().withMessage("E' obbligatorio scegliere se creare un account professore o studente"),

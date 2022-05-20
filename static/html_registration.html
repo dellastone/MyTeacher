@@ -304,7 +304,8 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="priceValidation" class="form-label">Inserisci un prezzo orario per le tue lezioni</label>
+                            <label for="priceValidation" class="form-label">Inserisci un prezzo orario per le tue
+                                lezioni</label>
                             <div class="input-group has-validation">
                                 <input type="text" class="form-control" id="priceValidation" value="0.00">
                                 <span class="input-group-text" id="inputGroupPrepend">€</span>
@@ -315,7 +316,7 @@
                                     Va bene!
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="col-12">
                             <button class="btn btn-danger" type="submit" onclick="resetFieldError()">Registrati</button>
@@ -325,7 +326,24 @@
             </div>
         </div>
 
+        <!-- Modal1 -->
+        <div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="Modal1"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Congratulazioni, il tuo account è stato registrato correttamente!
+                    </div>
+                    <div class="d-flex justify-content-center modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="window.location = 'home.html'">Vai alla home</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+
 
 
 
@@ -406,6 +424,7 @@
                 newImage.src = srcData;
 
                 convertedPic = newImage.outerHTML;
+                convertedPic = convertedPic.slice(33, -2)
                 //document.getElementById("imgTest").innerHTML = newImage.outerHTML;
                 //alert("Converted Base64 version is " + convertedPic);
                 //console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
@@ -428,34 +447,40 @@
     function createJSON(imgBase64) {
         dataJSON = "";
         if (professorAccount) {
-            aSubjects = []
+            aSubjects = ""
             if (document.getElementById("checkAlgebra").checked) {
-                aSubjects.push("Algebra")
+                aSubjects = aSubjects + '"Algebra",'
             }
             if (document.getElementById("checkBiologia").checked) {
-                aSubjects.push("Biologia")
+
+                aSubjects = aSubjects + '"Biologia",'
             }
             if (document.getElementById("checkChimica").checked) {
-                aSubjects.push("Chimica")
+
+                aSubjects = aSubjects + '"Chimica",'
             }
             if (document.getElementById("checkInformatica").checked) {
-                aSubjects.push("Informatica")
+
+                aSubjects = aSubjects + '"Informatica",'
             }
 
-            aTopics = []
+            aTopics = ""
             if (document.getElementById("checkAnalisi1").checked) {
-                aTopics.push("Analisi 1")
+                aTopics = aTopics + '"Analisi 1",'
             }
             if (document.getElementById("checkPython").checked) {
-                aTopics.push("Python")
+                aTopics = aTopics + '"Python",'
             }
             if (document.getElementById("checkCellule").checked) {
-                aTopics.push("Cellule")
+                aTopics = aTopics + '"Cellule",'
             }
             if (document.getElementById("checkTavola").checked) {
-                aTopics.push("Tavola periodica")
+                aTopics = aTopics + '"Tavola periodica",'
             }
-            
+
+            aSubjects = aSubjects.slice(0, -1)
+            aTopics = aTopics.slice(0, -1)
+
 
             fusername = document.getElementById("usernameValidation").value;
             fnome = document.getElementById("firstnameValidation").value;
@@ -486,11 +511,11 @@
                 '", "password": "' + fpassword +
                 '", "repeatpassword": "' + frpassword +
                 '", "image": "' + fimage +
-                '", "materie": ["' + fsubject +
-                '"], "argomenti": ["' + ftopic +
-                '"], "prezzo": "' + fprezzo +
+                '", "materie": [' + fsubject +
+                '], "argomenti": [' + ftopic +
+                '], "prezzo": "' + fprezzo +
                 '"}'
-            console.log(fimage);
+
         } else {
 
             fusername = document.getElementById("susernameValidation").value;
@@ -503,7 +528,7 @@
             frpassword = document.getElementById("srpwValidation").value;
             fimage = imgBase64;
 
-            console.log(fimage);
+
 
 
 
@@ -525,7 +550,7 @@
         }
 
 
-        
+        //console.log(dataJSON)
         registerNewUser(dataJSON)
 
 
@@ -546,9 +571,8 @@
             if (this.readyState == 4 && this.status == 201) {
 
                 //link to new user
-
                 linkNewUser = jsondoc.location;
-                //alert("Link to new user: " + linkNewUser)
+                $("#Modal1").modal('toggle');
 
 
             } else if (this.readyState == 4 && this.status == 400) {
@@ -590,7 +614,7 @@
                     } else {
                         document.getElementById("sphoneValidation").classList.add("is-invalid")
                     }
-                } else if (msg == "L'immagine non è stata caricata correttamente") {
+                } else if (msg == "L'immagine non è stata caricata correttamente. File accettati: JPG") {
                     if (professorAccount) {
                         document.getElementById("inputFileToLoad").classList.add("is-invalid")
                     } else {
