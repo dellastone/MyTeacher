@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet"
+        href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
     <style>
         .myTeacherlogo {
 
@@ -29,6 +31,15 @@
 
 
         }
+
+        .hide_div {
+            opacity: 0;
+        }
+
+        .show_div {
+            opacity: 100;
+        }
+
     </style>
 </head>
 
@@ -38,17 +49,17 @@
         <text id="logo" class="myTeacherlogo">MyTeacher</text><br><br>
         <div class="d-flex justify-content-center">
             <p>
-                <button class="btn btn-danger" type="button"
+                <button class="btn btn-lg btn-danger" type="button"
                     onclick="showCollapse('collapseStudent','collapseProfessor', 'student')">
                     Studente
                 </button>
-                <button class="btn btn-danger" type="button"
+                <button class="btn btn-lg btn-danger" type="button"
                     onclick="showCollapse('collapseProfessor','collapseStudent', 'professor')">
                     Professore
                 </button>
             </p>
         </div>
-        <div id="hidden_div" style="display: none">
+        <div id="hidden_div" class="hide_div">
             <div class="alert alert-danger d-flex align-items-center" role="alert">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
@@ -86,7 +97,7 @@
                         <div class="col-md-4">
                             <label for="susernameValidation" class="form-label">Username</label>
                             <div class="input-group has-validation">
-                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                <span style="background-color:#1166f1; color: white; border-color:#1166f1;" class="input-group-text" id="inputGroupPrepend">@</span>
                                 <input type="text" class="form-control" id="susernameValidation"
                                     aria-describedby="inputGroupPrepend" required>
                                 <div class="invalid-feedback">
@@ -138,7 +149,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="saccountPhoto" class="form-label">Scegli una foto profilo</label>
+                            <label for="saccountPhoto" class="form-label">Scegli un'immagine profilo</label>
                             <input class="form-control" type="file" id="sinputFileToLoad">
                             <div class="invalid-feedback">
                                 Per favore inserisci un file valido.
@@ -181,7 +192,7 @@
                         <div class="col-md-4">
                             <label for="usernameValidation" class="form-label">Username</label>
                             <div class="input-group has-validation">
-                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                <span style="background-color:#1166f1; color: white; border-color:#1166f1;" class="input-group-text" id="inputGroupPrepend">@</span>
                                 <input type="text" class="form-control" id="usernameValidation"
                                     aria-describedby="inputGroupPrepend" value="" required>
                                 <div class="invalid-feedback">
@@ -233,7 +244,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="accountPhoto" class="form-label">Scegli un immagine profilo</label>
+                            <label for="accountPhoto" class="form-label">Scegli un'immagine profilo</label>
                             <input class="form-control" type="file" id="inputFileToLoad" value="">
                             <div class="invalid-feedback">
                                 Per favore inserisci un file valido.
@@ -303,12 +314,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="priceValidation" class="form-label">Inserisci un prezzo orario per le tue
                                 lezioni</label>
                             <div class="input-group has-validation">
                                 <input type="text" class="form-control" id="priceValidation" value="0.00">
-                                <span class="input-group-text" id="inputGroupPrepend">€</span>
+                                <span style="background-color:#1166f1; color: white; border-color:#1166f1;" class="input-group-text" id="inputGroupPrepend">€</span>
                                 <div class="invalid-feedback">
                                     Per favore inserisci un prezzo valido.
                                 </div>
@@ -318,7 +329,7 @@
                             </div>
 
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 py-3">
                             <button class="btn btn-danger" type="submit" onclick="resetFieldError()">Registrati</button>
                         </div>
                     </div>
@@ -327,15 +338,15 @@
         </div>
 
         <!-- Modal1 -->
-        <div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="Modal1"
-            aria-hidden="true">
+        <div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="Modal1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         Congratulazioni, il tuo account è stato registrato correttamente!
                     </div>
                     <div class="d-flex justify-content-center modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="window.location = 'home.html'">Vai alla home</button>
+                        <button type="button" class="btn btn-primary" onclick="window.location = 'home.html'">Vai alla
+                            home</button>
                     </div>
                 </div>
             </div>
@@ -391,7 +402,7 @@
         for (var i = 0; i < fields.length; i++) {
             fields.item(i).className = "form-control";
         }
-
+        document.getElementById("hidden_div").setAttribute("class", "hide_div");
         encodeImageFileAsURL();
     }
 
@@ -579,7 +590,7 @@
 
                 //invalid request
                 msg = jsondoc.message
-                document.getElementById("hidden_div").setAttribute("style", "display: block");
+                document.getElementById("hidden_div").setAttribute("class", "show_div");
                 document.getElementById("alert_msg").innerHTML = msg
 
 
@@ -661,7 +672,8 @@
             } else if (this.readyState == 4 && this.status == 500) {
 
                 //internal server error
-                document.getElementById("hidden_div").setAttribute("style", "display: block");
+                msg = jsondoc.message
+                document.getElementById("hidden_div").setAttribute("class", "show_div");
                 document.getElementById("alert_msg").innerHTML = msg
 
 
