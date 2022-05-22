@@ -47,36 +47,97 @@ function printResults(data) {
         resultsSpace.removeChild(resultsSpace.lastChild);
     }
 
-    if(resultsSpace != null){
-        
-        for( d of data ){
-            
+    if (resultsSpace != null) {
+
+        for (d of data) {
+
             let div = document.createElement("div");
-            div.classList.add("container", "d-flex", "flex-row", "justify-content-start", "align-items-center", "my-3");
+            div.classList.add("container", "d-flex", "flex-row", "justify-content-start", "align-items-center", "result-div");
 
             //creazione immagine profilo dell'utente, se l'utente non ne ha scelta una ne viene mostrata una di default
             let profilePicture = document.createElement("img");
-            profilePicture.classList.add("profile-picture", "mx-3");
-            
-            if(d.image == "" || d.image == null || d.image == undefined)
-            {
-                profilePicture.src = "media/account_circle_FILL0_wght400_GRAD0_opsz48.png";   
-            }else{
-                profilePicture.src = d.image;
+            profilePicture.classList.add("profile-picture", "mx-4");
+
+            if (d.image == "" || d.image == null || d.image == undefined) {
+                profilePicture.src = "media/account_circle_FILL0_wght400_GRAD0_opsz48.png";
+            } else {
+                profilePicture.src = "data:image/jpg;base64," + d.image;
             }
 
-            //aggiunta del nome dell'utente al profilo 
+            //aggiunta dello username e del nome dell'utente 
+            let nameDiv = document.createElement("div");
+            nameDiv.classList.add("container", "d-flex", "flex-column", "justify-content-center", "align-items-start");
+
+            //nome
             let profName = document.createElement("p");
-            profName.classList.add("no-results-message", "mx-3");
-            profName.innerText = d.nome + " "+ d.cognome;
+            profName.classList.add("professor-name", "my-0");
+            profName.innerText = d.nome + " " + d.cognome;
 
+            //username
+            let profUsername = document.createElement("p");
+            profUsername.classList.add("professor-username", "my-0");
+            profUsername.innerText = d.username;
+
+            //aggiunta delle materie insegnate
+            let materieDiv = document.createElement("div");
+            materieDiv.classList.add("container", "d-flex", "flex-row", "justify-content-start", "align-items-center");
+
+            //materie
+            let materie = document.createElement("p");
+            materie.classList.add("subtitle", "my-0", "mx-1");
+            materie.innerText = "materie insegnate:"
+
+            //lista delle materie
+            let materieList = document.createElement("p");
+            materieList.classList.add("professor-name", "my-0",  "mx-1");
+            let innerTextMaterie = "";
+            for (m of d.materie) {
+                if (innerTextMaterie != "") {
+                    innerTextMaterie = innerTextMaterie + ", " + m;
+                }
+                else{
+                    innerTextMaterie = m;
+                }
+            }
+            materieList.innerText = innerTextMaterie;
+
+            //aggiunta del prezzo richiesto per lezione
+            let priceDiv = document.createElement("div");
+            priceDiv.classList.add("container", "d-flex", "flex-row", "justify-content-start", "align-items-center");
+
+            //prezzo
+            let price = document.createElement("p");
+            price.classList.add("subtitle", "my-0", "mx-1");
+            price.innerText = "prezzo lezioni:";
+
+            //prezzo orario per lezione
+            let prezzo_lezioni = document.createElement("p");
+            prezzo_lezioni.classList.add("professor-name", "my-0", "mx-1");
+            prezzo_lezioni.innerText = d.prezzo + " €/h";
+
+            //tutti gli elementi aggiunti al proprio div
+            nameDiv.appendChild(profUsername);
+            nameDiv.appendChild(profName);
+            materieDiv.appendChild(materie);
+            materieDiv.appendChild(materieList);
+            priceDiv.appendChild(price);
+            priceDiv.appendChild(prezzo_lezioni);
+
+            let hr = document.createElement("hr");
+            hr.classList.add("my-0");
+
+            //tutti gli elementi sono aggiunti al div principale
             div.appendChild(profilePicture);
-            div.appendChild(profName);
+            div.appendChild(nameDiv);
+            div.appendChild(materieDiv);
+            div.appendChild(priceDiv);
 
+            //il div viene aggiunto alla schermata di ricerca seguito da una linea orizzontale
             resultsSpace.appendChild(div);
+            resultsSpace.appendChild(hr);
         }
     }
-
+    resultsSpace.removeChild(resultsSpace.lastChild);
 };
 
 //stampa nella pagina un messaggio che indica all'utente che la ricerca non ha prodotto risultati
@@ -100,8 +161,8 @@ function printNoResults(toSearch) {
         let secondMessage = document.createElement("p");
         secondMessage.classList.add("no-results-message");
         secondMessage.innerText = "Ti ricordiamo che puoi cercare un massimo di due parole!";
-        
-        let line_break =  document.createElement("br");
+
+        let line_break = document.createElement("br");
 
         noResultsSpace.appendChild(noResultsText);
         noResultsSpace.appendChild(line_break);

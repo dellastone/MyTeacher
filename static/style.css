@@ -15,6 +15,8 @@
     font-family: 'Tahoma';
     font-weight: 400;
     font-size: 1.4rem;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 div a:link{
@@ -42,7 +44,8 @@ div a:hover{
     color: #F40000;
 
     -webkit-text-stroke: 1px black;
-    
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .search-space{
@@ -53,12 +56,56 @@ div a:hover{
 .no-results-message{
     color: black;
     opacity: 0.6;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.2rem;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.professor-username{
+    color: black;
+    opacity: 0.9;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.professor-name{
+    color: black;
+    opacity: 0.7;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.subtitle{
+    color: black;
+    opacity: 0.8;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .profile-picture{
-    border-radius: 10px;
-    height: 3rem;
-    width: 3rem;
+    background-color: #adacac;
+    object-fit: contain;
+    border-radius: 50%;
+    max-height: 3.5rem;
+    max-width: 3.5rem;
+    min-height: 3.5rem;
+    min-width: 3.5rem;
+}
+
+.result-div{
+    height: 5rem;
+}
+
+.result-div:hover{
+    background-color: #e7e6e6;
 }
