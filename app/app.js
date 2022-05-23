@@ -17,7 +17,7 @@ app.use(expressSanitizer());
 app.use(cors());
 app.use(cookieParser())
 
-app.use('/', express.static('static'));
+app.use('/', express.static('static',{index:'html_login.html'}));
 app.use('/api/v1/users/auth', authentication);
 app.use('/api/v1/users', registration);
 app.use('/api/v1/lection', lections);
