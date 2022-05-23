@@ -6,6 +6,7 @@ const authentication = require('./authentication.js');
 const expressSanitizer = require('express-sanitizer');
 const registration = require('../db_connection/userData');
 const ricerca = require('./ricerca/ricerca');
+const tokenchecker = require('./tokenchecker.js');
 
 //configuring expressJS middleware
 app.use(express.json({ limit: '30mb' }));
