@@ -435,10 +435,10 @@
                 newImage.src = srcData;
 
                 convertedPic = newImage.outerHTML;
+                console.log(convertedPic);
                 convertedPic = convertedPic.slice(33, -2)
                 //document.getElementById("imgTest").innerHTML = newImage.outerHTML;
                 //alert("Converted Base64 version is " + convertedPic);
-                //console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
                 createJSON(convertedPic);
             }
             fileReader.readAsDataURL(fileToLoad);
