@@ -19,7 +19,6 @@ app.use(cookieParser())
 app.use('/', express.static('static'));
 app.use('/api/v1/users/auth', authentication);
 app.use('/api/v1/users', registration);
-app.use('/api/v1/ricerca', tokenchecker);
 app.use('/api/v1/ricerca', ricerca);
 
 module.exports = app;
