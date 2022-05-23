@@ -27,8 +27,9 @@
   },
   "homepage": "https://github.com/dellastone/MyTeacher#readme",
   "dependencies": {
-    "cors": "^2.8.5",
     "bootstrap-icons": "^1.8.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",

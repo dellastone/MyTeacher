@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 router.post('', async function (req, res) {
 	try {
+		const jwtExpirySeconds = 120;
 		//Trova l'uente nel DB
 		let user = await User.findOne({
 			email: req.body.email
@@ -30,10 +31,10 @@ router.post('', async function (req, res) {
 
 		}
 		var options = {
-			expiresIn: 3600
+			expiresIn: jwtExpirySeconds,
 		}
 		var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
-
+		res.cookie("token", token, { maxAge: jwtExpirySeconds * 1000 })
 		//Login effettuato
 		res.status(200).json({
 			message: 'Login effettuato.',
