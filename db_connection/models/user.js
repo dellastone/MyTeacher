@@ -31,7 +31,13 @@ const UserSchema = mongoose.Schema({
     salt: String,
     materie: [String],
     argomenti: [String],
-    prezzo: Number
+    prezzo: Number,
+    lezioni: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Lection"
+        }
+    ]
 });
 
 //crea un salt per la password unico per l'utente scelto, cripta la password dell'utente
@@ -46,4 +52,4 @@ UserSchema.methods.validPassword = function(password) {
     return this.passwordHash === hash; 
 }; 
 
-module.exports = mongoose.model('Users', UserSchema);
+module.exports = mongoose.model('User', UserSchema)
