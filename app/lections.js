@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('../db_connection/models/user');
 const Lezione = require('../db_connection/models/lection');
 
-
+//Restituisci l'elenco delle lezioni dato uno username
 router.get('/:username', async (req, res) => {
 
     let message = "Si è verificato un errore nel recupero dei dati dell'utente, si prega di ricaricare la pagina";
@@ -33,7 +33,7 @@ router.get('/:username', async (req, res) => {
                     let lezione = await Lezione.findOne({ _id: l_id }).exec();
                     elenco_lezioni.push(lezione)
                 }
-
+                //ritorno l'elenco delle lezioni trovate per ID
                 
                 res.status(200).json(elenco_lezioni);
             }
