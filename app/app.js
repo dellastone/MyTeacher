@@ -6,6 +6,7 @@ const authentication = require('./authentication.js');
 const expressSanitizer = require('express-sanitizer');
 const registration = require('../db_connection/userData');
 const ricerca = require('./ricerca/ricerca');
+const lections = require('./lections.js')
 
 //configuring expressJS middleware
 app.use(express.json({ limit: '30mb' }));
@@ -16,6 +17,6 @@ app.use(cors());
 app.use('/', express.static('static'));
 app.use('/api/v1/users/auth', authentication);
 app.use('/api/v1/users', registration);
+app.use('/api/v1/lection', lections);
 app.use('/api/v1/ricerca', ricerca);
-
 module.exports = app;
