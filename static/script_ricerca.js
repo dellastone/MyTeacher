@@ -52,7 +52,7 @@ function printResults(data) {
         for (d of data) {
 
             let div = document.createElement("div");
-            div.classList.add("container", "d-flex", "flex-row", "justify-content-start", "align-items-center", "result-div");
+            div.classList.add("container", "d-inline-flex", "flex-row", "justify-content-between", "align-items-center", "result-div");
 
             //creazione immagine profilo dell'utente, se l'utente non ne ha scelta una ne viene mostrata una di default
             let profilePicture = document.createElement("img");
@@ -66,7 +66,7 @@ function printResults(data) {
 
             //aggiunta dello username e del nome dell'utente 
             let nameDiv = document.createElement("div");
-            nameDiv.classList.add("container", "d-flex", "flex-column", "justify-content-center", "align-items-start");
+            nameDiv.classList.add("d-flex", "flex-column", "justify-content-start", "align-items-start", "professor-div");
 
             //nome
             let profName = document.createElement("p");
@@ -80,8 +80,8 @@ function printResults(data) {
 
             //aggiunta delle materie insegnate
             let materieDiv = document.createElement("div");
-            materieDiv.classList.add("container", "d-flex", "flex-row", "justify-content-start", "align-items-center");
-
+            materieDiv.classList.add("d-flex", "flex-row", "justify-content-start", "align-items-start", "materie-div");
+    
             //materie
             let materie = document.createElement("p");
             materie.classList.add("subtitle", "my-0", "mx-1");
@@ -103,7 +103,7 @@ function printResults(data) {
 
             //aggiunta del prezzo richiesto per lezione
             let priceDiv = document.createElement("div");
-            priceDiv.classList.add("container", "d-flex", "flex-row", "justify-content-start", "align-items-center");
+            priceDiv.classList.add("d-flex", "flex-row", "justify-content-start", "align-items-start", "professor-div");
 
             //prezzo
             let price = document.createElement("p");

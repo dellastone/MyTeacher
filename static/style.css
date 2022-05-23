@@ -70,6 +70,7 @@ div a:hover{
     text-align: center;
     user-select: none;
     -webkit-user-select: none;
+    white-space: nowrap;
 }
 
 .professor-name{
@@ -80,6 +81,9 @@ div a:hover{
     text-align: center;
     user-select: none;
     -webkit-user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .subtitle{
@@ -87,9 +91,9 @@ div a:hover{
     opacity: 0.8;
     font-weight: 600;
     font-size: 1rem;
-    text-align: center;
     user-select: none;
     -webkit-user-select: none;
+    white-space: nowrap;
 }
 
 .profile-picture{
@@ -108,4 +112,14 @@ div a:hover{
 
 .result-div:hover{
     background-color: #e7e6e6;
+}
+
+.professor-div{
+    min-width: 25%;
+    max-width: 25%;
+}
+
+.materie-div{
+    min-width: 30%;
+    max-width: 30%;
 }
