@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
     console.log("Token assente")
-    return res.status(400).send("Serve effettuare il Login");
+    return res.status(400).send({message:"Serve effettuare il Login"});
   }
   try {
     const decoded = jwt.verify(token, config.SUPER_SECRET);
@@ -17,7 +17,7 @@ const verifyToken = (req, res, next) => {
   } catch (err) {
     console.log("token errato")
     console.log(err)
-    return res.status(400).send("Token non valido");
+    return res.status(400).send({message:"Token non valido"});
   }
   return next();
 };

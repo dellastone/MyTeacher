@@ -15,7 +15,7 @@ router.post('', async function (req, res) {
 		}).exec();
 		console.log(lection)
 		const std = await User.findOne({
-			username: req.body.username
+			username: req.loggedUser.username
 		}).exec();
 
 		if(!std){
