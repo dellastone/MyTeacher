@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
-const User = require('./models/user');
+const User = require('../db_connection/models/user');
+const Lezione = require('../db_connection/models/lection');
 
 
 router.get('/:username', async (req, res) => {
@@ -25,10 +26,16 @@ router.get('/:username', async (req, res) => {
                 res.status(400).json({ message: message });
             }
             else{
-                //lezioni ritornate all'utente
-                let lez = user.lezioni;
+                //id lezioni ritornate all'utente
+                let lez_ids = user.lezioni;
+                let elenco_lezioni = []
+                for (const l_id of lez_ids){
+                    let lezione = await Lezione.findOne({ _id: l_id }).exec();
+                    elenco_lezioni.push(lezione)
+                }
+
                 
-                res.status(200).json(lez);
+                res.status(200).json(elenco_lezioni);
             }
     }
     }catch(err){

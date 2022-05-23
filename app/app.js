@@ -17,6 +17,6 @@ app.use(cors());
 app.use('/', express.static('static'));
 app.use('/api/v1/users/auth', authentication);
 app.use('/api/v1/users', registration);
-app.use('/api/v1/ricerca', ricerca);
 app.use('/api/v1/lection', lections);
+app.use('/api/v1/ricerca', ricerca);
 module.exports = app;
