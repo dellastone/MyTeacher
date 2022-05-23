@@ -316,7 +316,7 @@
                 </div>
                 <div class="d-flex justify-content-center modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        onclick="window.location = 'home.html'">Vai alla
+                        onclick="window.location = 'ricerca.html'">Vai alla
                         home</button>
                 </div>
             </div>
@@ -335,7 +335,11 @@
     numTopics = 0;
     numSubjects = 0;
 
-    getUserInfo("prf");
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const professorUsername = urlParams.get('professor')
+    getUserInfo(professorUsername);
+
     /**
      * Request a user data
     **/
@@ -505,7 +509,6 @@
 
     }
 
-    usernameStudent = "std" //test static username
     idSelected = "";
 
     function selecLesson(btId) {
@@ -544,7 +547,7 @@
 
 
 
-        jsonToSend = '{"username": "' + usernameStudent + '", "materie": [' + aSubjects + '], "argomenti": [' + aTopics + '], "lection_id": "' + idSelected + '"}';
+        jsonToSend = '{"materie": [' + aSubjects + '], "argomenti": [' + aTopics + '], "lection_id": "' + idSelected + '"}';
 
         bookLesson(jsonToSend)
     }

@@ -53,6 +53,7 @@ function printResults(data) {
 
             let div = document.createElement("div");
             div.classList.add("container", "d-inline-flex", "flex-row", "justify-content-between", "align-items-center", "result-div");
+            div.setAttribute("onclick", "window.location='html_prenotazione.html?professor=" + d.username +"';");
 
             //creazione immagine profilo dell'utente, se l'utente non ne ha scelta una ne viene mostrata una di default
             let profilePicture = document.createElement("img");
