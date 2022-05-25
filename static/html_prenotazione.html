@@ -276,7 +276,27 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div id="modal_head" class="modal-head">
+
+                    <div id="error_modal" class="hide_div">
+                        <div class="d-flex justify-content-center">
+                        <div class="alert alert-danger d-flex align-items-center d-inline-flex bd-highlight m-2" role="alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </svg>
+                            <text style="color: hsla(0, 0%, 100%, 0)">12</text>
+                            <text>Seleziona almeno una materia e almeno un argomento.</text>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <b><div class="alert alert-success d-inline-flex p-2 bd-highlight">
+                            <text id="resume_lesson" class="d-flex align-items-end"></text>
+                        </div></b>
+                    </div>
                 </div>
+                <hr>
                 <div class="modal-body">
                     <div class="card card-body">
                         <div class="d-flex justify-content-center">
@@ -300,8 +320,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                        onclick="createJSON()">Prenota</button>
+                    <button id="btn_book" type="button" class="btn btn-danger" onclick="checkSubmission()">Prenota</button>
                 </div>
             </div>
         </div>
@@ -512,6 +531,7 @@
     idSelected = "";
 
     function selecLesson(btId) {
+        document.getElementById("error_modal").setAttribute("class", "hide_div");
         document.getElementById("hidden_div").setAttribute("class", "hide_div");
 
         idLesson = btId.slice(1);
@@ -521,9 +541,43 @@
         idSelected = idLesson;
         timeSelected = document.getElementById(idTime).innerHTML;
         dateSelected = document.getElementById(idDate).innerHTML;
+        document.getElementById("resume_lesson").innerHTML = dateSelected + "  " + timeSelected;
 
-        document.getElementById("modal_head").innerHTML = dateSelected + "  " + timeSelected;
+
         $("#book").modal('toggle');
+    }
+
+    function checkSubmission() {
+
+        let nCheckS = 0;
+        let nCheckT = 0;
+        for (let i = 0; i < numSubjects; i++) {
+            if (document.getElementById("s" + i).checked) {
+                nCheckS++;
+            }
+        }
+
+        for (let i = 0; i < numTopics; i++) {
+            if (document.getElementById("t" + i).checked) {
+                nCheckT++;
+            }
+        }  
+
+        btn = document.getElementById("btn_book");
+
+        if (nCheckS > 0 && nCheckT > 0) {
+            
+            btn.setAttribute("onclick","");
+            btn.setAttribute("data-bs-dismiss","modal");
+            btn.click();
+            btn.removeAttribute("data-bs-dismiss");
+            btn.setAttribute("onclick","checkSubmission()");
+            createJSON();
+        } else {
+            btn.removeAttribute("data-bs-dismiss");
+            document.getElementById("error_modal").setAttribute("class", "show_div")
+
+        }
     }
 
     function createJSON() {
