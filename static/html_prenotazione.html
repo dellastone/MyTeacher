@@ -639,7 +639,7 @@
     function bookLesson(jsonToSend) {
 
         console.log(jsonToSend)
-        fetch('../api/v1/prenota', {
+        fetch('../api/v1/prenota', { //CAMBIARE LINK API
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: jsonToSend,
