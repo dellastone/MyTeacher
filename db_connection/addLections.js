@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const Lection = require('./models/lection');
+const user = require('./models/user');
 
 router.post(
     '',
@@ -26,7 +27,7 @@ router.post(
                 const starts = new Date(req.sanitize(req.body.starts));
                 const ends = new Date(req.sanitize(req.body.ends));
                 const username = req.loggedUser.username;
-
+                console.log(username);
                 //recupero dei dati del professore che vuole aggiungere una lezione dal database
                 const professor = await Lection.findOne({ username: username }).exec();
 
@@ -44,14 +45,14 @@ router.post(
                         booked: false,
                         owner: professor._id
                     });
-                    
+
                     //il campo _id della nuova lezione viene aggiunto alla lista delle lezioni del professore
                     professor.lezioni.push(newLection._id);
 
                     //la nuova lezione viene aggiunta nel database
                     await newLection.save();
                 }
-                if(wrong_data){
+                if (wrong_data) {
                     console.log(message);
                     res.status(400).json({ message: message });
                 }
@@ -69,3 +70,5 @@ router.post(
 
 //aggiungere id professore nel campo owner 
 //aggiugnere lezione nell'array di lezioni del professore 
+
+module.exports = router;

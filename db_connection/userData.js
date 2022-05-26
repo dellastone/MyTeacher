@@ -55,40 +55,40 @@ router.post(
                 wrong_data = true;
                 message = errors[0].msg;
             }
+
+            //sanificazione dell'input
+            const username = req.sanitize(req.body.username);
+            const name = req.sanitize(req.body.nome);
+            const surname = req.sanitize(req.body.cognome);
+            const professor = req.sanitize(req.body.professore);
+            const email = req.sanitize(req.body.email);
+            const password = req.sanitize(req.body.password);
+            const repeatpassword = req.sanitize(req.body.repeatpassword);
+            const address = req.sanitize(req.body.address);
+            const phone = req.sanitize(req.body.phone);
+            const image = req.sanitize(req.body.image);
+            let price = req.sanitize(req.body.prezzo);
+            if (price == undefined) {
+                price = 0;
+            } else {
+                price = Number(price);
+            }
+
+            let materie = [];
+            if (req.body.materie != undefined) {
+                for (let i = 0; i < req.body.materie.length; i++) {
+                    materie[i] = req.sanitize(req.body.materie[i]);
+
+                }
+            }
+            let argomenti = [];
+            if (req.body.argomenti != undefined) {
+                for (let i = 0; i < req.body.argomenti.length; i++) {
+                    argomenti[i] = req.sanitize(req.body.argomenti[i]);
+                }
+            }
+
             if (!wrong_data) {
-                //sanificazione dell'input
-                const username = req.sanitize(req.body.username);
-                const name = req.sanitize(req.body.nome);
-                const surname = req.sanitize(req.body.cognome);
-                const professor = req.sanitize(req.body.professore);
-                const email = req.sanitize(req.body.email);
-                const password = req.sanitize(req.body.password);
-                const repeatpassword = req.sanitize(req.body.repeatpassword);
-                const address = req.sanitize(req.body.address);
-                const phone = req.sanitize(req.body.phone);
-                const image = req.sanitize(req.body.image);
-                let price = req.sanitize(req.body.prezzo);
-                if (price == undefined) {
-                    price = 0;
-                } else {
-                    price = Number(price);
-                }
-
-                let materie = [];
-                if (req.body.materie != undefined) {
-                    for (let i = 0; i < req.body.materie.length; i++) {
-                        materie[i] = req.sanitize(req.body.materie[i]);
-
-                    }
-                }
-                let argomenti = [];
-                if (req.body.argomenti != undefined) {
-                    for (let i = 0; i < req.body.argomenti.length; i++) {
-                        argomenti[i] = req.sanitize(req.body.argomenti[i]);
-                    }
-                }
-
-
                 //controlla se le due password inserite dall'utente sono uguali 
                 //controlla se esite già un utente con lo stesso username o con la stessa mail
                 if (checkSamePassword(password, repeatpassword)) {
