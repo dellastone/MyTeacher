@@ -9,7 +9,7 @@ router.post('', async function (req, res) {
     try {
         const token = req.body.token;
         if (token == NULL || token == undefined) {
-            return res.status(201).send({ login:false});
+            return res.status(200).send({ login:false});
         }
         try {
             const decoded = jwt.verify(token, config.SUPER_SECRET);
@@ -18,7 +18,7 @@ router.post('', async function (req, res) {
                 username: decoded.username
             }).exec();
             if(!usr)
-                return res.status(201).send({ login:false});
+                return res.status(200).send({ login:false});
             else{
                 let usrname = usr.username;
                 let img = usr.image;
