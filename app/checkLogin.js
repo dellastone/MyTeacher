@@ -7,8 +7,8 @@ const User = require('../db_connection/models/user');
 
 router.post('', async function (req, res) {
     try {
-        const token = req.body.token;
-        if (token == NULL || token == undefined) {
+        const token = req.sanitize(req.body.token);
+        if (token == null || token == undefined) {
             return res.status(200).send({ login:false});
         }
         try {
@@ -29,11 +29,6 @@ router.post('', async function (req, res) {
             return res.status(400).send({ message: "Token errato" });
         }
         return next();
-
-
-
-
-
     } catch (err) {
         console.log(err)
         return res.status(500).json({ message: 'Errore interno al Server.' });
