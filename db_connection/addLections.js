@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const Lection = require('./models/lection');
-const user = require('./models/user');
+const User = require('./models/user');
 
 router.post(
     '',
@@ -28,8 +28,9 @@ router.post(
                 const ends = new Date(req.sanitize(req.body.ends));
                 const username = req.loggedUser.username;
                 console.log(username);
+
                 //recupero dei dati del professore che vuole aggiungere una lezione dal database
-                const professor = await Lection.findOne({ username: username }).exec();
+                const professor = await User.findOne({ username: username }).exec();
 
                 //se il professore non viene recuperato dal database si verifica un errore, altrimenti si può procedere con l'aggiunta della lezione
                 if (professor == null) {
@@ -40,8 +41,9 @@ router.post(
                     //la nuova lezione viene creata
                     newLection = new Lection({
                         prof_username: username,
-                        starts: starts,
-                        ends: ends,
+                        date: starts,
+                        start_time: "1",
+                        end_time: "1",
                         booked: false,
                         owner: professor._id
                     });
@@ -51,6 +53,10 @@ router.post(
 
                     //la nuova lezione viene aggiunta nel database
                     await newLection.save();
+                    console.log("Lezione creata con successo all'interno del database");
+
+                    //viene inviata all'utente una risposta con codice 201 per confermare l'avvenuta creazione della lezione
+                    res.status(201).json({ location: "/api/v1/lection/" + username });
                 }
                 if (wrong_data) {
                     console.log(message);
