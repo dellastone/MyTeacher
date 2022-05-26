@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require('../db_connection/models/user');
 
-
 //controlla lo stato di login dell'utente
 router.post('', async function (req, res) {
     try {
@@ -15,7 +14,7 @@ router.post('', async function (req, res) {
         }
         try {
             //decodifica il token
-            const decoded = jwt.verify(token, config.SUPER_SECRET);
+            const decoded = jwt.verify(token, process.env.SUPER_SECRET);
             //trova l'utente loggato
             const usr = await User.findOne({
                 username: decoded.username
@@ -27,10 +26,13 @@ router.post('', async function (req, res) {
                 //ritorna username immagine e stato login a true
                 let usrname = usr.username;
                 let img = usr.image;
+                if(img == undefined)
+                    img = ""
                 return res.status(200).send({ login:true, username: usrname, image: img});
             }
 
         } catch (err) {
+            console.log(err)
             //se il token è errato restituisci errore
             return res.status(400).send({ message: "Token errato" });
         }
