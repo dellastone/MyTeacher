@@ -8,6 +8,7 @@ const expressSanitizer = require('express-sanitizer');
 const registration = require('../db_connection/userData');
 const ricerca = require('./ricerca/ricerca');
 const lections = require('./lections.js')
+const nblections = require('./notBookedLections')
 const tokenchecker = require('./tokenchecker');
 const prenota = require('./booking');
 
@@ -22,6 +23,7 @@ app.use('/', express.static('static',{index:'html_login.html'}));
 app.use('/api/v1/users/auth', authentication);
 app.use('/api/v1/users', registration);
 app.use('/api/v1/lection', lections);
+app.use('/api/v1/notBookedLection', nblections)
 app.use('/api/v1/ricerca', ricerca);
 app.use('/api/v1/prenota', tokenchecker);
 app.use('/api/v1/prenota', prenota);
