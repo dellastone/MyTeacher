@@ -9,6 +9,7 @@ const registration = require('../db_connection/userData');
 const ricerca = require('./ricerca/ricerca');
 const lections = require('./lections.js')
 const nblections = require('./notBookedLections')
+const checkLogin = require('./checkLogin')
 const tokenchecker = require('./tokenchecker');
 const prenota = require('./booking');
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(cookieParser())
 
 app.use('/', express.static('static',{index:'html_login.html'}));
+app.use('/api/v1/checkLogin',checkLogin)
 app.use('/api/v1/users/auth', authentication);
 app.use('/api/v1/users', registration);
 app.use('/api/v1/lection', lections);
