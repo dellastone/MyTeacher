@@ -32,10 +32,13 @@ async function checkNotAlreadyBusy(starts, ends, professor) {
             console.log(lezione.starts);
             console.log(starts);
         }
-        if (lezione != null && lezione.starts.getTime() == starts.getTime()) {
-            toRet = true;
+        if (lezione != null && lezione.starts.getUTCFullYear() == starts.getUTCFullYear()
+            && lezione.starts.getUTCMonth() == starts.getUTCMonth()
+            && lezione.starts.getUTCDate() == starts.getUTCDate()) {
+                if(!(ends.getTime() <= lezione.starts.getTime() || starts.getTime() >= lezione.ends.getTime()))
+                    toRet = true;
         }
-    }
+    } 
     console.log(toRet);
     return toRet;
 }
@@ -72,6 +75,11 @@ router.post(
                     wrong_data = checkSecondsZero(starts, ends);
                     if (wrong_data)
                         message = "La data non deve specificare secondi";
+                }
+                if (!wrong_data) {
+                    wrong_data = starts.getTime() >= ends.getTime();
+                    if (wrong_data)
+                        message = "La data di fine lezione deve essere dopo la data di inzio";
                 }
                 if (!wrong_data) {
                     let lection_duration = ends.getUTCHours() - starts.getUTCHours();
