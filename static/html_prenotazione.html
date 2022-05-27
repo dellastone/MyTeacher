@@ -377,7 +377,7 @@
             name = jsondoc.nome;
             surname = jsondoc.cognome;
             image = image + jsondoc.image;
-            price = "" + jsondoc.prezzo + " €";
+            price = "" + jsondoc.prezzo + " €/h";
             topics = "Argomenti:  " + jsondoc.argomenti;
             subjects = "Materie:  " + jsondoc.materie;
 
@@ -638,8 +638,8 @@
 
     function bookLesson(jsonToSend) {
 
-        console.log(jsonToSend)
-        fetch('../api/v1/prenota', { //CAMBIARE LINK API
+        
+        fetch('../api/v1/prenota', { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: jsonToSend,
