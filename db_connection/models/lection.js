@@ -4,25 +4,21 @@ var mongoose = require('mongoose');
 const LectionSchema = mongoose.Schema({ 
     student_username: {
         type: String,
-        
     },
     prof_username: {
         type: String,
         required: true
     },
-    date:{
+    starts:{
         type: Date,
         required: true
     },
-    start_time:{
-        type: String,
-        required: true
-    },
-    end_time:{
-        type: String,
+    ends:{
+        type: Date,
         required: true 
     },
     booked: Boolean,
+    prezzo: Number,
     materie: [String],
     argomenti: [String],
     owner: {
