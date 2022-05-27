@@ -1,13 +1,37 @@
-    <div id="header"
-        class="container d-flex flex-row justify-content-around sticky-top pt-3 align-items-center">
-        <h1 id="logo" class="title header-width">MyTeacher</h1>
-        <div class="container d-flex justify-content-center header-width">
-            <a class="header-pill mx-4" href="index.html">Home</a>
-            <a class="header-pill mx-4" href="ricerca.html">Ricerca</a>
-            <a class="header-pill mx-4" href="supporto.html">Supporto</a>
+<div id="header" class="container d-flex flex-row justify-content-around sticky-top pt-3 align-items-center">
+    <h1 id="logo" class="title header-width">MyTeacher</h1>
+    <div class="container d-flex justify-content-center header-width">
+        <a class="header-pill mx-4" href="home.html">Home</a>
+        <a class="header-pill mx-4" href="ricerca.html">Ricerca</a>
+        <a class="header-pill mx-4" href="supporto.html">Supporto</a>
+
+        <div id="divNotLogged" hidden>
+            <text style="opacity: 0" id="space_text">12345678</text><button class="btn btn-lg btn-danger" onclick="window.location = 'html_login.html'">Accedi</button>
         </div>
-        <div class="d-flex flex-row justify-content-center header-width">
-            <a class="header-pill">Logged User</a>
+        <div id="divLogged" class="dropdown" hidden>
+            
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img id="imgLogged" class="rounded-circle" style="background-color:#adacac" src="" alt="">
+                <text style="opacity: 0" id="space_text">1234</text><text id="nameLogged"></text>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="html_profile.html">Profile</a></li>
+                <li><a class="dropdown-item" href="html_logout.html">Logout</a></li>
+            </ul>
         </div>
     </div>
-    <hr class="mx-4" />
+</div>
+<hr class="mx-4" />
+
+<!-- /api/v1/checkLogin
+    JSON TO SEND: token: "token"
+        - token vuoto = JSON login = false, stato 200 -> effetua login
+        - token sbagliato = "Token errato", 400
+        - token giusto = JSON login true, username, img
+    
+    JSON: login: true/false, username : "username", img: "imgBase64"
+
+    json = {"login": true/false, "username": "username/null", "image": "imageBase64/null"}
+
+    <div w3-include-html="header.html"></div>
+-->
