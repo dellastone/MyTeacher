@@ -8,8 +8,8 @@ const User = require('./models/user');
 router.post(
     '',
     [
-        body('starts').exists().withMessage("Specifica data e ora di inizio della lezione").isDate().withMessage("La data e l'ora inserite per l'inizio della lezione non sono valide"),
-        body('ends').exists().withMessage("Specifica data e ora di fine della lezione").isDate().withMessage("La data e l'ora inserite per la fine della lezione non sono valide")
+        body('starts').exists().withMessage("Specifica data e ora di inizio della lezione").isISO8601.withMessage("La data e l'ora inserite per l'inizio della lezione non sono valide"),
+        body('ends').exists().withMessage("Specifica data e ora di fine della lezione").isISO8601().withMessage("La data e l'ora inserite per la fine della lezione non sono valide")
     ], async (req, res) => {
         let message = "Si è verificato un errore nella creazione della lezione nel calendario, la preghiamo di riprovare.";
         try {
@@ -27,7 +27,6 @@ router.post(
                 const starts = new Date(req.sanitize(req.body.starts));
                 const ends = new Date(req.sanitize(req.body.ends));
                 const username = req.loggedUser.username;
-                console.log(username);
 
                 //recupero dei dati del professore che vuole aggiungere una lezione dal database
                 const professor = await User.findOne({ username: username }).exec();
@@ -47,6 +46,7 @@ router.post(
                         booked: false,
                         owner: professor._id
                     });
+                    console.log(newLection);
 
                     //il campo _id della nuova lezione viene aggiunto alla lista delle lezioni del professore
                     professor.lezioni.push(newLection._id);
@@ -54,6 +54,9 @@ router.post(
                     //la nuova lezione viene aggiunta nel database
                     await newLection.save();
                     console.log("Lezione creata con successo all'interno del database");
+
+                    await professor.save();
+                    console.log("Lezione aggiunta con successo alla lista lezioni del professore con username "+ username);
 
                     //viene inviata all'utente una risposta con codice 201 per confermare l'avvenuta creazione della lezione
                     res.status(201).json({ location: "/api/v1/lection/" + username });
