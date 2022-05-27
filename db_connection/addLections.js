@@ -7,25 +7,37 @@ const User = require('./models/user');
 const lection = require('./models/lection');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
-//checks if the two dates in starts and ends correspond
+//controlla se le date di inizio e fine lezione corrispondono
 function checkDateCorrectness(starts, ends) {
-    console.log(starts.getUTCDate());
-    console.log(ends.getUTCDate());
     if (starts.getUTCDate() != ends.getUTCDate() || starts.getUTCMonth() != ends.getUTCMonth() || starts.getUTCFullYear() != ends.getUTCFullYear())
         return true;
-    else 
+    else
         return false;
 }
 
-//checks if the seconds are zero in every date
+//controlla che nelle date non siano specificati i secondi
 function checkSecondsZero(starts, ends) {
-    console.log(starts.getUTCSeconds());
-    console.log(ends.getUTCSeconds());
-    console.log(starts.getUTCSeconds() != 0 || ends.getUTCSeconds() != 0);
     if (starts.getUTCSeconds() != 0 || ends.getUTCSeconds() != 0)
         return true;
-    else 
+    else
         return false;
+}
+
+//controlla se il professore non ha già altre lezione in quello specifico orario
+async function checkNotAlreadyBusy(starts, ends, professor) {
+    let toRet = false;
+    for (id_lezione of professor.lezioni) {
+        let lezione = await Lection.findOne({ _id: id_lezione });
+        if (lezione != null) {
+            console.log(lezione.starts);
+            console.log(starts);
+        }
+        if (lezione != null && lezione.starts.getTime() == starts.getTime()) {
+            toRet = true;
+        }
+    }
+    console.log(toRet);
+    return toRet;
 }
 
 router.post(
@@ -39,6 +51,7 @@ router.post(
             //se uno dei controlli non è andato a buon fine viene settato un errore
             let errors = validationResult(req).array();
             let wrong_data = false;
+            let overlap = false;
 
             if (errors.length > 0) {
                 wrong_data = true;
@@ -50,25 +63,19 @@ router.post(
                 const starts = new Date(req.sanitize(req.body.starts));
                 const ends = new Date(req.sanitize(req.body.ends));
                 const username = req.loggedUser.username;
-                console.log(starts);
-                console.log(ends);
-                console.log(wrong_data);
                 //controllo per verificare se le date inserite dall'utente sono corrette
-                
+
                 wrong_data = checkDateCorrectness(starts, ends);
                 if (wrong_data)
                     message = "Il giorno di inizio e di fine della lezione non corrispondono";
-                if(!wrong_data){
-                wrong_data = checkSecondsZero(starts, ends);
+                if (!wrong_data) {
+                    wrong_data = checkSecondsZero(starts, ends);
                     if (wrong_data)
                         message = "La data non deve specificare secondi";
                 }
                 if (!wrong_data) {
-                    console.log(wrong_data);
                     let lection_duration = ends.getUTCHours() - starts.getUTCHours();
                     lection_duration += (ends.getUTCMinutes() - starts.getUTCMinutes()) / 60.0;
-                    console.log(lection_duration);
-                    console.log(message);
 
                     //recupero dei dati del professore che vuole aggiungere una lezione dal database
                     const professor = await User.findOne({ username: username }).exec();
@@ -79,31 +86,37 @@ router.post(
                         message = "Si è verificato un problema nella ricerca del professore nel database";
                     }
                     else {
-                        //la nuova lezione viene creata
-                        newLection = new Lection({
-                            prof_username: username,
-                            starts: starts,
-                            ends: ends,
-                            booked: false,
-                            prezzo: (professor.prezzo * lection_duration).toFixed(2),
-                            owner: professor._id
-                        });
-                        console.log(newLection);
+                        overlap = await checkNotAlreadyBusy(starts, ends, professor);
+                        console.log(overlap);
+                        if (!overlap) {
+                            //la nuova lezione viene creata
+                            newLection = new Lection({
+                                prof_username: username,
+                                starts: starts,
+                                ends: ends,
+                                booked: false,
+                                prezzo: (professor.prezzo * lection_duration).toFixed(2),
+                                owner: professor._id
+                            });
+                            console.log(newLection);
 
-                        //il campo _id della nuova lezione viene aggiunto alla lista delle lezioni del professore
-                        professor.lezioni.push(newLection._id);
+                            //il campo _id della nuova lezione viene aggiunto alla lista delle lezioni del professore
+                            professor.lezioni.push(newLection._id);
 
-                        //la nuova lezione viene aggiunta nel database
-                        await newLection.save();
-                        console.log("Lezione creata con successo all'interno del database");
+                            //la nuova lezione viene aggiunta nel database
+                            await newLection.save();
+                            console.log("Lezione creata con successo all'interno del database");
 
-                        await professor.save();
-                        console.log("Lezione aggiunta con successo alla lista lezioni del professore con username " + username);
+                            await professor.save();
+                            console.log("Lezione aggiunta con successo alla lista lezioni del professore con username " + username);
 
-                        //viene inviata all'utente una risposta con codice 201 per confermare l'avvenuta creazione della lezione
-                        res.status(201).json({ location: "/api/v1/lection/" + username });
+                            //viene inviata all'utente una risposta con codice 201 per confermare l'avvenuta creazione della lezione
+                            res.status(201).json({ location: "/api/v1/lection/" + username });
+                        } else {
+                            message = "L'orario scelto si sovrappone con quello di un'altra lezione";
+                        }
                     }
-                    if (wrong_data) {
+                    if (wrong_data || overlap) {
                         console.log(message);
                         res.status(400).json({ message: message });
                     }
