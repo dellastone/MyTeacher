@@ -12,6 +12,7 @@ const nblections = require('./notBookedLections')
 const checkLogin = require('./checkLogin')
 const tokenchecker = require('./tokenchecker');
 const prenota = require('./booking');
+const addLections = require('../db_connection/addLections');
 
 //configuring expressJS middleware
 app.use(express.json({ limit: '30mb' }));
@@ -29,5 +30,7 @@ app.use('/api/v1/notBookedLection', nblections)
 app.use('/api/v1/ricerca', ricerca);
 app.use('/api/v1/prenota', tokenchecker);
 app.use('/api/v1/prenota', prenota);
+app.use('/api/v2/lection/add', tokenchecker);
+app.use('/api/v2/lection/add', addLections);
 
 module.exports = app;
