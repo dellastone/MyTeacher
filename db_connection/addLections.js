@@ -42,7 +42,17 @@ async function checkNotAlreadyBusy(starts, ends, professor) {
     console.log(toRet);
     return toRet;
 }
+/*
+API che si occupa dell'aggiunta di una lezione al calendario di un professore 
+Vengono effettuati dei controlli:
+- data e ora della lezione devono essere validi e nel formato ISO8601
+- la data di inzio e fine lezione devono essere le stesse 
+- non devono essere specificati secondi ma solo minuti e ore
 
+La lezione viene creata con i dati inseriti dall'utente e il campo booked viene inizializzato a false
+La lezione viene aggiunta nel database con un riferimento al professore che ne è proprietario 
+L'id della lezione viene aggiunto nella lista delle lezioni del professore
+*/
 router.post(
     '',
     [
@@ -66,8 +76,8 @@ router.post(
                 const starts = new Date(req.sanitize(req.body.starts));
                 const ends = new Date(req.sanitize(req.body.ends));
                 const username = req.loggedUser.username;
+                
                 //controllo per verificare se le date inserite dall'utente sono corrette
-
                 wrong_data = checkDateCorrectness(starts, ends);
                 if (wrong_data)
                     message = "Il giorno di inizio e di fine della lezione non corrispondono";
@@ -94,6 +104,7 @@ router.post(
                         message = "Si è verificato un problema nella ricerca del professore nel database";
                     }
                     else {
+                        //controllo che la lezione non si sovrapponga con altre lezioni già presenti nel database
                         overlap = await checkNotAlreadyBusy(starts, ends, professor);
                         console.log(overlap);
                         if (!overlap) {
@@ -115,6 +126,7 @@ router.post(
                             await newLection.save();
                             console.log("Lezione creata con successo all'interno del database");
 
+                            //l'aggiornamento ai dati del professore viene aggiunto nel database
                             await professor.save();
                             console.log("Lezione aggiunta con successo alla lista lezioni del professore con username " + username);
 
@@ -125,15 +137,18 @@ router.post(
                         }
                     }
                     if (wrong_data || overlap) {
+                        //l'orario inserito per la lezione si sovrappone con quello di un'altra lezione
                         console.log(message);
                         res.status(400).json({ message: message });
                     }
                 } else {
+                    //i dati inseriti dall'utente non sono validi
                     console.log(message);
                     res.status(400).json({ message: message });
                 }
             }
             else {
+                //i dati inseriti dall'utente non sono validi
                 console.log("L'utente ha inserito dei dati non validi nell'input");
                 res.status(400).json({ message: message });
             }
@@ -142,8 +157,5 @@ router.post(
             res.status(500).json({ message: message });
         }
     });
-
-//aggiungere id professore nel campo owner 
-//aggiugnere lezione nell'array di lezioni del professore 
 
 module.exports = router;

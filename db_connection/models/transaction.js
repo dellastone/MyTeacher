@@ -12,6 +12,10 @@ const TransactionSchema = mongoose.Schema({
         ref: "User",
         required: true 
     },
+    data: {
+        type: Date,
+        required: true
+    },
     ricarica: {
         type: Boolean,
         required: true
