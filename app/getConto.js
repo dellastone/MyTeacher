@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const router = express.Router();
 const User = require('../db_connection/models/user');
 const Lezione = require('../db_connection/models/lection');
-const Conto = require('../db_connection/models/conto')
+const Conto = require('../db_connection/models/conto');
+let Transazione = require('../db_connection/models/transazione');
 
 
 router.get('/:username', async (req, res) => {
@@ -40,7 +41,7 @@ router.get('/:username', async (req, res) => {
                 let totale = conto.totale;
                 let elenco_transazioni = []
                 for (const t_id of transazioni_ids){
-                    let transazione = await transazione.findOne({ _id: t_id }).exec();
+                    let transazione = await Transazione.findOne({ _id: t_id }).exec();
                     elenco_transazioni.push(transazione)
                 }
                 res.status(200).json({"elenco_transazioni": elenco_transazioni,"totale": totale});

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 const crypto = require('crypto');
 var Schema = mongoose.Schema;
+const Conto = require('./conto')
 
 // mongoose model that desribes the user of the platform
 const UserSchema = mongoose.Schema({ 
@@ -55,8 +56,5 @@ UserSchema.methods.validPassword = function(password) {
     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex'); 
     return this.passwordHash === hash; 
 };
-UserSchema.methods.addTransaction = function(transaction) { 
-    return this.conto.addTransaction(transaction);
-}; 
 
 module.exports = mongoose.model('User', UserSchema)

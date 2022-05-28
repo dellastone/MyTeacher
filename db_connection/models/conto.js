@@ -21,19 +21,22 @@ const ContoSchema = mongoose.Schema({
 
 ContoSchema.methods.addTransaction = function(transazione){
     let totale = this.totale;
-    if(this.owner == transazione.mittente){
-        totale = totale - transazione.valore
+    if(this.owner == transazione.destinatario || transazione.ricarica == true){
+        totale = totale + transazione.valore;
+    }
+    else{
+        totale = totale - transazione.valore;
 
         if(totale<0){
-            totale = totale + transazione.valore
-            return false
+            totale = totale + transazione.valore;
+            return false;
         }
 
     }
-    else    
-        totale = totale + transazione.valore
-    
-    this.transazioni.push(transazione._id)
+
+    this.totale = totale;
+    this.transazioni.push(transazione._id);
+    this.save();
     return true
     
 }
