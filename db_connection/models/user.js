@@ -37,7 +37,11 @@ const UserSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Lection"
         }
-    ]
+    ],
+    conto: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Conto"
+    }
 });
 
 //crea un salt per la password unico per l'utente scelto, cripta la password dell'utente
@@ -50,6 +54,9 @@ UserSchema.methods.setPassword = function (password){
 UserSchema.methods.validPassword = function(password) { 
     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex'); 
     return this.passwordHash === hash; 
+};
+UserSchema.methods.addTransaction = function(transaction) { 
+    return this.conto.addTransaction(transaction);
 }; 
 
 module.exports = mongoose.model('User', UserSchema)

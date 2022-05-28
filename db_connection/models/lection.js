@@ -27,7 +27,7 @@ const LectionSchema = mongoose.Schema({
     argomenti: [String],
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user"
+        ref: "User"
     }
 });
 

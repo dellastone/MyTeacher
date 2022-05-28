@@ -4,6 +4,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const User = require('./models/user');
 const user = require('./models/user');
+const Conto = require('../db_connection/models/conto')
 
 //controlla se le due password inserite dall'utente corrispondono
 function checkSamePassword(pass1, pass2) {
@@ -69,6 +70,8 @@ router.post(
             const phone = req.sanitize(req.body.phone);
             const image = req.sanitize(req.body.image);
             let price = req.sanitize(req.body.prezzo);
+            let conto = new Conto();
+            
             if( price == undefined ){
                 price = 0;
             }else{
@@ -122,6 +125,7 @@ router.post(
                                     materie: materie,
                                     argomenti: argomenti,
                                     prezzo: price
+                                    
                                 });
                             }
                             else {
@@ -137,9 +141,15 @@ router.post(
                                     image: image
                                 });
                             }
+
+                            
                             //la password dell'utente viene settata calcolandone l'hash
                             newUser.setPassword(password);
+                            conto.owner = newUser._id;
+                            newUser.conto = conto
+                            await conto.save();
                             console.log(newUser);
+                            
                             await newUser.save();
                         }
                     }
