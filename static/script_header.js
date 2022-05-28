@@ -92,6 +92,11 @@ function printLoggedHeader(usr, img) {
     document.getElementById("divLogged").removeAttribute("hidden");
     document.getElementById("divNotLogged").setAttribute("hidden","");
     document.getElementById("imgLogged").setAttribute("src", img);
+    if(img=="media/account_circle_FILL0_wght400_GRAD0_opsz48.png"){
+        document.getElementById("imgLogged").setAttribute("style", "background-color:#adacac");
+    } else {
+        document.getElementById("imgLogged").setAttribute("style", "");
+    }
     document.getElementById("nameLogged").innerHTML = usr;
 };
 

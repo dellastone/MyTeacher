@@ -6,14 +6,15 @@
         <a class="header-pill mx-4" href="supporto.html">Supporto</a>
 
         <div id="divNotLogged" hidden>
-            <text style="opacity: 0" id="space_text">12345678</text><button class="btn btn-lg btn-danger" onclick="window.location = 'html_login.html'">Accedi</button>
+            <text style="opacity: 0" id="space_text">12345678</text><button class="btn btn-lg btn-danger"
+                onclick="window.location = 'html_login.html'">Accedi</button>
         </div>
-        <div id="divLogged" class="dropdown" hidden>
-            
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img id="imgLogged" class="rounded-circle" style="background-color:#adacac" src="" alt="">
-                <text style="opacity: 0" id="space_text">1234</text><text id="nameLogged"></text>
-            </button>
+        <div id="divLogged" class="dropdown d-flex align-items-center" hidden>
+            <img id="imgLogged" class="rounded-circle profile-picture mx-4" src="" alt="">
+            <div class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <text style="opacity: 0" id="space_text">12</text><text id="nameLogged" style="font-size:30px"></text>
+            </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="html_profile.html">Profile</a></li>
                 <li><a class="dropdown-item" href="html_logout.html">Logout</a></li>
@@ -22,16 +23,3 @@
     </div>
 </div>
 <hr class="mx-4" />
-
-<!-- /api/v1/checkLogin
-    JSON TO SEND: token: "token"
-        - token vuoto = JSON login = false, stato 200 -> effetua login
-        - token sbagliato = "Token errato", 400
-        - token giusto = JSON login true, username, img
-    
-    JSON: login: true/false, username : "username", img: "imgBase64"
-
-    json = {"login": true/false, "username": "username/null", "image": "imageBase64/null"}
-
-    <div w3-include-html="header.html"></div>
--->
