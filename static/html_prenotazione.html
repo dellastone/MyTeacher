@@ -494,13 +494,13 @@
             date = document.createElement("i");
             date.setAttribute("class", "");
             date.setAttribute("id", "d" + tmp._id);
-            date.innerHTML = " " + (tmp.date).slice(0, 10) + " ";
+            date.innerHTML = " " + (tmp.starts).slice(0, 10) + " ";
             li2 = document.createElement("li")
             li2.setAttribute("class", "mr-md-4");
             time = document.createElement("i");
             time.setAttribute("class", "");
             time.setAttribute("id", "t" + tmp._id);
-            time.innerHTML = "   " + tmp.start_time + " - " + tmp.end_time;
+            time.innerHTML = "   " + (tmp.starts).slice(11,16 ) + " - " + (tmp.ends).slice(11,16 );
             div4 = document.createElement("div");
             div4.setAttribute("class", "job-right my-4 flex-shrink-0");
             btn = document.createElement("a");

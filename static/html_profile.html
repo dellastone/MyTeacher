@@ -2,248 +2,267 @@
 <html>
 
 <head>
-    <title>MyTeacher - Prenotazione</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet"
-        href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
-        integrity="sha256-3sPp8BkKUE7QyPSl6VfBByBroQbKxKG7tsusY2mhbVY=" crossorigin="anonymous" />
-    <style>
-        .myTeacherlogo {
+  <title>MyTeacher - Prenotazione</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="scss/_utilities.scss">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" ></script>
+  <script src="script_header.js"></script>
+  <script src="script_ricerca.js"></script>
+  <link rel="stylesheet"
+    href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+    integrity="sha256-3sPp8BkKUE7QyPSl6VfBByBroQbKxKG7tsusY2mhbVY=" crossorigin="anonymous" />
+  <style>
+    .myTeacherlogo {
 
-            font-family: 'Tahoma';
-            font-style: normal;
-            font-weight: 900;
-            font-size: 3rem;
-            line-height: 63px;
-            /* identical to box height */
-            text-align: center;
+      font-family: 'Tahoma';
+      font-style: normal;
+      font-weight: 900;
+      font-size: 3rem;
+      line-height: 63px;
+      /* identical to box height */
+      text-align: center;
 
-            color: #F40000;
+      color: #F40000;
 
-            -webkit-text-stroke: 1px black;
+      -webkit-text-stroke: 1px black;
 
-        }
+    }
 
-        .hide_div {
-            opacity: 0;
-        }
+    .hide_div {
+      opacity: 0;
+    }
 
-        .show_div {
-            opacity: 100;
-        }
+    .show_div {
+      opacity: 100;
+    }
 
-        body {
-            background: #f5f5f5;
-            margin-top: 20px;
-        }
+    body {
+      background: #f5f5f5;
+      margin-top: 20px;
+    }
 
-        /* ===== Career ===== */
-        .career-form {
-            background-color: #4e63d7;
-            border-radius: 5px;
-            padding: 0 16px;
-        }
+    /* ===== Career ===== */
+    .career-form {
+      background-color: #4e63d7;
+      border-radius: 5px;
+      padding: 0 16px;
+    }
 
-        .career-form .form-control {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 0;
-            padding: 12px 15px;
-            color: #fff;
-        }
+    .career-form .form-control {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 0;
+      padding: 12px 15px;
+      color: #fff;
+    }
 
-        .career-form .form-control::-webkit-input-placeholder {
-            /* Chrome/Opera/Safari */
-            color: #fff;
-        }
+    .career-form .form-control::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      color: #fff;
+    }
 
-        .career-form .form-control::-moz-placeholder {
-            /* Firefox 19+ */
-            color: #fff;
-        }
+    .career-form .form-control::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #fff;
+    }
 
-        .career-form .form-control:-ms-input-placeholder {
-            /* IE 10+ */
-            color: #fff;
-        }
+    .career-form .form-control:-ms-input-placeholder {
+      /* IE 10+ */
+      color: #fff;
+    }
 
-        .career-form .form-control:-moz-placeholder {
-            /* Firefox 18- */
-            color: #fff;
-        }
+    .career-form .form-control:-moz-placeholder {
+      /* Firefox 18- */
+      color: #fff;
+    }
 
-        .career-form .custom-select {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 0;
-            padding: 12px 15px;
-            color: #fff;
-            width: 100%;
-            border-radius: 5px;
-            text-align: left;
-            height: auto;
-            background-image: none;
-        }
+    .career-form .custom-select {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 0;
+      padding: 12px 15px;
+      color: #fff;
+      width: 100%;
+      border-radius: 5px;
+      text-align: left;
+      height: auto;
+      background-image: none;
+    }
 
-        .career-form .custom-select:focus {
-            -webkit-box-shadow: none;
-            box-shadow: none;
-        }
+    .career-form .custom-select:focus {
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
 
-        .career-form .select-container {
-            position: relative;
-        }
+    .career-form .select-container {
+      position: relative;
+    }
 
-        .career-form .select-container:before {
-            position: absolute;
-            right: 15px;
-            top: calc(50% - 14px);
-            font-size: 18px;
-            color: #ffffff;
-            content: '\F2F9';
-            font-family: "Material-Design-Iconic-Font";
-        }
+    .career-form .select-container:before {
+      position: absolute;
+      right: 15px;
+      top: calc(50% - 14px);
+      font-size: 18px;
+      color: #ffffff;
+      content: '\F2F9';
+      font-family: "Material-Design-Iconic-Font";
+    }
 
-        .filter-result .job-box {
-            -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
-            box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
-            border-radius: 10px;
-            padding: 10px 35px;
-        }
+    .filter-result .job-box {
+      -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+      box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+      border-radius: 10px;
+      padding: 10px 35px;
+    }
 
-        ul {
-            list-style: none;
-        }
+    ul {
+      list-style: none;
+    }
 
-        .list-disk li {
-            list-style: none;
-            margin-bottom: 12px;
-        }
+    .list-disk li {
+      list-style: none;
+      margin-bottom: 12px;
+    }
 
-        .list-disk li:last-child {
-            margin-bottom: 0;
-        }
+    .list-disk li:last-child {
+      margin-bottom: 0;
+    }
 
-        .job-box .img-holder {
-            height: 65px;
-            width: 65px;
-            background-color: #4e63d7;
-            background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
-            background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
-            font-family: "Open Sans", sans-serif;
-            color: #fff;
-            font-size: 22px;
-            font-weight: 700;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            border-radius: 65px;
-        }
+    .job-box .img-holder {
+      height: 65px;
+      width: 65px;
+      background-color: #4e63d7;
+      background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
+      background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
+      font-family: "Open Sans", sans-serif;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      border-radius: 65px;
+    }
 
-        .career-title {
-            background-color: #4e63d7;
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-            border-radius: 10px 10px 0 0;
-            background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
-            background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
-        }
+    .career-title {
+      background-color: #4e63d7;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      border-radius: 10px 10px 0 0;
+      background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
+      background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
+    }
 
-        .job-overview {
-            -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
-            box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
-            border-radius: 10px;
-        }
+    .job-overview {
+      -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+      box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+      border-radius: 10px;
+    }
 
-        @media (min-width: 992px) {
-            .job-overview {
-                position: -webkit-sticky;
-                position: sticky;
-                top: 70px;
-            }
-        }
+    @media (min-width: 992px) {
+      .job-overview {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 70px;
+      }
+    }
 
-        .job-overview .job-detail ul {
-            margin-bottom: 28px;
-        }
+    .job-overview .job-detail ul {
+      margin-bottom: 28px;
+    }
 
-        .job-overview .job-detail ul li {
-            opacity: 0.75;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
+    .job-overview .job-detail ul li {
+      opacity: 0.75;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
 
-        .job-overview .job-detail ul li i {
-            font-size: 20px;
-            position: relative;
-            top: 1px;
-        }
+    .job-overview .job-detail ul li i {
+      font-size: 20px;
+      position: relative;
+      top: 1px;
+    }
 
-        .job-overview .overview-bottom,
-        .job-overview .overview-top {
-            padding: 35px;
-        }
+    .job-overview .overview-bottom,
+    .job-overview .overview-top {
+      padding: 35px;
+    }
 
-        .job-content ul li {
-            font-weight: 600;
-            opacity: 0.75;
-            border-bottom: 1px solid #ccc;
-            padding: 10px 5px;
-        }
+    .job-content ul li {
+      font-weight: 600;
+      opacity: 0.75;
+      border-bottom: 1px solid #ccc;
+      padding: 10px 5px;
+    }
 
-        @media (min-width: 768px) {
-            .job-content ul li {
-                border-bottom: 0;
-                padding: 0;
-            }
-        }
+    @media (min-width: 768px) {
+      .job-content ul li {
+        border-bottom: 0;
+        padding: 0;
+      }
+    }
 
-        .job-content ul li i {
-            font-size: 20px;
-            position: relative;
-            top: 1px;
-        }
+    .job-content ul li i {
+      font-size: 20px;
+      position: relative;
+      top: 1px;
+    }
 
-        .mb-30 {
-            margin-bottom: 30px;
-        }
+    .mb-30 {
+      margin-bottom: 30px;
+    }
 
-        .image_print {
-            max-height: 3.5rem;
-            max-width: 3.5rem;
-            min-height: 3.5rem;
-            min-width: 3.5rem;
-        }
-    </style>
+    .image_print {
+      max-height: 3.5rem;
+      max-width: 3.5rem;
+      min-height: 3.5rem;
+      min-width: 3.5rem;
+    }
+  </style>
 
 </head>
-<body>
-<section>
+
+<body class="background" onload="startPage()">
+
+  <div w3-include-html="header.html"></div>
+  <section id="notLoggedSection">
     <div class="container py-5">
-  
+      <h5 class="alert alert-danger d-flex justify-content-center">Accedi per visualizzare il tuo profilo!</h5>
+      <p class="d-flex justify-content-center"><button class="btn btn-lg btn-danger" type="button"
+          onclick="window.location = 'html_login.html'">Accedi</button></p>
+    </div>
+  </section>
+  <section id="profileSection">
+    <div class="container py-3">
+
       <div class="row">
         <div class="col-lg-4">
           <div class="card mb-4">
             <div class="card-body text-center">
-              <img id="accountImg" src="" alt="avatar"
-                class="rounded-circle img-fluid" style="width: 150px;">
-              <h5 id="accountName1" class="my-3">Nome</h5>
-              <p id="professorAccount" class="alert-success d-inline-flex bd-highlight px-2 rounded"><b>Professore</b></p>
+              <img id="accountImg" src="" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; background-color:#adacac">
+              <h5 id="accountUsername" class="my-3"></h5>
+              <b id="professorAccount" hidden>
+                <p class="alert-success d-inline-flex bd-highlight px-2 rounded"><b>Professore</b>
+                </p>
+              </b>
             </div>
           </div>
         </div>
-        <div class="col-lg-8">
+        <div id="infoDiv" class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body">
               <div class="row">
@@ -251,7 +270,7 @@
                   <p class="mb-0">Nome</p>
                 </div>
                 <div class="col-sm-9">
-                  <p id="accountName2" class="text-muted mb-0">TestNome</p>
+                  <p id="accountName" class="text-muted mb-0"></p>
                 </div>
               </div>
               <hr>
@@ -260,7 +279,7 @@
                   <p class="mb-0">Email</p>
                 </div>
                 <div class="col-sm-9">
-                  <p id="accountEmail" class="text-muted mb-0">example@example.com</p>
+                  <p id="accountEmail" class="text-muted mb-0"></p>
                 </div>
               </div>
               <hr>
@@ -269,74 +288,309 @@
                   <p class="mb-0">Telefono</p>
                 </div>
                 <div class="col-sm-9">
-                  <p id="accountPhone" class="text-muted mb-0">(+39) 346 9876543</p>
+                  <p id="accountPhone" class="text-muted mb-0"></p>
                 </div>
               </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Materie</p>
+              <div id="extraProfDiv" hidden>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Materie</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p id="accountSubjects" class="text-muted mb-0"></p>
+                  </div>
                 </div>
-                <div class="col-sm-9">
-                  <p id="accountSubjects" class="text-muted mb-0">TestMaterie</p>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Argomenti</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p id="accountTopics" class="text-muted mb-0"></p>
+                  </div>
                 </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Argomenti</p>
-                </div>
-                <div class="col-sm-9">
-                  <p id="accountTopics" class="text-muted mb-0">TestArgomenti</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Prezzo</p>
-                </div>
-                <div class="col-sm-9">
-                  <p id="accountPrice" class="text-muted mb-0">100 €/h</p>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Prezzo</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p id="accountPrice" class="text-muted mb-0"></p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
+
+
+
+    </div>
+
+    <section id="lectionsProf">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card mb-4">
+              <div class="card-body text-center">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Data</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                      <input type="date" id="dateNewLesson" name="dateStandard">
+                    </p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Inizio</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                      <input type="time" id="startNewLesson" name="dateStandard">
+                    </p>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Fine</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                      <input type="time" id="endNewLesson" name="dateStandard">
+                    </p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <button id="addLessonBtn" type="button" class="btn btn-danger">Aggiungi lezione</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="infoDiv" class="col-lg-8">
+            <div class="card mb-4">
+              <div id="lessonDiv" class="card-body overflow-scroll" style="max-height: 300px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
 </body>
 <script>
 
-    function bookLesson(jsonToSend) {
+  function startPage() {
+    includeHTML();
+    checkLoggedUser();
+    let token = getCookie("token");
+    var logged = false;
+    if (token != undefined) {
+      logged = true;
+    }
+
+    if (logged) {
+      getUserData();
+      document.getElementById("profileSection").removeAttribute("hidden");
+      document.getElementById("notLoggedSection").setAttribute("hidden", "");
+    } else {
+      document.getElementById("notLoggedSection").removeAttribute("hidden");
+      document.getElementById("profileSection").setAttribute("hidden", "");
+    }
+  }
+
+  function fillUserData(json) {
+    console.log(json.body.image)
+    name = json.body.nome;
+    cognome = json.body.cognome;
+    email = json.body.email;
+    phone = json.body.phone;
+    subjects = json.body.materie;
+    topics = json.body.argomenti;
+    price = json.body.prezzo;
+    username = json.body.username;
+    professor = json.body.professore;
+    img = "";
+    if (json.body.image != undefined) {
+      img = "data:image/jpeg;base64," + json.body.image;
+    } else {
+      img = "media/account_circle_FILL0_wght400_GRAD0_opsz48.png";
+    }
+    
+
+    if (professor) {
+      document.getElementById("professorAccount").removeAttribute("hidden");
+      document.getElementById("extraProfDiv").removeAttribute("hidden");
+      getLessons();
+    } else {
+      document.getElementById("professorAccount").setAttribute("hidden", "");
+      document.getElementById("extraProfDiv").setAttribute("hidden", "");
+    }
+
+    document.getElementById("accountName").innerHTML = name + " " + cognome;
+    document.getElementById("accountEmail").innerHTML = email;
+    if(phone=="" || phone == undefined){
+      document.getElementById("accountPhone").innerHTML = "-";
+    } else {
+      document.getElementById("accountPhone").innerHTML = phone.slice(0, 3) + " " + phone.slice(3);
+    }
+    if(price=="" || price == undefined){
+      document.getElementById("accountPhone").innerHTML = "- €/h";
+    } else {
+      document.getElementById("accountPrice").innerHTML = price + " €/h";
+    }
+    document.getElementById("accountUsername").innerHTML = username;
+    document.getElementById("accountImg").setAttribute("src", img);
+
+
+    printSubjects = "";
+    for (var i = 0; i < subjects.length; i++) {
+      printSubjects = printSubjects + subjects[i] + ", ";
+    }
+    printSubjects = printSubjects.slice(0, -2);
+
+    printTopics = "";
+    for (var i = 0; i < topics.length; i++) {
+      printTopics = printTopics + topics[i] + ", ";
+    }
+    printTopics = printTopics.slice(0, -2);
+
+    if(printSubjects==""){
+      document.getElementById("accountSubjects").innerHTML = "-";
+    } else {
+      document.getElementById("accountSubjects").innerHTML = printSubjects;
+    }
+
+    if(printTopics==""){
+      document.getElementById("accountTopics").innerHTML = "-";
+    } else {
+      document.getElementById("accountTopics").innerHTML = printTopics;
+    }
+    
+    
+
+  }
+
+  function getUserData() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const usr = urlParams.get('username')
+
+    fetch('../api/v1/users/' + usr)
+
+      .then(r => r.json().then(data => ({ status: r.status, body: data })))
+      .then(obj => {
+        
+        
+        if (obj.status == 200) {
+          
+          fillUserData(obj);
+        } else if (obj.status == 400) {
+
+        } else if (obj.status == 500) {
+
+        }
+      })
+      .catch(error => console.error(error));
+  }
+
+
+  function getLessons() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const usr = urlParams.get('username')
+    
+
+    fetch('../api/v1/notBookedLection/' + usr)
+
+      .then(r => r.json().then(data => ({ status: r.status, body: data })))
+      .then(obj => {
 
         
-        fetch('../api/v1/prenota', { 
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: jsonToSend,
-        })
+        if (obj.status == 200) {
+          printLesson(obj.body);
+        } else if (obj.status == 400) {
 
-            .then(r => r.json().then(data => ({ status: r.status, body: data })))
-            .then(obj => {
-                msg = obj.body.message;
-                if (obj.status == 200) {
-                    $("#success").modal('toggle');
+        } else if (obj.status == 500) {
 
-                } else if (obj.status == 400) {
-                    document.getElementById("hidden_div").setAttribute("class", "show_div");
-                    document.getElementById("alert_msg").innerHTML = msg;
+        }
+      })
+      .catch(error => console.error(error));
+  }
 
-                } else if (obj.status == 500) {
-                    document.getElementById("hidden_div").setAttribute("class", "show_div");
-                    document.getElementById("alert_msg").innerHTML = msg;
+  function printLesson(aJSON) {
+    lessonDiv = document.getElementById("lessonDiv");
+    
+    for (let i = 0; i < (aJSON.length - 1); i++) {
+      let tmp = aJSON[i];
 
-                }
-            })
-            .catch(error => console.error(error));
+      let row = document.createElement("div");
+      row.setAttribute("class", "row align-items-center");
+      let div1 = document.createElement("div");
+      div1.setAttribute("class", "col-sm-4");
+      let date = document.createElement("p");
+      date.setAttribute("class", "mb-0");
+      date.innerHTML = " " + (tmp.starts).slice(0, 10) + " ";
+      let div2 = document.createElement("div");
+      div2.setAttribute("class", "col-sm-4");
+      let time = document.createElement("p")
+      time.setAttribute("class", "text-muted mb-0");
+      time.innerHTML = "   " + (tmp.starts).slice(11, 16) + " - " + (tmp.ends).slice(11, 16);
+      let div3 = document.createElement("div");
+      div3.setAttribute("class", "col-sm-4 d-flex flex-row-reverse");
+      let btn = document.createElement("button");
+      btn.setAttribute("class", "btn btn-danger");
+      btn.innerHTML = "Elimina";
+      let hr = document.createElement("hr");
+
+      div1.appendChild(date);
+      div2.appendChild(time);
+      div3.appendChild(btn);
+      row.appendChild(div1);
+      row.appendChild(div2);
+      row.appendChild(div3);
+      lessonDiv.appendChild(row);
+      lessonDiv.appendChild(hr);
+
     }
+
+    let tmp = aJSON[aJSON.length - 1];
+
+    let row = document.createElement("div");
+    row.setAttribute("class", "row align-items-center");
+    let div1 = document.createElement("div");
+    div1.setAttribute("class", "col-sm-4");
+    let date = document.createElement("p");
+    date.setAttribute("class", "mb-0");
+    date.innerHTML = " " + (tmp.starts).slice(0, 10) + " ";
+    let div2 = document.createElement("div");
+    div2.setAttribute("class", "col-sm-4");
+    let time = document.createElement("p")
+    time.setAttribute("class", "text-muted mb-0");
+    time.innerHTML = "   " + (tmp.starts).slice(11, 16) + " - " + (tmp.ends).slice(11, 16);
+    let div3 = document.createElement("div");
+    div3.setAttribute("class", "col-sm-4 d-flex flex-row-reverse");
+    let btn = document.createElement("button");
+    btn.setAttribute("class", "btn btn-danger");
+    btn.innerHTML = "Elimina";
+
+    div1.appendChild(date);
+    div2.appendChild(time);
+    div3.appendChild(btn);
+    row.appendChild(div1);
+    row.appendChild(div2);
+    row.appendChild(div3);
+    lessonDiv.appendChild(row);
+
+  }
 
 </script>

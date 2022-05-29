@@ -38,6 +38,7 @@ function getCookie(name) {
 function checkLoggedUser() {
 
     let token = getCookie("token");
+    
 
     json = '{"token": "' + token + '"}';
 
@@ -51,7 +52,6 @@ function checkLoggedUser() {
         .then(obj => {
 
             if (obj.status == 200) {
-                console.log("User logged: " + JSON.stringify(obj))
                 login = obj.body.login;
                 username = obj.body.username;
                 if (obj.body.image != "") {
@@ -59,7 +59,6 @@ function checkLoggedUser() {
                 } else {
                     img = "media/account_circle_FILL0_wght400_GRAD0_opsz48.png";
                 }
-                console.log("DATA: " + login);
 
 
                 if (login) {
@@ -70,21 +69,17 @@ function checkLoggedUser() {
 
 
             } else if (obj.status == 201) {
-                console.log("User NOT logged")
                 printLoginHeader();
 
             } else if (obj.status == 400) {
-                console.log("MSG400: " + obj.body.message);
                 printLoginHeader();
 
             } else if (obj.status == 500) {
-                console.log("MSG500: " + obj.body.message);
                 printLoginHeader();
 
             }
         })
         .catch(error => console.error(error));
-
 
 };
 
@@ -98,6 +93,8 @@ function printLoggedHeader(usr, img) {
         document.getElementById("imgLogged").setAttribute("style", "");
     }
     document.getElementById("nameLogged").innerHTML = usr;
+    document.getElementById("profileLink").setAttribute("href","html_profile.html?username="+usr);
+    document.getElementById("logoutLink").setAttribute("href","html_logout.html?username="+usr);
 };
 
 function printLoginHeader() {

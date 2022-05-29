@@ -9,16 +9,18 @@
             <text style="opacity: 0" id="space_text">12345678</text><button class="btn btn-lg btn-danger"
                 onclick="window.location = 'html_login.html'">Accedi</button>
         </div>
-        <div id="divLogged" class="dropdown d-flex align-items-center" hidden>
+        <div id="divLogged" hidden>
+            <div class="dropdown d-flex align-items-center">
             <img id="imgLogged" class="rounded-circle profile-picture mx-4" src="" alt="">
             <div class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <text style="opacity: 0" id="space_text">12</text><text id="nameLogged" style="font-size:30px"></text>
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="html_profile.html">Profile</a></li>
-                <li><a class="dropdown-item" href="html_logout.html">Logout</a></li>
+                <li><a id="profileLink" class="dropdown-item" href="">Profile</a></li>
+                <li><a id="logoutLink" class="dropdown-item" href="">Logout</a></li>
             </ul>
+        </div>
         </div>
     </div>
 </div>
