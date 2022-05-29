@@ -37,7 +37,11 @@ const UserSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Lection"
         }
-    ]
+    ],
+    conto: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Conto"
+    }
 });
 
 //crea un salt per la password unico per l'utente scelto, cripta la password dell'utente

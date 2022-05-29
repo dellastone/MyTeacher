@@ -4,7 +4,8 @@ const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const User = require('../../db_connection/models/user');
 const Transaction = require('../../db_connection/models/transaction');
-
+const Conto = require('../../db_connection/models/conto');
+const { ContextRunnerImpl } = require('express-validator/src/chain');
 
 /*
 API che si occupa di ricaricare il conto dell'utente 
@@ -18,7 +19,7 @@ Il conto dell'utente viene ricaricato con la cifra specificata dall'utente
 La transazione effettuata viene aggiunta al database e ne viene salvato l'id nel conto dell'utente
 */
 
-router.get(
+router.post(
     '',
     [
         body('cardNumber').exists().withMessage("Inserisci il numero della tua carta di credito").isAlphanumeric().withMessage("La carta di credito inserita non esiste o è scaduta"),
@@ -44,7 +45,7 @@ router.get(
                 const cardNumber = req.sanitize(req.body.cardNumber);
                 const expirationDate = req.sanitize(req.body.expirationDate);
                 const cvv = req.sanitize(req.body.cvv);
-                const amount = req.sanitize(req.body.amount);
+                const amount = Number(req.sanitize(req.body.amount));
                 const date = new Date();
 
                 //l'utente che ha effettuato la transazione viene ricercato nel database
@@ -52,20 +53,40 @@ router.get(
 
                 //se l'utente cercato esiste
                 if (user != null) {
-                    //viene creata la transazione
+                    //viene creata la transazione, nel caso della ricarica l'id e username di mittente 
+                    //e ricevente sono sempre quelli dello stesso utente
                     let newTransaction = new Transaction({
                         mittente: user._id,
                         username_mittente: username,
-                        ricevente: user_id,
+                        ricevente: user._id,
                         username_ricevente: username,
                         data: date,
                         ricarica: true,
                         valore: amount.toFixed(2)
                     });
-                    console.log("Ricarica sul conto dell'utente avvenuta con successo");
-                    res.status(200).json({ location: "api/v2/conto" + username });
+
+                    //il conto dell'utente viene recuperato dal database
+                    const conto = await Conto.findOne({ _id: user.conto });
+
+                    //se il conto viene recuperato correttamente si procede con l'inserimento della transazione 
+                    if (conto != null) {
+
+                        //la transazione viene aggiunta al conto dell'utente 
+                        conto.addTransaction(newTransaction);
+                        //la transazione viene salvata nel database
+                        await newTransaction.save();
+
+                        console.log("La ricarica di " + amount.toFixed(2) + " euro sul suo conto è avvenuta con successo");
+                        res.status(200).json({ location: "api/v2/conto" + username });
+                    }
+                    else {
+                        //il conto dell'utente non è stato recuperato correttamente dal database
+                        message = "Il suo conto non è stato trovato nei nostri database, la preghiamo di riprovare";
+                        console.log(message);
+                        res.status(400).json({ message: message });
+                    }
                 }
-                else{
+                else {
                     //l'utente che ha effettuato la transazione non esiste
                     message = "Il suo utente non è stato trovato nei nostri database, la preghiamo di riprovare";
                     console.log(message);
@@ -83,3 +104,5 @@ router.get(
             res.status(500).json({ message: message });
         }
     });
+
+module.exports = router;
