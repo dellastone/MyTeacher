@@ -2,17 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
 const User = require('../db_connection/models/user');
-const Lezione = require('../db_connection/models/lection');
 const Conto = require('../db_connection/models/conto');
-let Transazione = require('../db_connection/models/transazione');
+const Transazione = require('../db_connection/models/transazione');
 
-
+//dato uno username restituisce tutte le informazioni del conto legato all'account specificato
 router.get('/:username', async (req, res) => {
 
     let message = "Si è verificato un errore nel recupero dei dati dell'utente, si prega di ricaricare la pagina";
 
     try{
-
+        //il login deve essere effettuato con l'account di cui si richiede le informazioni del conto
         const username = req.params.username;
         if(username == null || username == undefined){
             message = "E' necessario specificare uno username valido";
@@ -23,7 +22,7 @@ router.get('/:username', async (req, res) => {
             res.status(400).json({ message: message });
         }
         else{
-            
+            //trova l'utente dato lo username e restituisce l'id del conto
             const user = await User.findOne({ username: username }, ["conto"]).exec();
             if(user == null){
                 //utente non trovato nel database, viene ritornato un errore all'utente
@@ -31,20 +30,24 @@ router.get('/:username', async (req, res) => {
                 res.status(400).json({ message: message });
             }
             else{
+                //trova il conto legato all'utente
                 let conto = await Conto.findOne({ _id: user.conto }).exec();
                 if(conto == null){
-                     //utente non trovato nel database, viene ritornato un errore all'utente
+                     //conto non trovato nel database, viene ritornato un errore all'utente
                     message = "Conto non presente nel database";
                     return res.status(400).json({ message: message });
                 }
-                let transazioni_ids = conto.transazioni;
-                let totale = conto.totale;
+
+                let transazioni_ids = conto.transazioni; //elenco degli id delle transazioni presenti nel conto
+                let totale = conto.totale;// valore del conto
                 let elenco_transazioni = []
+
+                //inserisce in un elenco le informazioni di ogni transazione presente nel conto e le restituisci insieme al totale
                 for (const t_id of transazioni_ids){
-                    let transazione = await Transazione.findOne({ _id: t_id }).exec();
+                    let transazione = await Transazione.findOne({ _id: t_id },['valore','username_mittente','username_ricevente','ricarica','data','lezione']).exec();
                     elenco_transazioni.push(transazione)
                 }
-                res.status(200).json({"elenco_transazioni": elenco_transazioni,"totale": totale});
+                res.status(200).json({elenco_transazioni: elenco_transazioni,totale: totale});
                 
             }
     }
