@@ -45,6 +45,8 @@ router.get('/:username', async (req, res) => {
                 //inserisce in un elenco le informazioni di ogni transazione presente nel conto e le restituisci insieme al totale
                 for (const t_id of transazioni_ids){
                     let transazione = await Transazione.findOne({ _id: t_id },['valore','username_mittente','username_ricevente','ricarica','data','lezione']).exec();
+                    if(!transazione.ricarica && username == transazione.username_mittente)
+                        transazione.valore = -transazione.valore;
                     elenco_transazioni.push(transazione)
                 }
                 res.status(200).json({elenco_transazioni: elenco_transazioni,totale: totale});
