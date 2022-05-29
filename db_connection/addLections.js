@@ -4,7 +4,6 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const Lection = require('./models/lection');
 const User = require('./models/user');
-const lection = require('./models/lection');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
 //controlla se le date di inizio e fine lezione corrispondono
@@ -109,7 +108,7 @@ router.post(
                         console.log(overlap);
                         if (!overlap) {
                             //la nuova lezione viene creata
-                            newLection = new Lection({
+                            let newLection = new Lection({
                                 prof_username: username,
                                 starts: starts,
                                 ends: ends,

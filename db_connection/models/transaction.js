@@ -6,11 +6,19 @@ const TransactionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
-    }, 
+    },
+    username_mittente: {
+        type: String,
+        required: true
+    },
     ricevente: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true 
+    },
+    username_ricevente: {
+        type: String,
+        required: true
     },
     data: {
         type: Date,

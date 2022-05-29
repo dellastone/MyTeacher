@@ -39,8 +39,38 @@ router.get(
 
             //se i dati inseriti dall'utente sono validi si procede con la ricarica del conto
             if (!wrong_data) {
-                console.log("Ricarica sul conto dell'utente avvenuta con successo");
-                res.status(200).json({ location: "api/v2/conto" + username });
+
+                const username = req.loggedUser.username;
+                const cardNumber = req.sanitize(req.body.cardNumber);
+                const expirationDate = req.sanitize(req.body.expirationDate);
+                const cvv = req.sanitize(req.body.cvv);
+                const amount = req.sanitize(req.body.amount);
+                const date = new Date();
+
+                //l'utente che ha effettuato la transazione viene ricercato nel database
+                const user = await User.findOne({ username: username });
+
+                //se l'utente cercato esiste
+                if (user != null) {
+                    //viene creata la transazione
+                    let newTransaction = new Transaction({
+                        mittente: user._id,
+                        username_mittente: username,
+                        ricevente: user_id,
+                        username_ricevente: username,
+                        data: date,
+                        ricarica: true,
+                        valore: amount.toFixed(2)
+                    });
+                    console.log("Ricarica sul conto dell'utente avvenuta con successo");
+                    res.status(200).json({ location: "api/v2/conto" + username });
+                }
+                else{
+                    //l'utente che ha effettuato la transazione non esiste
+                    message = "Il suo utente non è stato trovato nei nostri database, la preghiamo di riprovare";
+                    console.log(message);
+                    res.status(400).json({ message: message });
+                }
             }
             else {
                 //uno dei controlli sui dati inseriti dall'utente non è andato a buon fine
