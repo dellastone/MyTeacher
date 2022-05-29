@@ -41,7 +41,7 @@ function checkLoggedUser() {
 
     json = '{"token": "' + token + '"}';
 
-    fetch('../api/v1/checkLogin', {
+    fetch('../api/v2/checkLogin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: json,
