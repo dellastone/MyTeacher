@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const router = express.Router();
 const User = require('../db_connection/models/user');
 const Conto = require('../db_connection/models/conto');
-const Transazione = require('../db_connection/models/transazione');
+const Transazione = require('../db_connection/models/transaction');
 
 //dato uno username restituisce tutte le informazioni del conto legato all'account specificato
 router.get('/:username', async (req, res) => {
