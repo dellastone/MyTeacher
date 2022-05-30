@@ -54,7 +54,7 @@ function checkLoggedUser() {
             if (obj.status == 200) {
                 login = obj.body.login;
                 username = obj.body.username;
-                if (obj.body.image != "") {
+                if (obj.body.image != "" && obj.body.image != undefined) {
                     img = "data:image/jpeg;base64," + obj.body.image;
                 } else {
                     img = "media/account_circle_FILL0_wght400_GRAD0_opsz48.png";

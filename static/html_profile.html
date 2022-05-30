@@ -2,19 +2,21 @@
 <html>
 
 <head>
-  <title>MyTeacher - Prenotazione</title>
+  <title>MyTeacher - Profilo</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="scss/_utilities.scss">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" ></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
   <script src="script_header.js"></script>
   <script src="script_ricerca.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  
   <link rel="stylesheet"
     href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
   <link rel="stylesheet"
@@ -253,12 +255,23 @@
         <div class="col-lg-4">
           <div class="card mb-4">
             <div class="card-body text-center">
-              <img id="accountImg" src="" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; background-color:#adacac">
+              <img id="accountImg" src="" alt="avatar" class="rounded-circle img-fluid"
+                style="width: 150px; background-color:#adacac">
               <h5 id="accountUsername" class="my-3"></h5>
               <b id="professorAccount" hidden>
                 <p class="alert-success d-inline-flex bd-highlight px-2 rounded"><b>Professore</b>
                 </p>
               </b>
+              <hr>
+              <div class="row d-flex justify-content-center">
+                <button id="updateProfileBtn" type="button" class="btn btn-danger" style="max-width: 200px;"
+                  onclick="showUpdateForm()">Modifica
+                  profilo</button>
+                <hr style="opacity: 0;">
+                <button id="balanceBtn" type="button" class="btn btn-danger" style="max-width: 200px;"
+                  onclick="window.location='conto.html'">Il tuo
+                  conto</button>
+              </div>
             </div>
           </div>
         </div>
@@ -323,71 +336,166 @@
             </div>
           </div>
         </div>
-      </div>
 
-
-
-
-    </div>
-
-    <section id="lectionsProf">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card mb-4">
-              <div class="card-body text-center">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Data</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">
-                      <input type="date" id="dateNewLesson" name="dateStandard">
-                    </p>
-                  </div>
+        <!--FORM UPDATE PROFILE-->
+        <div id="infoDivF" class="col-lg-8" hidden>
+          <div class="card mb-2">
+            <div class="card-body">
+              <div class="row d-flex align-items-center">
+                <div class="col-sm-2">
+                  <p class="mb-0">Nome</p>
                 </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Inizio</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">
-                      <input type="time" id="startNewLesson" name="dateStandard">
-                    </p>
-                  </div>
+                <div class="col-sm-4">
+                  <input type="text" id="accountNameF" class="form-control">
                 </div>
-                <br>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Fine</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">
-                      <input type="time" id="endNewLesson" name="dateStandard">
-                    </p>
-                  </div>
+                <div class="col-sm-2">
+                  <p class="mb-0">Cognome</p>
                 </div>
-                <hr>
-                <div class="row">
-                  <button id="addLessonBtn" type="button" class="btn btn-danger">Aggiungi lezione</button>
+                <div class="col-sm-4">
+                  <input type="text" id="accountSurnameF" class="form-control">
                 </div>
               </div>
-            </div>
-          </div>
-          <div id="infoDiv" class="col-lg-8">
-            <div class="card mb-4">
-              <div id="lessonDiv" class="card-body overflow-scroll" style="max-height: 300px;">
+              <hr>
+              <div class="row d-flex align-items-center">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <input type="text" id="accountEmailF" class="form-control">
+                </div>
+              </div>
+              <hr>
+              <div class="row d-flex align-items-center">
+                <div class="col-sm-3">
+                  <p class="mb-0">Telefono</p>
+                </div>
+                <div class="col-sm-9">
+                  <input type="text" id="accountPhoneF" class="form-control">
+                </div>
+              </div>
+              <hr>
+              <div id="extraProfDivF" hidden>
+                <div class="row d-flex align-items-center">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Materie</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" id="accountSubjectsF" class="form-control">
+                  </div>
+                </div>
+                <hr>
+                <div class="row d-flex align-items-center">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Argomenti</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" id="accountTopicsF" class="form-control">
+                  </div>
+                </div>
+                <hr>
+                <div class="row d-flex align-items-center">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Prezzo</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" id="accountPriceF" class="form-control">
+                  </div>
+                </div>
+                <hr>
+              </div>
+              <div class="row d-flex align-items-center justify-content-center">
+                <button type="button" id="sendUpdateBtn" class="btn btn-danger" onclick="sendUpdate()">Aggiorna
+                  profilo</button>
               </div>
             </div>
           </div>
         </div>
+        <!--END FORM-->
+
       </div>
-    </section>
+    </div>
+  </section>
 
+  <section id="lectionsProf" hidden>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Data</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">
+                    <input type="date" id="dateNewLesson" name="dateStandard">
+                  </p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Inizio</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">
+                    <input type="time" id="startNewLesson" name="dateStandard">
+                  </p>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Fine</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">
+                    <input type="time" id="endNewLesson" name="dateStandard">
+                  </p>
+                </div>
+              </div>
+              <hr>
+              <div class="row d-flex justify-content-center">
+                <button id="addLessonBtn" type="button" class="btn btn-danger" style="max-width: 200px;"
+                  onclick="addLesson()">Aggiungi
+                  lezione</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="printLessonDiv" class="col-lg-8">
+          <div class="card mb-4">
+            <div id="lessonDiv" class="card-body overflow-scroll" style="max-height: 300px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- Error add lesson -->
+  <div class="container">
+    <div class="modal fade" data-bs-backdrop="static" id="errorAddLessonModal" tabindex="-1" role="dialog"
+      aria-labelledby="success" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body d-flex justify-content-center">
+            <div id="msgErrorNewLesson" class="container alert alert-danger"></div>
+          </div>
+          <div class="d-flex justify-content-center modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 <script>
+
+  var professor = false;
 
   function startPage() {
     includeHTML();
@@ -409,7 +517,6 @@
   }
 
   function fillUserData(json) {
-    console.log(json.body.image)
     name = json.body.nome;
     cognome = json.body.cognome;
     email = json.body.email;
@@ -425,26 +532,30 @@
     } else {
       img = "media/account_circle_FILL0_wght400_GRAD0_opsz48.png";
     }
-    
+
 
     if (professor) {
       document.getElementById("professorAccount").removeAttribute("hidden");
       document.getElementById("extraProfDiv").removeAttribute("hidden");
+      document.getElementById("extraProfDivF").removeAttribute("hidden");
+      document.getElementById("lectionsProf").removeAttribute("hidden");
       getLessons();
     } else {
       document.getElementById("professorAccount").setAttribute("hidden", "");
       document.getElementById("extraProfDiv").setAttribute("hidden", "");
+      document.getElementById("extraProfDivF").setAttribute("hidden", "");
+      document.getElementById("lectionsProf").setAttribute("hidden", "");
     }
 
     document.getElementById("accountName").innerHTML = name + " " + cognome;
     document.getElementById("accountEmail").innerHTML = email;
-    if(phone=="" || phone == undefined){
+    if (phone == "" || phone == undefined) {
       document.getElementById("accountPhone").innerHTML = "-";
     } else {
       document.getElementById("accountPhone").innerHTML = phone.slice(0, 3) + " " + phone.slice(3);
     }
-    if(price=="" || price == undefined){
-      document.getElementById("accountPhone").innerHTML = "- €/h";
+    if (price == "" || price == undefined) {
+      document.getElementById("accountPrice").innerHTML = "- €/h";
     } else {
       document.getElementById("accountPrice").innerHTML = price + " €/h";
     }
@@ -464,19 +575,60 @@
     }
     printTopics = printTopics.slice(0, -2);
 
-    if(printSubjects==""){
+    if (printSubjects == "") {
       document.getElementById("accountSubjects").innerHTML = "-";
     } else {
       document.getElementById("accountSubjects").innerHTML = printSubjects;
     }
 
-    if(printTopics==""){
+    if (printTopics == "") {
       document.getElementById("accountTopics").innerHTML = "-";
     } else {
       document.getElementById("accountTopics").innerHTML = printTopics;
     }
+
+    //FILL FORM
+    document.getElementById("accountNameF").value = name;
+    document.getElementById("accountSurnameF").value = cognome;
+    document.getElementById("accountEmailF").value = email;
     
-    
+    if (phone == "" || phone == undefined) {
+      document.getElementById("accountPhoneF").value = "";
+    } else {
+      document.getElementById("accountPhoneF").value = phone.slice(0, 3) + " " + phone.slice(3);
+    }
+    if (price == "" || price == undefined) {
+      document.getElementById("accountPriceF").value = "";
+    } else {
+      document.getElementById("accountPriceF").value = price;
+    }
+
+
+    printSubjects = "";
+    for (var i = 0; i < subjects.length; i++) {
+      printSubjects = printSubjects + subjects[i] + ", ";
+    }
+    printSubjects = printSubjects.slice(0, -2);
+
+    printTopics = "";
+    for (var i = 0; i < topics.length; i++) {
+      printTopics = printTopics + topics[i] + ", ";
+    }
+    printTopics = printTopics.slice(0, -2);
+
+    if (printSubjects == "") {
+      document.getElementById("accountSubjectsF").value = "";
+    } else {
+      document.getElementById("accountSubjectsF").value = printSubjects;
+    }
+
+    if (printTopics == "") {
+      document.getElementById("accountTopicsF").value = "";
+    } else {
+      document.getElementById("accountTopicsF").value = printTopics;
+    }
+
+
 
   }
 
@@ -489,10 +641,10 @@
 
       .then(r => r.json().then(data => ({ status: r.status, body: data })))
       .then(obj => {
-        
-        
+
+
         if (obj.status == 200) {
-          
+
           fillUserData(obj);
         } else if (obj.status == 400) {
 
@@ -508,14 +660,14 @@
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const usr = urlParams.get('username')
-    
+
 
     fetch('../api/v1/notBookedLection/' + usr)
 
       .then(r => r.json().then(data => ({ status: r.status, body: data })))
       .then(obj => {
 
-        
+
         if (obj.status == 200) {
           printLesson(obj.body);
         } else if (obj.status == 400) {
@@ -529,7 +681,7 @@
 
   function printLesson(aJSON) {
     lessonDiv = document.getElementById("lessonDiv");
-    
+
     for (let i = 0; i < (aJSON.length - 1); i++) {
       let tmp = aJSON[i];
 
@@ -549,6 +701,8 @@
       div3.setAttribute("class", "col-sm-4 d-flex flex-row-reverse");
       let btn = document.createElement("button");
       btn.setAttribute("class", "btn btn-danger");
+      btn.setAttribute("id", "b" + tmp._id);
+      btn.setAttribute("onclick", "deleteLesson(this.id)")
       btn.innerHTML = "Elimina";
       let hr = document.createElement("hr");
 
@@ -581,6 +735,8 @@
     div3.setAttribute("class", "col-sm-4 d-flex flex-row-reverse");
     let btn = document.createElement("button");
     btn.setAttribute("class", "btn btn-danger");
+    btn.setAttribute("id", "b" + tmp._id);
+    btn.setAttribute("onclick", "deleteLesson(this.id)")
     btn.innerHTML = "Elimina";
 
     div1.appendChild(date);
@@ -591,6 +747,114 @@
     row.appendChild(div3);
     lessonDiv.appendChild(row);
 
+  }
+
+  function showUpdateForm() {
+    document.getElementById("infoDiv").setAttribute("hidden", "");
+    document.getElementById("infoDivF").removeAttribute("hidden");
+  }
+
+  /**
+   * TO BE IMPLEMENTED
+   * POST REQUEST TO UPDATE THE PROFILE IN THE DB
+  **/
+  function sendUpdate() {
+
+
+
+
+    //-----------------------------------------------------------
+    document.getElementById("infoDivF").setAttribute("hidden", "");
+    document.getElementById("infoDiv").removeAttribute("hidden");
+  }
+
+  /**
+   * TO BE IMPLEMENTED
+   * POST REQUEST TO DELETE A LESSON IN THE DB
+  **/
+  function deleteLesson(btn_id) {
+    lesson_id = btn_id.slice(1);
+
+    //Fetch to send a post request to delete a lesson in the DB
+  }
+
+  function addLesson() {
+    date = document.getElementById("dateNewLesson").value;
+    start = document.getElementById("startNewLesson").value;
+    end = document.getElementById("endNewLesson").value;
+
+    showModal = false;
+    msg = "";
+
+    if (date == "") {
+      msg = msg + "Seleziona una data.";
+      showModal = true;
+    }
+    if (start == "") {
+      if (msg == "") {
+        msg = msg + "Seleziona un orario di inizio.";
+      } else {
+        msg = msg + "<br>Seleziona un orario di inizio.";
+      }
+      showModal = true;
+    }
+    if (end == "") {
+      if (msg == "") {
+        msg = msg + "Seleziona un orario di fine.";
+      } else {
+        msg = msg + "<br>Seleziona un orario di fine.";
+      }
+      showModal = true;
+    }
+    if (start > end && (start != "") && (end != "")) {
+      if (msg == "") {
+        msg = msg + "L'orario di fine non può precedere l'orario di inizio.";
+      } else {
+        msg = msg + "<br>L'orario di fine non può precedere l'orario di inizio.";
+      }
+      showModal = true;
+    }
+
+    if (showModal) {
+      document.getElementById("msgErrorNewLesson").innerHTML = msg;
+      $("#errorAddLessonModal").modal('toggle');
+    } else {
+      sendJSONaddLesson(date, start, end);
+    }
+  }
+
+  function sendJSONaddLesson(date, start, end) {
+
+    startJSON = date + "T" + start + ":00Z";
+    endJSON = date + "T" + end + ":00Z";
+
+    jsonToSend = '{"starts": "' + startJSON + '","ends": "' + endJSON + '"}';
+
+    fetch('../api/v2/lection/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: jsonToSend,
+    })
+
+      .then(r => r.json().then(data => ({ status: r.status, body: data })))
+      .then(obj => {
+        if (obj.status == 201) {
+          refreshAddedLesson();
+        } else if (obj.status == 400) {
+
+        } else if (obj.status == 500) {
+
+        }
+      })
+      .catch(error => console.error(error));
+  }
+
+  function refreshAddedLesson() {
+    document.getElementById("lessonDiv").innerHTML = "";
+    getLessons();
+    document.getElementById("dateNewLesson").value = "";
+    document.getElementById("startNewLesson").value = "";
+    document.getElementById("endNewLesson").value = "";
   }
 
 </script>
