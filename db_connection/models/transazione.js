@@ -10,12 +10,12 @@ const TransazioneSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    id_destinatario: {
+    id_ricevente: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    usr_mittente: String,
-    usr_destinatario: String,
+    username_mittente: String,
+    username_ricevente: String,
     ricarica: Boolean,
     data: Date,
     lezione:{
