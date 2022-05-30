@@ -14,7 +14,8 @@ const ContoSchema = mongoose.Schema({
     ],
     owner:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     }
 });
 
@@ -46,4 +47,4 @@ ContoSchema.methods.addTransaction = function(transazione){
     
 }
 
-module.exports = mongoose.model('Conto', ContoSchema)
+module.exports = mongoose.model('Conto', ContoSchema);
