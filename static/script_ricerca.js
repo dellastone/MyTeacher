@@ -154,7 +154,7 @@ function ricerca() {
         const words = toSearch.split(' ');
         if (words.length == 1) {
             console.log("Searching for " + words[0]);
-            fetch('../api/v1/ricerca/' + words[0])
+            fetch('../api/v2/ricerca/' + words[0])
                 .then((resp) => resp.json())
                 .then(function (data) {
                     if (data.length > 0) {
@@ -169,7 +169,7 @@ function ricerca() {
                 });
         } else if (words.length == 2) {
             console.log("Searching for " + words[0] + " " + words[1]);
-            fetch('../api/v1/ricerca/' + words[0] + '/' + words[1])
+            fetch('../api/v2/ricerca/' + words[0] + '/' + words[1])
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.length > 0) {

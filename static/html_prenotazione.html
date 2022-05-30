@@ -417,7 +417,7 @@
         }
 
 
-        xhttp1.open("GET", "/api/v1/users/" + username, false);
+        xhttp1.open("GET", "/api/v2/users/" + username, false);
         xhttp1.send();
     }
 
@@ -671,7 +671,7 @@
     function bookLesson(jsonToSend) {
 
 
-        fetch('../api/v1/prenota', {
+        fetch('../api/v2/prenota', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: jsonToSend,

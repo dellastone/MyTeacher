@@ -637,7 +637,7 @@
     const urlParams = new URLSearchParams(queryString);
     const usr = urlParams.get('username')
 
-    fetch('../api/v1/users/' + usr)
+    fetch('../api/v2/users/' + usr)
 
       .then(r => r.json().then(data => ({ status: r.status, body: data })))
       .then(obj => {
@@ -662,7 +662,7 @@
     const usr = urlParams.get('username')
 
 
-    fetch('../api/v1/notBookedLection/' + usr)
+    fetch('../api/v2/notBookedLection/' + usr)
 
       .then(r => r.json().then(data => ({ status: r.status, body: data })))
       .then(obj => {

@@ -25,13 +25,13 @@ app.use(cookieParser())
 
 app.use('/', express.static('static',{index:'html_login.html'}));
 app.use('/api/v2/checkLogin',checkLogin)
-app.use('/api/v1/users/auth', authentication);
-app.use('/api/v1/users', registration);
-app.use('/api/v1/lection', lections);
+app.use('/api/v2/users/auth', authentication);
+app.use('/api/v2/users', registration);
+app.use('/api/v2/lection', lections);
 app.use('/api/v2/notBookedLection', nblections)
-app.use('/api/v1/ricerca', ricerca);
-app.use('/api/v1/prenota', tokenchecker);
-app.use('/api/v1/prenota', prenota);
+app.use('/api/v2/ricerca', ricerca);
+app.use('/api/v2/prenota', tokenchecker);
+app.use('/api/v2/prenota', prenota);
 app.use('/api/v2/lection/add', tokenchecker);
 app.use('/api/v2/lection/add', addLections);
 app.use('/api/v2/getConto', tokenchecker);
