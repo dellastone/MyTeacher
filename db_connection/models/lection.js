@@ -19,6 +19,7 @@ const LectionSchema = mongoose.Schema({
     },
     booked: Boolean,
     prezzo: Number,
+    paid: Boolean,
     materie: [String],
     argomenti: [String],
     owner: {

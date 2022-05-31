@@ -26,6 +26,13 @@ function includeHTML() {
     }
 };
 
+/**
+ * 
+ * @param {*} name (string) name of the cookie
+ * @returns value of the the cookie with that name
+ * 
+ * The function take a name (string) and return the value of the cookie with that name.
+ */
 function getCookie(name) {
     let cookie = {};
     document.cookie.split(';').forEach(function (el) {
@@ -35,6 +42,10 @@ function getCookie(name) {
     return cookie[name];
 }
 
+/**
+ * The function check if a user is logged.
+ * Based on this the function call two different function to printi two different headers.
+ */
 function checkLoggedUser() {
 
     let token = getCookie("token");
@@ -83,6 +94,15 @@ function checkLoggedUser() {
 
 };
 
+/**
+ * 
+ * @param {*} usr (string) username of the account logged
+ * @param {*} img (string) Base64 img of the account logged if present.
+ * 
+ * The function print the version of the header for a current logged user.
+ * Instead of the "Accedi" button, there is the image and username of the account.
+ * If clicked a dropdown menu is shown with a link for logout and personal profile page.
+ */
 function printLoggedHeader(usr, img) {
     document.getElementById("divLogged").removeAttribute("hidden");
     document.getElementById("divNotLogged").setAttribute("hidden","");
@@ -97,6 +117,10 @@ function printLoggedHeader(usr, img) {
     document.getElementById("logoutLink").setAttribute("href","html_logout.html?username="+usr);
 };
 
+/**
+ * The function print the version of the header for no current logged user.
+ * It prints a "Accedi" button to go to the login page.
+ */
 function printLoginHeader() {
     document.getElementById("divNotLogged").removeAttribute("hidden");
     document.getElementById("divLogged").setAttribute("hidden","");

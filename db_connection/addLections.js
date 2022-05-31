@@ -113,6 +113,7 @@ router.post(
                                 starts: starts,
                                 ends: ends,
                                 booked: false,
+                                paid: false,
                                 prezzo: (professor.prezzo * lection_duration).toFixed(2),
                                 owner: professor._id
                             });
