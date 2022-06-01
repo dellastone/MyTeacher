@@ -1,5 +1,3 @@
-const { body } = require("express-validator");
-
 //chiama la API per ottenere i dati del conto dell'utente
 function getConto() {
 
@@ -50,9 +48,13 @@ function printConto(conto) {
     saldo.innerText = conto.totale + " €";
 
     //stampa della data 
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const date_string = today.getDate() + "/" + month + "/" + today.getFullYear() + "  "
+        + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     let date = document.getElementById("date_info");
-    date.innerText = "Saldo del conto alla data " + new Date();
-    
+    date.innerText = "Saldo del conto alla data  " + date_string;
+
 }
 
 //stampa a video dei messaggi di errore
