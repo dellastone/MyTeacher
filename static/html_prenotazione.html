@@ -290,7 +290,7 @@
             </div>
         </div>
 
-        <!-- Book lesson -->
+        <!-- Book lection -->
         <div class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="book" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -313,7 +313,7 @@
                         <div class="d-flex justify-content-center">
                             <b>
                                 <div class="alert alert-success d-inline-flex p-2 bd-highlight">
-                                    <text id="resume_lesson" class="d-flex align-items-end"></text>
+                                    <text id="resume_lection" class="d-flex align-items-end"></text>
                                 </div>
                             </b>
                         </div>
@@ -412,7 +412,7 @@
 
             fillModal(jsondoc.materie, jsondoc.argomenti);
             printProfessor(name, surname, image, price, subjects, topics);
-            getLesson(username)
+            getLection(username)
 
         }
 
@@ -420,7 +420,9 @@
         xhttp1.open("GET", "/api/v2/users/" + username, false);
         xhttp1.send();
     }
-
+    /**
+     *  Fill the prenotation modal with the subjects and topics teached by the professor. 
+    **/
     function fillModal(subjects, topics) {
 
         numTopics = topics.length;
@@ -466,9 +468,9 @@
     }
 
     /**
-     * Get lessons
+     * Get avaible (not already booked) lections of the professor.
     **/
-    function getLesson(username) {
+    function getLection(username) {
 
         const xhttp2 = new XMLHttpRequest();
         xhttp2.onreadystatechange = function () {
@@ -476,7 +478,7 @@
             const json = this.responseText;
 
 
-            printLessons(json)
+            printLection(json)
 
         }
 
@@ -500,10 +502,10 @@
     }
 
     /**
-     * Print page with all lesson for that user
+     * Print page with all lections for that user
     **/
-    function printLessons(lessons) {
-        const aJSON = JSON.parse(lessons);
+    function printLection(lections) {
+        const aJSON = JSON.parse(lections);
 
         for (let i = 0; i < aJSON.length; i++) {
 
@@ -537,7 +539,7 @@
             div4.setAttribute("class", "job-right my-4 flex-shrink-0");
             btn = document.createElement("a");
             btn.setAttribute("class", "btn btn-danger");
-            btn.setAttribute("onclick", "selecLesson(this.id)");
+            btn.setAttribute("onclick", "selecLection(this.id)");
             btn.innerHTML = "Prenota";
             btn.setAttribute("id", "b" + tmp._id);
 
@@ -560,25 +562,31 @@
 
     }
 
+    /**
+     * Save the id of the lection selected.
+     * Print date and time of the lection selected on the prenotation modal.
+    **/ 
     idSelected = "";
-
-    function selecLesson(btId) {
+    function selecLection(btId) {
         document.getElementById("error_modal").setAttribute("class", "hide_div");
         document.getElementById("hidden_div").setAttribute("class", "hide_div");
 
-        idLesson = btId.slice(1);
-        idDate = "d" + idLesson;
-        idTime = "t" + idLesson;
+        idLection = btId.slice(1);
+        idDate = "d" + idLection;
+        idTime = "t" + idLection;
 
-        idSelected = idLesson;
+        idSelected = idLection;
         timeSelected = document.getElementById(idTime).innerHTML;
         dateSelected = document.getElementById(idDate).innerHTML;
-        document.getElementById("resume_lesson").innerHTML = dateSelected + "  " + timeSelected;
+        document.getElementById("resume_lection").innerHTML = dateSelected + "  " + timeSelected;
 
 
         $("#book").modal('toggle');
     }
-
+    
+    /**
+     * Check if the user selected at least one subject and one topic before sending the post request to the DB.
+    **/ 
     function checkSubmission() {
 
         let nCheckS = 0;
@@ -612,6 +620,9 @@
         }
     }
 
+    /**
+     * Create the JSON to send to the DB to book the lection.
+    **/ 
     function createJSON() {
         aSubjects = "";
         aTopics = "";
@@ -635,40 +646,13 @@
 
         jsonToSend = '{"materie": [' + aSubjects + '], "argomenti": [' + aTopics + '], "lection_id": "' + idSelected + '"}';
 
-        bookLesson(jsonToSend)
+        bookLection(jsonToSend)
     }
 
-    /* function bookLesson(jsonToSend) {
-         const xhttp3 = new XMLHttpRequest();
-         xhttp3.onreadystatechange = function () {
- 
-             const json = this.responseText;
-             const jsondoc = JSON.parse(json);
- 
- 
-             msg = jsondoc.message;
-             if (this.readyState == 4 && this.status == 200) {
-                 $("#success").modal('toggle');
- 
-             } else if (this.readyState == 4 && this.status == 400) {
-                 document.getElementById("hidden_div").setAttribute("class", "show_div");
-                 document.getElementById("alert_msg").innerHTML = msg;
- 
-             } else if (this.readyState == 4 && this.status == 500) {
-                 document.getElementById("hidden_div").setAttribute("class", "show_div");
-                 document.getElementById("alert_msg").innerHTML = msg;
- 
-             }
- 
-         }
- 
-         xhttp3.open("POST", "/api/v1/prenota", false);
-         xhttp3.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-         xhttp3.send(jsonToSend);
- 
-     }*/
-
-    function bookLesson(jsonToSend) {
+    /**
+     * Send the POST request to book the lection.
+    **/ 
+    function bookLection(jsonToSend) {
 
 
         fetch('../api/v2/prenota', {
