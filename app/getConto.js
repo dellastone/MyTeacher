@@ -23,7 +23,7 @@ router.get('/:username', async (req, res) => {
         }
         else{
             //trova l'utente dato lo username e restituisce l'id del conto
-            const user = await User.findOne({ username: username }, ["conto"]).exec();
+            const user = await User.findOne({ username: username }, ["conto","nome","cognome"]).exec();
             if(user == null){
                 //utente non trovato nel database, viene ritornato un errore all'utente
                 message = "Utente non presente nel database";
@@ -49,7 +49,7 @@ router.get('/:username', async (req, res) => {
                         transazione.valore = -transazione.valore;
                     elenco_transazioni.push(transazione)
                 }
-                res.status(200).json({elenco_transazioni: elenco_transazioni,totale: totale});
+                res.status(200).json({elenco_transazioni: elenco_transazioni,totale: totale,nome: user.nome,cognome: user.cognome,id: conto._id});
                 
             }
     }
