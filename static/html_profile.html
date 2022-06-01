@@ -659,9 +659,11 @@
         if (obj.status == 200) {
           fillUserData(obj);
         } else if (obj.status == 400) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         } else if (obj.status == 500) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         }
       })
       .catch(error => console.error(error));
@@ -685,9 +687,11 @@
         if (obj.status == 200) {
           printLection(obj.body);
         } else if (obj.status == 400) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         } else if (obj.status == 500) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         }
       })
       .catch(error => console.error(error));
@@ -871,9 +875,11 @@
         if (obj.status == 201) {
           refreshAddedLection();
         } else if (obj.status == 400) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         } else if (obj.status == 500) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         }
       })
       .catch(error => console.error(error));
