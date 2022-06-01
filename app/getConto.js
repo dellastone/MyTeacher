@@ -49,7 +49,7 @@ router.get('/:username', async (req, res) => {
                         transazione.valore = -transazione.valore;
                     elenco_transazioni.push(transazione)
                 }
-                res.status(200).json({elenco_transazioni: elenco_transazioni,totale: totale});
+                res.status(200).json({elenco_transazioni: elenco_transazioni, totale: totale});
                 
             }
     }

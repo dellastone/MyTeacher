@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MyTeacher - Conto</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="script_header.js"></script>
+    <script src="script_conto.js"></script>
+</head>
+
+<body class="background" onload="checkLoggedUser()">
+    <!--header-->
+    <div w3-include-html="header.html"></div>
+    <div class="container px-1 my-5">
+        <div class="row gx-5">
+            <div class="col">
+                <!--conto-->
+                <div id = "conto_div" class="p-4 my-3 box-shadow bg-gradient-1">
+                    <span class="conto-title p-2">Il tuo Conto MyTeacher</span>
+                    <hr style="border: 1px solid black;">
+                    <div id="name_div" class="p-2">
+                        <span id="name" class="conto-subtitle"></span>
+                    </div>
+                    <div id="id_div" class="p-2">
+                        <span id="id_text" class="conto-subtitle">ID:</span>
+                        <span id="id_conto" class="conto-text"></span>
+                    </div>
+                    <hr style="border: 1px solid black;">
+                    <div id="saldo_div" class="p-2">
+                        <p class="conto-subtitle">Saldo:</p>
+                        <p id="saldo" class="saldo px-3 py-1 positive-number">0 €</p>
+                        <p id="date_info" class="conto-text" conto-text></p>
+                    </div>
+                    <hr style="border: 1px solid black;">
+                    <div id="button_ricarica" class="container d-flex flex-row justify-content-center p-2">
+                        <button id="ricarica" type="button" class="btn btn-danger" style="max-width: 200px;"
+                            onclick="window.location='ricarica.html'">ricarica</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <!--transazioni-->
+                <div id="transazioni_div" class="p-4 my-3 box-shadow bg-gradient-2">
+                    <span class="conto-title p-2">Le tue Transazioni</span>
+                    <hr style="border: 1px solid black;">
+                    <div id="transazioni">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    includeHTML();
+    getConto();
+</script>
+
+</html>
