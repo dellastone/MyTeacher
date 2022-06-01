@@ -784,7 +784,11 @@
    * POST REQUEST TO UPDATE THE PROFILE IN THE DB
   **/
   function sendUpdate() {
-
+    msg = "La funzione di modifica del profilo non è stata attualmente implementata.<br>";
+    msg += "Al momento viene mostrato il prototipo del form di update del profilo.<br>";
+    msg += "Il bottone 'Aggiorna Profilo' non manda nessun aggiornameto, ma mostra nuovamente i dati già presenti nel DB."
+    document.getElementById("msgErrorNewLection").innerHTML = msg;
+    $("#errorAddLectionModal").modal('toggle');
 
 
 
@@ -798,8 +802,14 @@
    * POST REQUEST TO DELETE A LECTION IN THE DB
   **/
   function deleteLection(btn_id) {
-    lection_id = btn_id.slice(1);
+    
+    msg = "La funzione per eliminare una lezione non è stata attualmente implementata.<br>";
+    msg += "Al momento viene solo mostrato il prototipo del bottone 'Elimina'.<br>";
+    msg += "Cliccando il bottone viene solo recuperato l'id della lezione che si vorrebbe eliminare."
+    document.getElementById("msgErrorNewLection").innerHTML = msg;
+    $("#errorAddLectionModal").modal('toggle');
 
+    lection_id = btn_id.slice(1);
     //Fetch to send a post request to delete a lection in the DB
   }
 
