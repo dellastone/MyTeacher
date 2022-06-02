@@ -428,7 +428,7 @@
                 </div>
                 <div class="col-sm-9">
                   <p class="text-muted mb-0">
-                    <input type="date" id="dateNewLesson" name="dateStandard">
+                    <input type="date" id="dateNewLection" name="dateStandard">
                   </p>
                 </div>
               </div>
@@ -439,7 +439,7 @@
                 </div>
                 <div class="col-sm-9">
                   <p class="text-muted mb-0">
-                    <input type="time" id="startNewLesson" name="dateStandard">
+                    <input type="time" id="startNewLection" name="dateStandard">
                   </p>
                 </div>
               </div>
@@ -450,22 +450,22 @@
                 </div>
                 <div class="col-sm-9">
                   <p class="text-muted mb-0">
-                    <input type="time" id="endNewLesson" name="dateStandard">
+                    <input type="time" id="endNewLection" name="dateStandard">
                   </p>
                 </div>
               </div>
               <hr>
               <div class="row d-flex justify-content-center">
-                <button id="addLessonBtn" type="button" class="btn btn-danger" style="max-width: 200px;"
-                  onclick="addLesson()">Aggiungi
+                <button id="addLectionBtn" type="button" class="btn btn-danger" style="max-width: 200px;"
+                  onclick="addLection()">Aggiungi
                   lezione</button>
               </div>
             </div>
           </div>
         </div>
-        <div id="printLessonDiv" class="col-lg-8">
+        <div id="printLectionDiv" class="col-lg-8">
           <div class="card mb-4">
-            <div id="lessonDiv" class="card-body overflow-scroll" style="max-height: 300px;">
+            <div id="lectionDiv" class="card-body overflow-scroll" style="max-height: 300px;">
             </div>
           </div>
         </div>
@@ -473,14 +473,14 @@
     </div>
   </section>
 
-  <!-- Error add lesson -->
+  <!-- Error add lection -->
   <div class="container">
-    <div class="modal fade" data-bs-backdrop="static" id="errorAddLessonModal" tabindex="-1" role="dialog"
+    <div class="modal fade" data-bs-backdrop="static" id="errorAddLectionModal" tabindex="-1" role="dialog"
       aria-labelledby="success" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-body d-flex justify-content-center">
-            <div id="msgErrorNewLesson" class="container alert alert-danger"></div>
+            <div id="msgErrorNewLection" class="container alert alert-danger"></div>
           </div>
           <div class="d-flex justify-content-center modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>
@@ -494,9 +494,14 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 <script>
-
+  //keep update and saved if the current account logged is a professor or not
   var professor = false;
 
+  /**
+   * Print the header.
+   * Chek if there is a current logged user.
+   * Print the logged version page or not logged version page.
+  **/
   function startPage() {
     includeHTML();
     checkLoggedUser();
@@ -516,6 +521,11 @@
     }
   }
 
+  /**
+   * Fill the user data section with the user information.
+   * Fille the form with the current info of the user.
+   * Form initially hidden, will show up if the "Modifica profilo" button will be pressed.
+  **/
   function fillUserData(json) {
     name = json.body.nome;
     cognome = json.body.cognome;
@@ -539,7 +549,7 @@
       document.getElementById("extraProfDiv").removeAttribute("hidden");
       document.getElementById("extraProfDivF").removeAttribute("hidden");
       document.getElementById("lectionsProf").removeAttribute("hidden");
-      getLessons();
+      getLections();
     } else {
       document.getElementById("professorAccount").setAttribute("hidden", "");
       document.getElementById("extraProfDiv").setAttribute("hidden", "");
@@ -632,6 +642,9 @@
 
   }
 
+  /**
+   * Get the user data from the DB.
+  **/
   function getUserData() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -644,19 +657,22 @@
 
 
         if (obj.status == 200) {
-
           fillUserData(obj);
         } else if (obj.status == 400) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         } else if (obj.status == 500) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         }
       })
       .catch(error => console.error(error));
   }
 
-
-  function getLessons() {
+  /**
+   * Get the not already booked lections of the professor.
+  **/
+  function getLections() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const usr = urlParams.get('username')
@@ -669,18 +685,24 @@
 
 
         if (obj.status == 200) {
-          printLesson(obj.body);
+          printLection(obj.body);
         } else if (obj.status == 400) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         } else if (obj.status == 500) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         }
       })
       .catch(error => console.error(error));
   }
 
-  function printLesson(aJSON) {
-    lessonDiv = document.getElementById("lessonDiv");
+  /**
+   * Print the lections (date and time) of the professor on the lection section.
+   * Add a button "Elimina" for each lection.
+  **/ 
+  function printLection(aJSON) {
+    lectionDiv = document.getElementById("lectionDiv");
 
     for (let i = 0; i < (aJSON.length - 1); i++) {
       let tmp = aJSON[i];
@@ -702,7 +724,7 @@
       let btn = document.createElement("button");
       btn.setAttribute("class", "btn btn-danger");
       btn.setAttribute("id", "b" + tmp._id);
-      btn.setAttribute("onclick", "deleteLesson(this.id)")
+      btn.setAttribute("onclick", "deleteLection(this.id)")
       btn.innerHTML = "Elimina";
       let hr = document.createElement("hr");
 
@@ -712,8 +734,8 @@
       row.appendChild(div1);
       row.appendChild(div2);
       row.appendChild(div3);
-      lessonDiv.appendChild(row);
-      lessonDiv.appendChild(hr);
+      lectionDiv.appendChild(row);
+      lectionDiv.appendChild(hr);
 
     }
 
@@ -736,7 +758,7 @@
     let btn = document.createElement("button");
     btn.setAttribute("class", "btn btn-danger");
     btn.setAttribute("id", "b" + tmp._id);
-    btn.setAttribute("onclick", "deleteLesson(this.id)")
+    btn.setAttribute("onclick", "deleteLection(this.id)")
     btn.innerHTML = "Elimina";
 
     div1.appendChild(date);
@@ -745,10 +767,13 @@
     row.appendChild(div1);
     row.appendChild(div2);
     row.appendChild(div3);
-    lessonDiv.appendChild(row);
+    lectionDiv.appendChild(row);
 
   }
 
+  /**
+   * Show up the form to update the user data.
+  **/ 
   function showUpdateForm() {
     document.getElementById("infoDiv").setAttribute("hidden", "");
     document.getElementById("infoDivF").removeAttribute("hidden");
@@ -759,7 +784,11 @@
    * POST REQUEST TO UPDATE THE PROFILE IN THE DB
   **/
   function sendUpdate() {
-
+    msg = "La funzione di modifica del profilo non è stata attualmente implementata.<br>";
+    msg += "Al momento viene mostrato il prototipo del form di update del profilo.<br>";
+    msg += "Il bottone 'Aggiorna Profilo' non manda nessun aggiornameto, ma mostra nuovamente i dati già presenti nel DB."
+    document.getElementById("msgErrorNewLection").innerHTML = msg;
+    $("#errorAddLectionModal").modal('toggle');
 
 
 
@@ -770,18 +799,29 @@
 
   /**
    * TO BE IMPLEMENTED
-   * POST REQUEST TO DELETE A LESSON IN THE DB
+   * POST REQUEST TO DELETE A LECTION IN THE DB
   **/
-  function deleteLesson(btn_id) {
-    lesson_id = btn_id.slice(1);
+  function deleteLection(btn_id) {
+    
+    msg = "La funzione per eliminare una lezione non è stata attualmente implementata.<br>";
+    msg += "Al momento viene solo mostrato il prototipo del bottone 'Elimina'.<br>";
+    msg += "Cliccando il bottone viene solo recuperato l'id della lezione che si vorrebbe eliminare."
+    document.getElementById("msgErrorNewLection").innerHTML = msg;
+    $("#errorAddLectionModal").modal('toggle');
 
-    //Fetch to send a post request to delete a lesson in the DB
+    lection_id = btn_id.slice(1);
+    //Fetch to send a post request to delete a lection in the DB
   }
 
-  function addLesson() {
-    date = document.getElementById("dateNewLesson").value;
-    start = document.getElementById("startNewLesson").value;
-    end = document.getElementById("endNewLesson").value;
+  /**
+   * Check if all the requested values to add a lection are filled up.
+   * Check if the end time is after the start time.
+   * Call the function to send the POST request.
+  **/ 
+  function addLection() {
+    date = document.getElementById("dateNewLection").value;
+    start = document.getElementById("startNewLection").value;
+    end = document.getElementById("endNewLection").value;
 
     showModal = false;
     msg = "";
@@ -816,14 +856,18 @@
     }
 
     if (showModal) {
-      document.getElementById("msgErrorNewLesson").innerHTML = msg;
-      $("#errorAddLessonModal").modal('toggle');
+      document.getElementById("msgErrorNewLection").innerHTML = msg;
+      $("#errorAddLectionModal").modal('toggle');
     } else {
-      sendJSONaddLesson(date, start, end);
+      sendJSONaddLection(date, start, end);
     }
   }
 
-  function sendJSONaddLesson(date, start, end) {
+  /**
+   * Send a POST request to add the new lection.
+   * In case of success, call the refreshAddedLection.
+  **/ 
+  function sendJSONaddLection(date, start, end) {
 
     startJSON = date + "T" + start + ":00Z";
     endJSON = date + "T" + end + ":00Z";
@@ -839,22 +883,27 @@
       .then(r => r.json().then(data => ({ status: r.status, body: data })))
       .then(obj => {
         if (obj.status == 201) {
-          refreshAddedLesson();
+          refreshAddedLection();
         } else if (obj.status == 400) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         } else if (obj.status == 500) {
-
+          document.getElementById("msgErrorNewLection").innerHTML = obj.body.message;
+          $("#errorAddLectionModal").modal('toggle');
         }
       })
       .catch(error => console.error(error));
   }
 
-  function refreshAddedLesson() {
-    document.getElementById("lessonDiv").innerHTML = "";
-    getLessons();
-    document.getElementById("dateNewLesson").value = "";
-    document.getElementById("startNewLesson").value = "";
-    document.getElementById("endNewLesson").value = "";
+  /**
+   * Refresh the lections section so the new one will be shown up.
+  **/
+  function refreshAddedLection() {
+    document.getElementById("lectionDiv").innerHTML = "";
+    getLections();
+    document.getElementById("dateNewLection").value = "";
+    document.getElementById("startNewLection").value = "";
+    document.getElementById("endNewLection").value = "";
   }
 
 </script>

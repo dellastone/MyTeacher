@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 router.post('', async function (req, res) {
 	try {
-		const jwtExpirySeconds = 1000;
+		const jwtExpirySeconds = 100000000;
 		//Trova l'uente nel DB
 		let user = await User.findOne({
 			email: req.body.email

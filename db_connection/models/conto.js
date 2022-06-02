@@ -26,7 +26,7 @@ const ContoSchema = mongoose.Schema({
 ContoSchema.methods.addTransaction = function(transazione){
     let totale = this.totale;
     //se il conto è dell'utente ricevente o si tratta di una ricarica aggiorna il totale aggiungendo i fondi
-    if(this.owner == transazione.ricevente || transazione.ricarica == true){
+    if(this.owner.equals(transazione.ricevente) || transazione.ricarica == true){
         totale = totale + transazione.valore;
     }
     else{
