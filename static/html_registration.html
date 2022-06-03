@@ -244,7 +244,7 @@
     </style>
 </head>
 
-<body class="background" onload="includeHTML(); checkLoggedUser();">
+<body class="background" onload="includeHTML(); checkLoggedRegistration();">
     <div w3-include-html="header.html"></div>
     <div class="container mb-2">
         <div class="d-flex justify-content-center">
@@ -567,6 +567,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 <script>
     professorAccount = false;
+
+    /**
+     *  Delete the cookie "token" before calling checkLoggedUser().
+     *  In registration page the user cannot be logged in. 
+    **/
+    function checkLoggedRegistration(){
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        checkLoggedUser();
+    }
 
     /**
      * Show the proper form for the account to register
