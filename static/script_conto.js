@@ -152,7 +152,7 @@ function printConto(conto) {
 
     //stampa del saldo
     let saldo = document.getElementById("saldo");
-    saldo.innerText = conto.totale + " €";
+    saldo.innerText = conto.totale.toFixed(2) + " €";
 
     //stampa della data 
     const today = new Date();
