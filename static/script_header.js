@@ -49,7 +49,7 @@ function getCookie(name) {
 function checkLoggedUser() {
 
     let token = getCookie("token");
-    
+
 
     json = '{"token": "' + token + '"}';
 
@@ -105,16 +105,16 @@ function checkLoggedUser() {
  */
 function printLoggedHeader(usr, img) {
     document.getElementById("divLogged").removeAttribute("hidden");
-    document.getElementById("divNotLogged").setAttribute("hidden","");
+    document.getElementById("divNotLogged").setAttribute("hidden", "");
     document.getElementById("imgLogged").setAttribute("src", img);
-    if(img=="media/account_circle_FILL0_wght400_GRAD0_opsz48.png"){
+    if (img == "media/account_circle_FILL0_wght400_GRAD0_opsz48.png") {
         document.getElementById("imgLogged").setAttribute("style", "background-color:#adacac");
     } else {
         document.getElementById("imgLogged").setAttribute("style", "");
     }
     document.getElementById("nameLogged").innerHTML = usr;
-    document.getElementById("profileLink").setAttribute("href","html_profile.html?username="+usr);
-    document.getElementById("logoutLink").setAttribute("href","html_logout.html?username="+usr);
+    document.getElementById("profileLink").setAttribute("href", "html_profile.html?username=" + usr);
+    document.getElementById("logoutLink").setAttribute("onclick", "logoutHeader()");
 };
 
 /**
@@ -123,5 +123,13 @@ function printLoggedHeader(usr, img) {
  */
 function printLoginHeader() {
     document.getElementById("divNotLogged").removeAttribute("hidden");
-    document.getElementById("divLogged").setAttribute("hidden","");
+    document.getElementById("divLogged").setAttribute("hidden", "");
+};
+
+/**
+   * Delete token cookie to logout the user
+  **/
+function logoutHeader() {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    window.location.reload();
 };

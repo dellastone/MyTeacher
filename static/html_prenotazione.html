@@ -250,7 +250,8 @@
     <div class="container mt-1">
         <nav class="navbar navbar-light bg-light px-3">
             <div id="professor_tab">
-                <img id="pAccountPhoto" class="rounded-circle profile-picture" src="" alt="" style="background-color:#adacac">
+                <img id="pAccountPhoto" class="rounded-circle profile-picture" src="" alt=""
+                    style="background-color:#adacac">
                 <text id="pname"></text>
                 <text id="psurname"></text><br>
                 <text id="psubjects"></text><br>
@@ -312,7 +313,7 @@
                         </div>
                         <div class="d-flex justify-content-center">
                             <b>
-                                <div class="alert alert-success d-inline-flex p-2 bd-highlight">
+                                <div class="alert alert-info d-inline-flex p-2 bd-highlight">
                                     <text id="resume_lection" class="d-flex align-items-end"></text>
                                 </div>
                             </b>
@@ -349,23 +350,66 @@
             </div>
         </div>
 
-        <!-- Success -->
-        <div class="modal fade" data-bs-backdrop="static" id="success" tabindex="-1" role="dialog"
-            aria-labelledby="success" aria-hidden="true">
+        <!-- Success prenotation & pay -->
+        <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="payModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        Lezione prenotata!
+                    <div id="modal_head" class="modal-head d-flex justify-content-center">
+
+                        <div id="error_modal_payment" class="hide_div">
+                            <div class="d-flex justify-content-center">
+                                <div class="alert alert-danger d-flex align-items-center d-inline-flex bd-highlight m-2"
+                                    role="alert">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                    </svg>
+                                    <text style="color: hsla(0, 0%, 100%, 0)">12</text>
+                                    <text id="error_msg_payment"></text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container d-flex justify-content-center align-items-center">
+                            <b>
+                                <div class="alert alert-success d-inline-flex p-2 bd-highlight">
+                                    <text id="resume_lection_payment" class="d-flex align-items-end"></text>
+                                </div>
+                            </b><br>
+                            <div class="alert alert-success d-inline-flex p-2 bd-highlight">
+                                Prenotazione effettuata!
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="modal-body d-flex justify-content-center">
+                        <div class="alert alert-info d-inline-flex p-2 bd-highlight">
+                            <text id="lectionPrice" class="d-flex align-items-end"></text>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-center modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                            onclick="window.location = 'ricerca.html'">Vai alla
-                            home</button>
+                        <button id="btn_pay" type="button" class="btn btn-danger" onclick="payLection()">Paga</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Success payment-->
+        <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="success" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body d-flex justify-content-center">
+                        <div class="alert alert-success d-inline-flex p-2 bd-highlight">
+                            Pagamento effettuato!
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center modal-footer">
+                        <button id="btn_success" type="button" class="btn btn-danger"
+                            onclick='window.location = "ricerca.html"'>Torna alla ricerca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -439,11 +483,11 @@
             label.setAttribute("for", "s" + i);
             label.innerHTML = subjects[i];
             let div = document.createElement("div");
-            
+
             div.appendChild(input);
             div.appendChild(label);
             document.getElementById("subject-form-check").appendChild(div);
-            
+
 
         }
 
@@ -458,7 +502,7 @@
             label.setAttribute("for", "t" + i);
             label.innerHTML = topics[i];
             let div = document.createElement("div");
-            
+
             div.appendChild(input);
             div.appendChild(label);
             document.getElementById("topics-form-check").appendChild(div);
@@ -565,7 +609,7 @@
     /**
      * Save the id of the lection selected.
      * Print date and time of the lection selected on the prenotation modal.
-    **/ 
+    **/
     idSelected = "";
     function selecLection(btId) {
         document.getElementById("error_modal").setAttribute("class", "hide_div");
@@ -579,14 +623,15 @@
         timeSelected = document.getElementById(idTime).innerHTML;
         dateSelected = document.getElementById(idDate).innerHTML;
         document.getElementById("resume_lection").innerHTML = dateSelected + "  " + timeSelected;
+        document.getElementById("resume_lection_payment").innerHTML = dateSelected + "  " + timeSelected;
 
 
         $("#book").modal('toggle');
     }
-    
+
     /**
      * Check if the user selected at least one subject and one topic before sending the post request to the DB.
-    **/ 
+    **/
     function checkSubmission() {
 
         let nCheckS = 0;
@@ -622,7 +667,7 @@
 
     /**
      * Create the JSON to send to the DB to book the lection.
-    **/ 
+    **/
     function createJSON() {
         aSubjects = "";
         aTopics = "";
@@ -651,7 +696,7 @@
 
     /**
      * Send the POST request to book the lection.
-    **/ 
+    **/
     function bookLection(jsonToSend) {
 
 
@@ -665,7 +710,7 @@
             .then(obj => {
                 msg = obj.body.message;
                 if (obj.status == 200) {
-                    $("#success").modal('toggle');
+                    showPayModal();
 
                 } else if (obj.status == 400) {
                     document.getElementById("hidden_div").setAttribute("class", "show_div");
@@ -674,6 +719,83 @@
                 } else if (obj.status == 500) {
                     document.getElementById("hidden_div").setAttribute("class", "show_div");
                     document.getElementById("alert_msg").innerHTML = msg;
+
+                }
+            })
+            .catch(error => console.error(error));
+    }
+
+    function showPayModal() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const professorUsername = urlParams.get('professor');
+
+
+        fetch('../api/v2/lection/' + professorUsername)
+
+            .then(r => r.json().then(data => ({ status: r.status, body: data })))
+            .then(obj => {
+
+                msg = obj.body.message;
+                if (obj.status == 200) {
+                    findLectionPrice(obj.body);
+                } else if (obj.status == 400) {
+                    btn.removeAttribute("data-bs-dismiss");
+                    document.getElementById("hidden_div").setAttribute("class", "show_div");
+                    document.getElementById("alert_msg").innerHTML = msg;
+                } else if (obj.status == 500) {
+                    document.getElementById("hidden_div").setAttribute("class", "show_div");
+                    document.getElementById("alert_msg").innerHTML = msg;
+                }
+            })
+            .catch(error => console.error(error));
+
+    }
+
+    function findLectionPrice(aJSON) {
+        let price = 0;
+        for (let i = 0; i < aJSON.length; i++) {
+            if (aJSON[i]._id == idSelected) {
+                price = aJSON[i].prezzo;
+                
+                console.log(idSelected + "==" + aJSON[i]._id + "  "+(idSelected==aJSON[i]._id));
+                i = aJSON.length;
+            }
+        }
+        document.getElementById("lectionPrice").innerHTML = price + " €";
+        $("#payModal").modal('toggle');
+    }
+
+    function payLection() {
+        jsonToSend = '{"lection_id": "' + idSelected + '"}';
+        console.log("JSON: "+jsonToSend);
+        fetch('../api/v2/payLection', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: jsonToSend,
+        })
+
+            .then(r => r.json().then(data => ({ status: r.status, body: data })))
+            .then(obj => {
+                msg = obj.body.message;
+                btn = document.getElementById("btn_pay");
+                if (obj.status == 200) {
+                    btn.setAttribute("onclick", "");
+                    btn.setAttribute("data-bs-dismiss", "modal");
+                    btn.click();
+                    btn.removeAttribute("data-bs-dismiss");
+                    btn.setAttribute("onclick", "checkSubmission()");
+                    $("#success").modal('toggle');
+
+                } else if (obj.status == 400) {
+                    btn.removeAttribute("data-bs-dismiss");
+                    document.getElementById("error_modal_payment").setAttribute("class", "show_div");
+                    document.getElementById("error_msg_payment").innerHTML = msg;
+
+                } else if (obj.status == 500) {
+                    btn.removeAttribute("data-bs-dismiss");
+                    document.getElementById("error_modal_payment").setAttribute("class", "show_div");
+                    document.getElementById("error_msg_payment").innerHTML = msg;
 
                 }
             })
