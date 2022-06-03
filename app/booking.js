@@ -59,6 +59,41 @@ router.post('', async function (req, res) {
 
 });
 
+router.delete('', async function (req, res) {
+	try {
+		
+
+
+		const lection = await Lection.findOne({
+			_id: req.body.lection_id
+		}).exec();
+		
+		if(!lection){
+			return res.status(400).json({ message: 'Errore, lezione non trovata.' });
+
+		}
+		
+		
+		lection.materie = ""
+		lection.argomenti = ""
+		lection.student_username = ""
+		lection.booked = false;
+		await lection.save();
+
+
+		res.status(200).json({
+			message: "the lection is no longer booked"
+		});
+
+
+
+	} catch (err) {
+		console.log(err)
+		return res.status(500).json({ message: 'Errore interno al Server.' });
+	}
+
+});
+
 
 
 module.exports = router;

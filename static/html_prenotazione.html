@@ -344,7 +344,7 @@
                     </div>
                     <div class="d-flex justify-content-center modal-footer">
                         <button id="btn_book" type="button" class="btn btn-danger"
-                            onclick="checkSubmission()">Prenota</button>
+                            onclick="checkSubmission()">Avanti</button>
                     </div>
                 </div>
             </div>
@@ -376,9 +376,7 @@
                                     <text id="resume_lection_payment" class="d-flex align-items-end"></text>
                                 </div>
                             </b><br>
-                            <div class="alert alert-success d-inline-flex p-2 bd-highlight">
-                                Prenotazione effettuata!
-                            </div>
+                            
                         </div>
                     </div>
                     <hr>
@@ -388,7 +386,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center modal-footer">
-                        <button id="btn_pay" type="button" class="btn btn-danger" onclick="payLection()">Paga</button>
+                        <button id="btn_pay" type="button" class="btn btn-danger" onclick="bookLection()">Paga</button>
                     </div>
                 </div>
             </div>
@@ -668,6 +666,7 @@
     /**
      * Create the JSON to send to the DB to book the lection.
     **/
+   bookingJson = ""
     function createJSON() {
         aSubjects = "";
         aTopics = "";
@@ -690,27 +689,28 @@
 
 
         jsonToSend = '{"materie": [' + aSubjects + '], "argomenti": [' + aTopics + '], "lection_id": "' + idSelected + '"}';
-
-        bookLection(jsonToSend)
+        bookingJson = jsonToSend;
+        showPayModal();
+        //bookLection(jsonToSend)
     }
 
     /**
      * Send the POST request to book the lection.
     **/
-    function bookLection(jsonToSend) {
-
+    function bookLection() {
+        let booked = false;
 
         fetch('../api/v2/prenota', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: jsonToSend,
+            body: bookingJson,
         })
 
             .then(r => r.json().then(data => ({ status: r.status, body: data })))
             .then(obj => {
                 msg = obj.body.message;
                 if (obj.status == 200) {
-                    showPayModal();
+                    booked = true;
 
                 } else if (obj.status == 400) {
                     document.getElementById("hidden_div").setAttribute("class", "show_div");
@@ -721,6 +721,10 @@
                     document.getElementById("alert_msg").innerHTML = msg;
 
                 }
+            })
+            .then(()=>{
+                if(booked)
+                    payLection();
             })
             .catch(error => console.error(error));
     }
@@ -769,6 +773,7 @@
     function payLection() {
         jsonToSend = '{"lection_id": "' + idSelected + '"}';
         console.log("JSON: "+jsonToSend);
+        let paid = false;
         fetch('../api/v2/payLection', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -785,6 +790,7 @@
                     btn.click();
                     btn.removeAttribute("data-bs-dismiss");
                     btn.setAttribute("onclick", "checkSubmission()");
+                    paid = true;
                     $("#success").modal('toggle');
 
                 } else if (obj.status == 400) {
@@ -797,6 +803,34 @@
                     document.getElementById("error_modal_payment").setAttribute("class", "show_div");
                     document.getElementById("error_msg_payment").innerHTML = msg;
 
+                }
+            })
+            .then(()=>{
+                if(!paid)
+                    deleteBokking(jsonToSend);
+            })
+            .catch(error => console.error(error));
+    }
+    function deleteBokking(jsonToSend){
+        fetch('../api/v2/prenota', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: bookingJson,
+        })
+
+            .then(r => r.json().then(data => ({ status: r.status, body: data })))
+            .then(obj => {
+                msg = obj.body.message;
+                if (obj.status == 200) {
+                    console.log(msg)
+
+
+                } else if (obj.status == 400) {
+                    console.log(msg)
+
+
+                } else if (obj.status == 500) {
+                    console.log(msg)
                 }
             })
             .catch(error => console.error(error));
