@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet"
         href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
-    <script src="script_ricerca.js"></script>
+    <script src="script_ricarica.js"></script>
     <script src="script_header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -35,27 +35,10 @@
     .show_div {
             opacity: 100;
         }
-
-
-    .rounded {
-        border-radius: 1rem;
-    }
-
-    .nav-pills .nav-link {
-        color: #555;
-    }
-
-    .nav-pills .nav-link.active {
-        color: white;
-    }
-
     input[type="radio"] {
         margin-right: 5px;
     }
 
-    .bold {
-        font-weight: bold;
-    }
 </style>
 
 
@@ -101,14 +84,14 @@
                                     <label for="value">
                                         <h6>Valore ricarica</h6>
                                     </label>
-                                    <input type="number" min="0.00" max="10000.00" step="0.01" name="value"
+                                    <input type="number" id="amount" min="0.00" max="10000.00" step="0.01" name="value"
                                         placeholder="Valore ricarica" required class="form-control" />
                                 </div>
                                 <div class="form-group">
                                     <label for="username">
-                                        <h6>Card Owner</h6>
+                                        <h6>Proprietario della cartar</h6>
                                     </label>
-                                    <input type="text" name="username" placeholder="Card Owner Name" required
+                                    <input type="text" name="username" id="owner" placeholder="Card Owner Name" required
                                         class="form-control" />
                                 </div>
                                 <div class="form-group">
@@ -116,7 +99,7 @@
                                         <h6>Card number</h6>
                                     </label>
                                     <div class="input-group">
-                                        <input type="text" name="cardNumber" placeholder="Valid card number"
+                                        <input type="text" name="cardNumber" id = "cardNumber" placeholder="Valid card number"
                                             class="form-control" required />
                                         <div class="input-group-append">
                                             <span class="input-group-text text-muted"> <i
@@ -134,9 +117,9 @@
                                                     <h6>Expiration Date</h6>
                                                 </span>
                                             </label>
-                                            <div class="input-group"><input type="number" placeholder="MM" name=""
+                                            <div class="input-group"><input type="number" min="1" max="31" step="1" id="mm" placeholder="MM" name=""
                                                     class="form-control" required /> <input type="number"
-                                                    placeholder="YY" name="" class="form-control" required /></div>
+                                                    placeholder="YYYY" id="yy" step="1" name="" class="form-control" required /></div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -145,7 +128,7 @@
                                                 title="Three digit CV code on the back of your card">
                                                 <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
                                             </label>
-                                            <input type="text" required class="form-control" />
+                                            <input type="text" id="cvv" required class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -161,35 +144,6 @@
     </div>
     <script>
         includeHTML();
-        keyPressButton();
-        function ricarica() {
-            jsonToSend = '{"cardNumber":"6125526152665266","expirationDate":"2022-06-01","cvv":"111","amount": "12"}';
-
-            fetch('../api/v2/ricarica', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: jsonToSend,
-            })
-
-                .then(r => r.json().then(data => ({ status: r.status, body: data })))
-                .then(obj => {
-                    msg = obj.body.message;
-                    if (obj.status == 200) {
-                        $("#success").modal('toggle');
-
-                    } else if (obj.status == 400) {
-                        document.getElementById("hidden_div").setAttribute("class", "show_div");
-                        document.getElementById("alert_msg").innerHTML = msg;
-
-                    } else if (obj.status == 500) {
-                        document.getElementById("hidden_div").setAttribute("class", "show_div");
-                        document.getElementById("alert_msg").innerHTML = msg;
-
-                    }
-                })
-                .catch(error => console.error(error));
-        }
-
     </script>
 </body>
 
