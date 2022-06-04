@@ -4,7 +4,7 @@
   "description": "Progetto del corso ingegneria del software 2021/2022",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --setupFiles dotenv/config",
     "start": "node index.js",
     "start_local": "echo use: $ npm run dev",
     "dev": "node -r dotenv/config index.js"
@@ -39,5 +39,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.3",
     "run": "^1.4.0"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "node-fetch": "^2.6.7",
+    "supertest": "^6.2.3"
   }
 }

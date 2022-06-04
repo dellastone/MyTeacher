@@ -35,7 +35,7 @@ router.post(
     '',
     [
         body('username').exists().withMessage("Scegli uno username").isAlphanumeric().withMessage("Username non valido, deve essere una stringa alfanumerica"),
-        body('email').exists().withMessage("Inserisi un indirizzo email per continuare").isEmail().withMessage("L'email inserita non è valida"),
+        body('email').exists().withMessage("Inserisci un indirizzo email per continuare").isEmail().withMessage("L'email inserita non è valida"),
         body('nome').exists().withMessage("Inserisci il tuo nome prima di continuare").isAlpha().withMessage("Nome non valido"),
         body('cognome').exists().withMessage("Inserisci il tuo cognome prima di continuare").isAlpha().withMessage("Cognome non valido"),
         body('phone').optional().isMobilePhone().withMessage("Numero di telefono non valido"),
