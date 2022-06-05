@@ -21,7 +21,7 @@ router.get('', async (req, res) => {
         }
         else {
             //trova il conto legato all'utente
-            let conto = await Conto.findOne({ _id: user.conto }).exec();
+            let conto = await Conto.findOne({ _id: user.conto })
             if (conto == null) {
                 //conto non trovato nel database, viene ritornato un errore all'utente
                 message = "Conto non presente nel database";

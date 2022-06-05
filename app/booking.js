@@ -13,12 +13,12 @@ router.post('', async function (req, res) {
 		if(mongoose.Types.ObjectId.isValid(req.body.lection_id)){
 			lection = await Lection.findOne({
 				_id: req.body.lection_id
-			}).exec();
+			})
 		}
 		console.log(lection)
 		const std = await User.findOne({
 			username: req.loggedUser.username
-		}).exec();
+		})
 
 		if(!std){
 			return res.status(400).json({ message: 'Errore, utente non trovato.' });
@@ -64,11 +64,14 @@ router.post('', async function (req, res) {
 router.delete('', async function (req, res) {
 	try {
 		
+		let lection = null;
+		if(mongoose.Types.ObjectId.isValid(req.body.lection_id)){
+			lection = await Lection.findOne({
+				_id: req.body.lection_id
+			})
+		}
 
-
-		const lection = await Lection.findOne({
-			_id: req.body.lection_id
-		}).exec();
+	
 		
 		if(!lection){
 			return res.status(400).json({ message: 'Errore, lezione non trovata.' });
