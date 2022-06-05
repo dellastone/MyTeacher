@@ -15,18 +15,18 @@ describe('POST /api/v2/payLection', function () {
         userSpy = jest.spyOn(User, 'findOne').mockImplementation((json) => {
 
             if (json.username == "prf")
-                return {
+                return new User({
                     conto: "conto_prf"
-                };
+                });
             else
-                return {
+                return new User({
                     conto: "conto_std"
-                };
+                });
         });
         lectionSpy = jest.spyOn(Lection, 'findOne').mockImplementation((json) => {
 
             if (json._id == "not_booked")
-                return {
+                return new Lection({
                     prof_username: "prf",
                     starts: "2021-01-01T12:00:00Z",
                     ends: "2021-01-01T13:00:00Z",
@@ -35,11 +35,11 @@ describe('POST /api/v2/payLection', function () {
                     prezzo: 20,
                     owner: "629a26abbd66ab87c123f9ba",
                     _id: "629a26abbd66ab87c123f9bb"
-                };
+                });
             else if (json._id == "wrong_id")
                 return null;
             else if (json._id == "paid")
-                return {
+                return new Lection( {
                     prof_username: "prf",
                     starts: "2021-01-01T12:00:00Z",
                     ends: "2021-01-01T13:00:00Z",
@@ -48,9 +48,9 @@ describe('POST /api/v2/payLection', function () {
                     prezzo: 20,
                     owner: "prf",
                     _id: "629a26abbd66ab87c123f9bb"
-                };
+                });
             else
-                return {
+                return new Lection({
                     student_username: "std",
                     prof_username: "prf",
                     starts: "2021-01-01T12:00:00Z",
@@ -59,14 +59,14 @@ describe('POST /api/v2/payLection', function () {
                     paid: false,
                     prezzo: 20,
                     owner: "prf",
-                    _id: "629a326382701e0773c38f67"
-                };
+                    _id: "lect_id"
+                });
         });
         contoSpy = jest.spyOn(Conto, 'findOne').mockImplementation((json) => {
 
-            return {
+            return new Conto({
                 totale: 10
-            };
+            });
 
         });
 
@@ -131,7 +131,7 @@ describe('POST /api/v2/payLection', function () {
             .post('/api/v2/payLection')
             .set('Cookie', ['token=' + token])
             .set('Accept', 'application/json')
-            .send({ lection_id: '629a326382701e0773c38f67' })
+            .send({ lection_id: 'lect_id' })
             .expect(400, { message: 'Errore, il tuo saldo non è sufficiente per pagare la lezione.' });
     });
 
