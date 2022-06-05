@@ -39,5 +39,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.3",
     "run": "^1.4.0"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0"
   }
 }

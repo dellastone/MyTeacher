@@ -40,7 +40,7 @@ router.post('', async function (req, res) {
 		res.status(200).json({
 			message: 'Login effettuato.',
 			token: token,
-			self: "api/v1/users/" + user.username
+			self: "api/v2/users/" + user.username
 		});
 	} catch (err) {
 		return res.status(500).json({ message: 'Errore interno al Server.' });
