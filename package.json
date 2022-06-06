@@ -38,6 +38,10 @@
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.3",
-    "run": "^1.4.0"
+    "run": "^1.4.0",
+    "supertest": "^6.2.3"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0"
   }
 }

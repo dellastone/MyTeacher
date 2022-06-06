@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Lection = require('../db_connection/models/lection'); // get our mongoose model
 const User = require('../db_connection/models/user');
 
@@ -8,43 +9,44 @@ const User = require('../db_connection/models/user');
 router.post('', async function (req, res) {
 	try {
 		
+		let lection = null;
 
-
-		const lection = await Lection.findOne({
+		lection = await Lection.findOne({
 			_id: req.body.lection_id
-		}).exec();
+		})
+
 		console.log(lection)
 		const std = await User.findOne({
 			username: req.loggedUser.username
-		}).exec();
+		})
 
-		if(!std){
+		if (!std) {
 			return res.status(400).json({ message: 'Errore, utente non trovato.' });
 		}
-		if(!lection){
+		if (!lection) {
 			return res.status(400).json({ message: 'Errore, lezione non trovata.' });
 
 		}
-		if(lection.booked){
+		if (lection.booked) {
 			return res.status(400).json({ message: 'Errore, lezione già prenotata.' });
 		}
-		if(std.professore){
+		if (std.professore) {
 			return res.status(400).json({ message: 'Errore, il professore non può prenotare la lezione.' });
 		}
 
 
-		if(req.body.materie != undefined)
+		if (req.body.materie != undefined)
 			lection.materie = req.body.materie
-		if(req.body.argomenti != undefined)
+		if (req.body.argomenti != undefined)
 			lection.argomenti = req.body.argomenti
 		lection.student_username = std.username
 		lection.booked = true;
 		await lection.save();
 
-		let std_lections =  std.lezioni;
+		let std_lections = std.lezioni;
 		std_lections.push(lection);
 		std.lezioni = std_lections;
-		await std.save();
+		await std.save()
 
 		res.status(200).json({
 			message: "lection booked"
@@ -61,19 +63,22 @@ router.post('', async function (req, res) {
 
 router.delete('', async function (req, res) {
 	try {
-		
+
+		let lection = null;
+		if (mongoose.Types.ObjectId.isValid(req.body.lection_id)) {
+			lection = await Lection.findOne({
+				_id: req.body.lection_id
+			})
+		}
 
 
-		const lection = await Lection.findOne({
-			_id: req.body.lection_id
-		}).exec();
-		
-		if(!lection){
+
+		if (!lection) {
 			return res.status(400).json({ message: 'Errore, lezione non trovata.' });
 
 		}
-		
-		
+
+
 		lection.materie = ""
 		lection.argomenti = ""
 		lection.student_username = ""
