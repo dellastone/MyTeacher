@@ -17,7 +17,7 @@ router.get('', async (req, res) => {
         console.log("Ricerca professori nel database ...");
 
         const professors = await User.find({ professore: true }, 
-        ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+        ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']);
 
         //dati ritornati all'utente
         console.log("Lista professori ritornata correttamente all'utente");
@@ -59,7 +59,7 @@ router.get(
                         { nome: new RegExp(name, 'i') },
                         { cognome: new RegExp(name, 'i') }]
                     },
-                    ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+                    ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']);
 
                 //dati ritornati all'utente
                 console.log("Lista professori ritornata correttamente all'utente");
@@ -111,7 +111,7 @@ router.get(
                         cognome: new RegExp(name, 'i')
                         }]
                     },
-                    ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+                    ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']);
 
                 //dati ritornati all'utente
                 console.log("Lista professori ritornata correttamente all'utente");
