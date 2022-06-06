@@ -143,7 +143,6 @@ router.post(
                             conto.owner = newUser._id;
                             newUser.conto = conto._id;
                             await conto.save();
-                            console.log(newUser);
                             
                             await newUser.save();
                         }
@@ -205,7 +204,6 @@ router.get('/:username', async (req, res) => {
             console.log("Ricerca dell'utente con username " + username + " nel database ...");
 
             const user = await User.findOne({ username: username }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']);
-            console.log(user);
             if (user == null) {
                 //utente non trovato nel database, viene ritornato un errore all'utente
                 message = "Utente non presente nel database";
