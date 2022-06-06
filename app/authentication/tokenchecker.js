@@ -16,7 +16,7 @@ const verifyToken = (req, res, next) => {
   } catch (err) {
     console.log("token errato")
     console.log(err)
-    return res.status(400).send({message:"Token non valido"});
+    return res.status(401).send({message:"Token non valido"});
   }
   return next();
 };

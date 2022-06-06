@@ -15,12 +15,12 @@ router.post('', async function (req, res) {
 
 		//L'utente non è stato trovato
 		if (!user) {
-			return res.status(400).json({ message: 'Errore, utente non trovato.' });
+			return res.status(401).json({ message: 'Errore, utente non trovato.' });
 		}
 
 		//controllo password
 		if (!user.validPassword(req.body.password)) {
-			return res.status(400).json({ message: 'Errore, password errata.' });
+			return res.status(401).json({ message: 'Errore, password errata.' });
 		}
 
 		//crea il token per l'utente
