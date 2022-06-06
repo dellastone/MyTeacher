@@ -1,0 +1,48 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    
+    # This is used to load Environment-level secrets, from the specified environment.
+    # Instead, repository secrets are loaded by default.
+    environment: production
+    
+    env:
+      SUPER_SECRET: ${{ secrets.SUPER_SECRET }} # Must be set as a GitHub secret
+      DB_URL: ${{ secrets.DB_URL }} # Must be set as a GitHub secret
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+  
+  release:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v2
+    # https://github.com/marketplace/actions/deploy-to-heroku#procfile-passing
+    - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "myteacher2022" #Must be unique in Heroku
+        heroku_email: "daniele.dellapietra@studenti.unitn.it"
