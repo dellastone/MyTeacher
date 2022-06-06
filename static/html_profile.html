@@ -14,9 +14,13 @@
 
   <script src="script/script_header.js"></script>
   <script src="script/script_ricerca.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+
   <link rel="stylesheet"
     href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
   <link rel="stylesheet"
@@ -601,7 +605,7 @@
     document.getElementById("accountNameF").value = name;
     document.getElementById("accountSurnameF").value = cognome;
     document.getElementById("accountEmailF").value = email;
-    
+
     if (phone == "" || phone == undefined) {
       document.getElementById("accountPhoneF").value = "";
     } else {
@@ -678,7 +682,7 @@
     const usr = urlParams.get('username')
 
 
-    fetch('../api/v2/notBookedLection/' + usr)
+    fetch('../api/v2/lection/' + usr)
 
       .then(r => r.json().then(data => ({ status: r.status, body: data })))
       .then(obj => {
@@ -700,7 +704,7 @@
   /**
    * Print the lections (date and time) of the professor on the lection section.
    * Add a button "Elimina" for each lection.
-  **/ 
+  **/
   function printLection(aJSON) {
     lectionDiv = document.getElementById("lectionDiv");
 
@@ -726,9 +730,20 @@
       btn.setAttribute("id", "b" + tmp._id);
       btn.setAttribute("onclick", "deleteLection(this.id)")
       btn.innerHTML = "Elimina";
+
+      let booked = document.createElement("p");
+      date.setAttribute("class", "mb-0");
+      if (tmp.booked) {
+          booked.innerText = "PRENOTATA";
+      }
+      else {
+          booked.innerText = "NON PRENOTATA";
+      }
+
       let hr = document.createElement("hr");
 
       div1.appendChild(date);
+      div1.appendChild(booked);
       div2.appendChild(time);
       div3.appendChild(btn);
       row.appendChild(div1);
@@ -761,7 +776,17 @@
     btn.setAttribute("onclick", "deleteLection(this.id)")
     btn.innerHTML = "Elimina";
 
+    let booked = document.createElement("p");
+      date.setAttribute("class", "mb-0");
+      if (tmp.booked) {
+          booked.innerText = "PRENOTATA";
+      }
+      else {
+          booked.innerText = "NON PRENOTATA";
+      }
+
     div1.appendChild(date);
+    div1.appendChild(booked);
     div2.appendChild(time);
     div3.appendChild(btn);
     row.appendChild(div1);
@@ -773,7 +798,7 @@
 
   /**
    * Show up the form to update the user data.
-  **/ 
+  **/
   function showUpdateForm() {
     document.getElementById("infoDiv").setAttribute("hidden", "");
     document.getElementById("infoDivF").removeAttribute("hidden");
@@ -802,7 +827,7 @@
    * POST REQUEST TO DELETE A LECTION IN THE DB
   **/
   function deleteLection(btn_id) {
-    
+
     msg = "La funzione per eliminare una lezione non è stata attualmente implementata.<br>";
     msg += "Al momento viene solo mostrato il prototipo del bottone 'Elimina'.<br>";
     msg += "Cliccando il bottone viene solo recuperato l'id della lezione che si vorrebbe eliminare."
@@ -817,7 +842,7 @@
    * Check if all the requested values to add a lection are filled up.
    * Check if the end time is after the start time.
    * Call the function to send the POST request.
-  **/ 
+  **/
   function addLection() {
     date = document.getElementById("dateNewLection").value;
     start = document.getElementById("startNewLection").value;
@@ -866,7 +891,7 @@
   /**
    * Send a POST request to add the new lection.
    * In case of success, call the refreshAddedLection.
-  **/ 
+  **/
   function sendJSONaddLection(date, start, end) {
 
     startJSON = date + "T" + start + ":00Z";
