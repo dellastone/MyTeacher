@@ -19,7 +19,6 @@ router.get('', async (req, res) => {
         const professors = await User.find({ professore: true }, 
         ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
 
-        console.log(professors);
         //dati ritornati all'utente
         console.log("Lista professori ritornata correttamente all'utente");
         res.status(200).json(professors);
@@ -62,7 +61,6 @@ router.get(
                     },
                     ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
 
-                console.log(professors);
                 //dati ritornati all'utente
                 console.log("Lista professori ritornata correttamente all'utente");
                 res.status(200).json(professors);
@@ -115,7 +113,6 @@ router.get(
                     },
                     ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
 
-                console.log(professors);
                 //dati ritornati all'utente
                 console.log("Lista professori ritornata correttamente all'utente");
                 res.status(200).json(professors);
