@@ -11,7 +11,7 @@ router.post('', async function (req, res) {
 		//Trova l'uente nel DB
 		let user = await User.findOne({
 			email: req.body.email
-		}).exec();
+		});
 
 		//L'utente non è stato trovato
 		if (!user) {
