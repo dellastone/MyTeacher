@@ -176,7 +176,7 @@ function ricerca() {
                         printResults(data);
                     }
                     else {
-                        printNoResults();
+                        printNoResults(toSearch);
                     }
                 })
                 .catch((err) => function () {

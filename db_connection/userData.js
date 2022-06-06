@@ -80,7 +80,6 @@ router.post(
             if (req.body.materie != undefined) {
                 for (let i = 0; i < req.body.materie.length; i++) {
                     materie[i] = req.sanitize(req.body.materie[i]);
-
                 }
             }
             let argomenti = [];
@@ -94,13 +93,13 @@ router.post(
                 //controlla se le due password inserite dall'utente sono uguali 
                 //controlla se esite già un utente con lo stesso username o con la stessa mail
                 if (checkSamePassword(password, repeatpassword)) {
-                    let search_username = await User.findOne({ username: username }).exec();
+                    let search_username = await User.findOne({ username: username });
                     if (search_username != null) {
                         message = "Username non disponibile";
                         wrong_data = true;
                     }
                     else {
-                        let search_email = await User.findOne({ email: email }).exec();
+                        let search_email = await User.findOne({ email: email });
                         if (search_email != null) {
                             message = "Esiste già un utente registrato con questo indirizzo email";
                             wrong_data = true;
@@ -163,7 +162,7 @@ router.post(
             else {
                 //nel caso in cui l'utente sia stato correttamente creato viene ritornato un codice 201
                 console.log("Utente creato con successo e aggiunto al database");
-                res.status(201).json({ location: "/api/v1/users/" + username });
+                res.status(201).json({ location: "/api/v2/users/" + username });
             }
         } catch (err) {
             //nel caso di errore del server viene ritornato un errore con codice 500
@@ -174,11 +173,11 @@ router.post(
 router.get('', async (req, res) => {
     let message = "Si è verificato un errore durante la ricerca utenti, la preghiamo di riprovare";
     try {
-        //ricerca drgli utenti nel database, solo i campi da ritornare vengono recuperati 
+        //ricerca degli utenti nel database, solo i campi da ritornare vengono recuperati 
         //non viene ritornato l'_id creato da mongoDB, l'hash della password e il salt
         console.log("Ricerca utenti nel database ...");
 
-        const users = await User.find({}, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+        const users = await User.find({}, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']);
 
         //dati ritornati all'utente
         console.log("Lista utenti ritornata correttamente all'utente");
@@ -205,7 +204,7 @@ router.get('/:username', async (req, res) => {
             //non viene ritornato l'_id creato da mongoDB, l'hash della password e il salt
             console.log("Ricerca dell'utente con username " + username + " nel database ...");
 
-            const user = await User.findOne({ username: username }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+            const user = await User.findOne({ username: username }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']);
             console.log(user);
             if (user == null) {
                 //utente non trovato nel database, viene ritornato un errore all'utente
