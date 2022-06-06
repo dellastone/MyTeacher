@@ -1,7 +1,6 @@
 const request = require('supertest');
-const app = require('./app');
+const app = require('../app/app');
 const User = require('../db_connection/models/user');
-const { response } = require('./app');
 
 /**
  * Testing:
@@ -52,37 +51,37 @@ describe('POST /api/v2/users/auth', () => {
         userSpy.mockRestore();
     });
 
-    test('POST /api/v2/users/auth senza inserire la mail deve ritornare 400.', () => {
+    test('POST /api/v2/users/auth senza inserire la mail deve ritornare 401.', () => {
         return request(app)
             .post('/api/v2/users/auth')
             .set('Accept', 'application/json')
             .send(no_mail) // sends a JSON post body
-            .expect(400, { message: 'Errore, utente non trovato.' });
+            .expect(401, { message: 'Errore, utente non trovato.' });
 
     });
 
-    test('POST /api/v2/users/auth inserendo una mail non corretta (non appartente a nessun utente presente nel sistema) deve ritornare 400.', () => {
+    test('POST /api/v2/users/auth inserendo una mail non corretta (non appartente a nessun utente presente nel sistema) deve ritornare 401.', () => {
         return request(app)
             .post('/api/v2/users/auth')
             .set('Accept', 'application/json')
             .send(wrong_mail) // sends a JSON post body
-            .expect(400, { message: 'Errore, utente non trovato.' });
+            .expect(401, { message: 'Errore, utente non trovato.' });
     });
 
-    test('POST /api/v2/users/auth senza inserire la password deve ritornare 400.', () => {
+    test('POST /api/v2/users/auth senza inserire la password deve ritornare 401.', () => {
         return request(app)
             .post('/api/v2/users/auth')
             .set('Accept', 'application/json')
             .send(no_password) // sends a JSON post body
-            .expect(400, { message: 'Errore, password errata.' });
+            .expect(401, { message: 'Errore, password errata.' });
     });
 
-    test('POST /api/v2/users/auth inserendo una password errata deve ritornare 400.', () => {
+    test('POST /api/v2/users/auth inserendo una password errata deve ritornare 401.', () => {
         return request(app)
             .post('/api/v2/users/auth')
             .set('Accept', 'application/json')
             .send(wrong_password) // sends a JSON post body
-            .expect(400, { message: 'Errore, password errata.' });
+            .expect(401, { message: 'Errore, password errata.' });
     });
 
     test('POST /api/v2/users/auth inserendo i dati correttamente (di un utente esistente nel sistema) deve ritornare 200', () => {

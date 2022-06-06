@@ -1,7 +1,6 @@
 const request = require('supertest');
-const app = require('./app');
+const app = require('../app/app');
 const User = require('../db_connection/models/user');
-const { response } = require('./app');
 
 /**
  * Testing:
@@ -136,14 +135,14 @@ describe('GET /api/v2/ricerca/', () => {
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toBe("Il parametro da cercare deve essere alfanumerico");
     });
-    //ERRORE
+    
     test('GET /api/v2/ricerca/ con una parola (username, nome o cognome) valida e presente nel sistema deve ritornare 200', async () => {
         const response = await request(app).get('/api/v2/ricerca/' + one_word_valid_present);
         expect(response.statusCode).toBe(200);
         expect(JSON.stringify(response.body)).toBe(marioUserJSON);
     });
 
-    //ERRORE
+    
     test('GET /api/v2/ricerca/ con una parola (username, nome o cognome) valida non presente nel sistema deve ritornare 200', async () => {
         const response = await request(app).get('/api/v2/ricerca/' + one_word_valid_notpresent);
         expect(response.statusCode).toBe(200);
