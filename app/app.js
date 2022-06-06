@@ -3,19 +3,19 @@ const express = require('express');
 const cookieParser = require("cookie-parser")
 const app = express();
 const cors = require('cors');
-const authentication = require('./authentication.js');
+const authentication = require('./authentication/authentication');
 const expressSanitizer = require('express-sanitizer');
-const registration = require('../db_connection/userData');
+const registration = require('./authentication/userData');
 const ricerca = require('./ricerca/ricerca');
-const lections = require('./lections.js')
-const nblections = require('./notBookedLections')
-const checkLogin = require('./checkLogin')
-const tokenchecker = require('./tokenchecker');
-const prenota = require('./booking');
-const addLections = require('../db_connection/addLections');
-const getConto = require('./getConto')
+const lections = require('./lections/lections')
+const nblections = require('./lections/notBookedLections')
+const checkLogin = require('./front_end_api/checkLogin')
+const tokenchecker = require('./authentication/tokenchecker');
+const prenota = require('./lections/booking');
+const addLections = require('./lections/addLections');
+const getConto = require('./conto/getConto')
 const ricarica = require('./conto/ricarica');
-const payLection = require('./payLection')
+const payLection = require('./conto/payLection')
 
 //configuring expressJS middleware
 app.use(express.json({ limit: '30mb' }));

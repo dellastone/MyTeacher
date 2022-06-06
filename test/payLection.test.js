@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('./app');
+const app = require('../app/app');
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 const User = require('../db_connection/models/user');
 const Lection = require('../db_connection/models/lection');

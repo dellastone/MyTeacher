@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const User = require('./models/user');
-const Conto = require('./models/conto');
+const User = require('../../db_connection/models/user');
+const Conto = require('../../db_connection/models/conto');
 
 //controlla se le due password inserite dall'utente corrispondono
 function checkSamePassword(pass1, pass2) {

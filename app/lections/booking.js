@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Lection = require('../db_connection/models/lection'); // get our mongoose model
-const User = require('../db_connection/models/user');
+const Lection = require('../../db_connection/models/lection'); // get our mongoose model
+const User = require('../../db_connection/models/user');
 
 
 
@@ -15,7 +15,6 @@ router.post('', async function (req, res) {
 			_id: req.body.lection_id
 		})
 
-		console.log(lection)
 		const std = await User.findOne({
 			username: req.loggedUser.username
 		})

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Lection = require('../db_connection/models/lection');
-const User = require('../db_connection/models/user');
-const Conto = require('../db_connection/models/conto');
-const Transaction = require('../db_connection/models/transaction');
+const Lection = require('../../db_connection/models/lection');
+const User = require('../../db_connection/models/user');
+const Conto = require('../../db_connection/models/conto');
+const Transaction = require('../../db_connection/models/transaction');
 
 /*
 API per effetturare il pagamento di una lezione precedentemente prenotata da uno studente.
@@ -31,7 +31,6 @@ router.post('', async function (req, res) {
         const lection = await Lection.findOne({
             _id: req.body.lection_id
         })
-        console.log(lection)
 
         // controlli fatti a priori
         if (!lection) {

@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const Lection = require('./models/lection');
-const User = require('./models/user');
+const Lection = require('../../db_connection/models/lection');
+const User = require('../../db_connection/models/user');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
 //controlla se le date di inizio e fine lezione corrispondono
@@ -27,10 +27,6 @@ async function checkNotAlreadyBusy(starts, ends, professor) {
     let toRet = false;
     for (id_lezione of professor.lezioni) {
         let lezione = await Lection.findOne({ _id: id_lezione });
-        if (lezione != null) {
-            console.log(lezione.starts);
-            console.log(starts);
-        }
         if (lezione != null && lezione.starts.getUTCFullYear() == starts.getUTCFullYear()
             && lezione.starts.getUTCMonth() == starts.getUTCMonth()
             && lezione.starts.getUTCDate() == starts.getUTCDate()) {
@@ -38,7 +34,6 @@ async function checkNotAlreadyBusy(starts, ends, professor) {
                     toRet = true;
         }
     } 
-    console.log(toRet);
     return toRet;
 }
 /*
@@ -117,7 +112,6 @@ router.post(
                                 prezzo: (professor.prezzo * lection_duration).toFixed(2),
                                 owner: professor._id
                             });
-                            console.log(newLection);
 
                             //il campo _id della nuova lezione viene aggiunto alla lista delle lezioni del professore
                             professor.lezioni.push(newLection._id);
