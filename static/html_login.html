@@ -387,7 +387,7 @@
 
 
 
-      } else if (this.readyState == 4 && this.status == 400) {
+      } else if (this.readyState == 4 && (this.status == 400 || this.status == 401)) {
 
         //invalid request
         msg = jsondoc.message
