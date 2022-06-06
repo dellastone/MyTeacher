@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "jest": "^28.1.0",
-    "node-fetch": "^2.6.7",
-    "supertest": "^6.2.3"
+    "supertest": "^6.2.3",
+    "run": "^1.4.0"
   }
 }

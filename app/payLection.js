@@ -30,7 +30,7 @@ router.post('', async function (req, res) {
     try {
         const lection = await Lection.findOne({
             _id: req.body.lection_id
-        }).exec();
+        })
         console.log(lection)
 
         // controlli fatti a priori
@@ -49,8 +49,8 @@ router.post('', async function (req, res) {
         lection_price = lection.prezzo;
         const std_username = lection.student_username;
         const prof_username = lection.prof_username;
-        const std_account = await User.findOne({ username: std_username }, ["conto"]).exec();
-        const prf_account = await User.findOne({ username: prof_username }, ["conto"]).exec();
+        const std_account = await User.findOne({ username: std_username }, ["conto"])
+        const prf_account = await User.findOne({ username: prof_username }, ["conto"])
         let std_conto = await Conto.findOne({ _id: std_account.conto });
         let prf_conto = await Conto.findOne({ _id: prf_account.conto });
 
