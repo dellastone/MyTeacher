@@ -1,31 +1,3 @@
-function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    /*loop through a collection of all HTML elements:*/
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-        elmnt = z[i];
-        /*search for elements with a certain atrribute:*/
-        file = elmnt.getAttribute("w3-include-html");
-        if (file) {
-            /*make an HTTP request using the attribute value as the file name:*/
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    if (this.status == 200) { elmnt.innerHTML = this.responseText; }
-                    if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
-                    /*remove the attribute, and call this function once more:*/
-                    elmnt.removeAttribute("w3-include-html");
-                    includeHTML();
-                }
-            }
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            /*exit the function:*/
-            return;
-        }
-    }
-};
-
 //Funzione che attiva il bottone di ricerca quando viene premuto il tasto invio
 function keyPressButton() {
     let input = document.getElementById("search_bar");
@@ -182,7 +154,7 @@ function ricerca() {
         const words = toSearch.split(' ');
         if (words.length == 1) {
             console.log("Searching for " + words[0]);
-            fetch('../api/v1/ricerca/' + words[0])
+            fetch('../api/v2/ricerca/' + words[0])
                 .then((resp) => resp.json())
                 .then(function (data) {
                     if (data.length > 0) {
@@ -197,14 +169,14 @@ function ricerca() {
                 });
         } else if (words.length == 2) {
             console.log("Searching for " + words[0] + " " + words[1]);
-            fetch('../api/v1/ricerca/' + words[0] + '/' + words[1])
+            fetch('../api/v2/ricerca/' + words[0] + '/' + words[1])
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.length > 0) {
                         printResults(data);
                     }
                     else {
-                        printNoResults();
+                        printNoResults(toSearch);
                     }
                 })
                 .catch((err) => function () {

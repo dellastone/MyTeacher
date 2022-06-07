@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 const crypto = require('crypto');
 var Schema = mongoose.Schema;
+const Conto = require('./conto')
 
 // mongoose model that desribes the user of the platform
 const UserSchema = mongoose.Schema({ 
@@ -37,7 +38,11 @@ const UserSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Lection"
         }
-    ]
+    ],
+    conto: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Conto"
+    }
 });
 
 //crea un salt per la password unico per l'utente scelto, cripta la password dell'utente
@@ -50,6 +55,6 @@ UserSchema.methods.setPassword = function (password){
 UserSchema.methods.validPassword = function(password) { 
     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex'); 
     return this.passwordHash === hash; 
-}; 
+};
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema);

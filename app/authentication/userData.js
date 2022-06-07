@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const User = require('./models/user');
-const user = require('./models/user');
+const User = require('../../db_connection/models/user');
+const Conto = require('../../db_connection/models/conto');
 
 //controlla se le due password inserite dall'utente corrispondono
 function checkSamePassword(pass1, pass2) {
@@ -35,7 +35,7 @@ router.post(
     '',
     [
         body('username').exists().withMessage("Scegli uno username").isAlphanumeric().withMessage("Username non valido, deve essere una stringa alfanumerica"),
-        body('email').exists().withMessage("Inserisi un indirizzo email per continuare").isEmail().withMessage("L'email inserita non è valida"),
+        body('email').exists().withMessage("Inserisci un indirizzo email per continuare").isEmail().withMessage("L'email inserita non è valida"),
         body('nome').exists().withMessage("Inserisci il tuo nome prima di continuare").isAlpha().withMessage("Nome non valido"),
         body('cognome').exists().withMessage("Inserisci il tuo cognome prima di continuare").isAlpha().withMessage("Cognome non valido"),
         body('phone').optional().isMobilePhone().withMessage("Numero di telefono non valido"),
@@ -47,7 +47,7 @@ router.post(
     ], async (req, res) => {
         //messaggio che viene ritornato all'utente in caso di errore
         let message = "Si è verificato un errore nella registrazione, la preghiamo di riprovare.";
-        try{
+        try {
             //se uno dei controlli non è andato a buon fine viene settato un errore
             let errors = validationResult(req).array();
             let wrong_data = false;
@@ -69,22 +69,21 @@ router.post(
             const phone = req.sanitize(req.body.phone);
             const image = req.sanitize(req.body.image);
             let price = req.sanitize(req.body.prezzo);
+            
             if( price == undefined ){
                 price = 0;
-            }else{
+            } else {
                 price = Number(price);
             }
-            console.log(price);
 
             let materie = [];
-            if(req.body.materie != undefined){
+            if (req.body.materie != undefined) {
                 for (let i = 0; i < req.body.materie.length; i++) {
                     materie[i] = req.sanitize(req.body.materie[i]);
-
                 }
             }
             let argomenti = [];
-            if(req.body.argomenti != undefined){
+            if (req.body.argomenti != undefined) {
                 for (let i = 0; i < req.body.argomenti.length; i++) {
                     argomenti[i] = req.sanitize(req.body.argomenti[i]);
                 }
@@ -94,13 +93,13 @@ router.post(
                 //controlla se le due password inserite dall'utente sono uguali 
                 //controlla se esite già un utente con lo stesso username o con la stessa mail
                 if (checkSamePassword(password, repeatpassword)) {
-                    let search_username = await User.findOne({ username: username }).exec();
+                    let search_username = await User.findOne({ username: username });
                     if (search_username != null) {
                         message = "Username non disponibile";
                         wrong_data = true;
                     }
                     else {
-                        let search_email = await User.findOne({ email: email }).exec();
+                        let search_email = await User.findOne({ email: email });
                         if (search_email != null) {
                             message = "Esiste già un utente registrato con questo indirizzo email";
                             wrong_data = true;
@@ -109,6 +108,8 @@ router.post(
                             //i campi variano in base al tipo di utente: (studente o professore)
                             console.log("Adding the user to the db ...");
                             let newUser;
+                            //viene creato un nuovo conto per l'utente
+                            let conto = new Conto();
                             if (professor == "true") {
                                 newUser = new User({
                                     username: username,
@@ -125,7 +126,6 @@ router.post(
                                 });
                             }
                             else {
-                                console.log("false");
                                 newUser = new User({
                                     username: username,
                                     nome: name,
@@ -134,12 +134,16 @@ router.post(
                                     professore: professor,
                                     email: email,
                                     phone: phone,
-                                    image: image
+                                    image: image,
                                 });
                             }
+
                             //la password dell'utente viene settata calcolandone l'hash
                             newUser.setPassword(password);
-                            console.log(newUser);
+                            conto.owner = newUser._id;
+                            newUser.conto = conto._id;
+                            await conto.save();
+                            
                             await newUser.save();
                         }
                     }
@@ -157,9 +161,9 @@ router.post(
             else {
                 //nel caso in cui l'utente sia stato correttamente creato viene ritornato un codice 201
                 console.log("Utente creato con successo e aggiunto al database");
-                res.status(201).json({ location: "/api/v1/users/" + username });
+                res.status(201).json({ location: "/api/v2/users/" + username });
             }
-        }catch(err){
+        } catch (err) {
             //nel caso di errore del server viene ritornato un errore con codice 500
             res.status(500).json({ message: message });
         }
@@ -167,19 +171,19 @@ router.post(
 
 router.get('', async (req, res) => {
     let message = "Si è verificato un errore durante la ricerca utenti, la preghiamo di riprovare";
-    try{
-        //ricerca drgli utenti nel database, solo i campi da ritornare vengono recuperati 
+    try {
+        //ricerca degli utenti nel database, solo i campi da ritornare vengono recuperati 
         //non viene ritornato l'_id creato da mongoDB, l'hash della password e il salt
         console.log("Ricerca utenti nel database ...");
-        
-        const users = await User.find({ }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
+
+        const users = await User.find({}, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']);
 
         //dati ritornati all'utente
         console.log("Lista utenti ritornata correttamente all'utente");
         res.status(200).json(users);
-    }catch(err){
+    } catch (err) {
         console.log(err);
-        res.status(500).json({ message: message});
+        res.status(500).json({ message: message });
     }
 });
 
@@ -187,32 +191,31 @@ router.get('/:username', async (req, res) => {
 
     let message = "Si è verificato un errore nel recupero dei dati dell'utente, si prega di ricaricare la pagina";
 
-    try{
+    try {
 
         const username = req.params.username;
-        if(username == null || username == undefined){
+        if (username == null || username == undefined) {
             message = "E' necessario specificare uno username valido";
             res.status(400).json({ message: message });
         }
-        else{
+        else {
             //recupero dei dati dell'utente dal database 
             //non viene ritornato l'_id creato da mongoDB, l'hash della password e il salt
             console.log("Ricerca dell'utente con username " + username + " nel database ...");
 
-            const user = await User.findOne({ username: username }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']).exec();
-            console.log(user);
-            if(user == null){
+            const user = await User.findOne({ username: username }, ['-_id', 'username', 'nome', 'cognome', 'indirizzo', 'professore', 'email', 'phone', 'image', 'materie', 'argomenti', 'prezzo']);
+            if (user == null) {
                 //utente non trovato nel database, viene ritornato un errore all'utente
                 message = "Utente non presente nel database";
                 res.status(400).json({ message: message });
             }
-            else{
+            else {
                 //dati ritornati all'utente
                 console.log("Dati utente recuperati correttamente");
                 res.status(200).json(user);
             }
-    }
-    }catch(err){
+        }
+    } catch (err) {
         console.log(err);
         res.status(500).json({ message: message });
     }

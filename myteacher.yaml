@@ -1,0 +1,809 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: MyTeacher
+  description: API del progetto MyTeacher sviluppato per il corso di Ingegneria del Software 2 anno accademico 2021/2022.
+
+servers:
+  - url: https://myteacher/api/v1
+
+paths:
+  /users:
+    get:
+      description: Restituisce la lista degli utenti iscritti all'applicazione
+      responses:
+        '200':
+          description: La lista degli utenti dell'applicazione è stata restituita
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Utente'
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+    post:
+      description: Permette a un nuovo utente di registrarsi all'applicazione
+      requestBody:
+        description: Dati dell'utente da creare
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrazioneUtente'
+      responses:
+        '201':
+          description: L'utente è stato creato correttamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location: 
+                    type: string
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+  /users/{username}:
+    get:
+      description: Restituisce i dati di un particolare utente dell'applicazione
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string 
+          description: nome dell'utente nell'applicazione
+      responses:
+        '200':
+          description: I dati dell'utente con l'username indicato sono stati restituiti correttamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Utente'
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+  /users/auth:
+     post:
+      description: Permette a un utente di effettuare il login
+      requestBody:
+        description: Email e password dell'utente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: Login effettuato correttamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  token: 
+                    type: string
+                    description: token di login dell'utente
+                  self:
+                    type: string
+        '401':
+          description: Utente non autorizzato
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+  /ricerca:
+    get:
+      description: Restituisce una lista dei professori iscritti all'applicazione
+      responses:
+        '200':
+          description: La lista dei professori è stata scaricata correttamente            
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Utente'
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+  /ricerca/{name}:
+    get:
+        description: Restituisce i professori iscritti all'applicazione che hanno uno username oppure un nome oppure un cognome che contiene le lettere specificate nel parametro name
+        parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string 
+          description: nome dell'utente da cercare
+        responses:
+          '200':
+            description: La lista dei professori è stata scaricata correttamente
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items: 
+                    $ref: '#/components/schemas/Utente'
+          '400':
+            description: Richiesta non valida
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:   
+                    message:
+                      type: string
+          '500':
+            description: Errore interno del server
+            content:
+              application/json:
+                schema: 
+                  type: object
+                  properties:   
+                    message:
+                      type: string
+  /ricerca/{name}/{surname}:
+    get:
+        description: Restituisce i professori iscritti all'applicazione che hanno un nome e un cognome che contengono quelli indicati come parametri
+        parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string 
+          description: nome dell'utente da cercare
+        - in: path
+          name: surname
+          required: true
+          schema:
+            type: string
+          description: cognome dell'utente da cercare
+        responses:
+          '200':
+            description: La lista dei professori è stata scaricata correttamente
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items: 
+                    $ref: '#/components/schemas/Utente'
+          '400':
+            description: Richiesta non valida
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:   
+                    message:
+                      type: string
+          '500':
+            description: Errore interno del server
+            content:
+              application/json:
+                schema: 
+                  type: object
+                  properties:   
+                    message:
+                      type: string
+  
+                    
+  /lection/{username}:
+    get:
+      description: Restituisce le lezioni di un particolare utente dell'applicazione
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string 
+          description: nome dell'utente nell'applicazione
+      responses:
+        '200':
+          description: Le lezioni dell'utente con l'username indicato sono state restituite correttamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lezione'
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+
+  /notBookedLection/{username}:
+    get:
+      description: Restituisce le lezioni non prenotate di un particolare insegnante dell'applicazione
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string 
+          description: nome dell'insegante nell'applicazione
+      responses:
+        '200':
+          description: Le lezioni dell'utente con l'username indicato sono state restituite correttamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lezione'
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+  /prenota:
+     delete:
+      description: Permette di annullare una prenotazione a una lezione
+      requestBody:
+        description: id della lezione
+        content:
+          application/json:
+            schema:
+              type: object
+              description: id lezione
+            
+                
+      responses:
+        '200':
+          description: Lezione annullata correttamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+      
+     
+     post:
+      description: Permette a uno studente di prenotare una lezione
+      requestBody:
+        description: Dati che permettono di salvare l'appuntamento sia allo studente che al professore
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lezione_std'
+      responses:
+        '200':
+          description: Lezione salvata correttamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+      
+                    
+  /lection/add:
+     post:
+      description: Permette ad un professore di aggiungere una lezione al suo calendario e permettere quindi agli studenti di prenotarla
+      requestBody:
+        description: Dati relativi allo slot lezione da aggiungere al calendario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LectionToAdd'
+      responses:
+        '201':
+          description: Lo slot per la lezione disponibile è stato aggiunto correttamente al profilo dell'insegnante
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+        '400':
+          description: I dati forniti per la registrazione della lezione non sono corretti 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+  /ricarica:
+     post:
+      description: Permette ad un utente di ricaricare il proprio conto
+      requestBody:
+        description: Dati della carta di credito dell'utente e importo da ricaricare
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ricarica'
+      responses:
+        '201':
+          description: La ricarica è andata a buon fine e la transazione è stata aggiunta al database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+        '400':
+          description: I dati forniti non sono validi
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+
+  /payLection:
+     post:
+      description: Permette a uno studente di pagare una lezione
+      requestBody:
+        description: Dati che permettono di pagare una specifica lezione
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lesson_payment'
+      responses:
+        '200':
+          description: Transazione effettuata correttamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+  
+  /getConto:
+    get:
+      description: Restituisce le informazioni relative al conto dell'utente
+      responses:
+        '200':
+          description: Le informazioni relative al conto sono state restituite correttamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conto'
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '500':
+          description: Errore interno del server
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:   
+                  message:
+                    type: string
+    
+components:
+  schemas:
+    Utente:
+      type: object
+      required:
+        - username
+        - nome
+        - cognome
+        - professore
+        - email
+      properties:
+        username: 
+          type: string 
+          description: nome dell'utente nell'applicazione
+        nome: 
+          type: string
+          description: nome dell'utente
+        cognome:
+          type: string
+          description: cognome dell'utente
+        indirizzo:
+          type: string
+          description: indirizzo dell'utente
+        professore:
+          type: boolean
+          description: true se l'utente è professore, false altrimenti
+        email:
+          type: string
+        phone:
+          type: string
+        image:
+          type: string
+          description: indirizzo per scaricare l'immagine dell'utente
+        materie:
+          type: array
+          items:
+            type: string
+        argomenti: 
+          type: array
+          items:
+            type: string
+        prezzo:
+          type: number
+    RegistrazioneUtente:
+      type: object
+      required:
+        - username
+        - nome
+        - cognome
+        - professore
+        - password
+        - repeatpassword
+        - email
+      properties:
+        username: 
+          type: string 
+          description: nome dell'utente nell'applicazione
+        nome: 
+          type: string
+          description: nome dell'utente
+        cognome:
+          type: string
+          description: cognome dell'utente
+        indirizzo:
+          type: string
+          description: indirizzo dell'utente
+        professore:
+          type: boolean
+          description: true se l'utente è professore, false altrimenti
+        email:
+          type: string
+        phone:
+          type: string
+        password:
+          type: string
+        repeatpassword:
+          type: string
+        image:
+          type: string
+          description: indirizzo per scaricare l'immagine dell'utente
+        materie:
+          type: array
+          description: materie insegnate dal professore
+          items:
+            type: string
+        argomenti: 
+          type: array
+          description: argomenti insegnati dal professore
+          items:
+            type: string
+        prezzo:
+          type: number
+          description: prezzo orario richiesto dal professore per le ripetizioni
+        
+    Login:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email: 
+          type: string 
+          description: email dell'utente
+        password:
+          type: string
+          
+    
+         
+    lezione_std:
+      type: object
+      required:
+        - id_lezione
+        - materie
+        - argomenti
+      properties:
+        materie:
+          type: array
+          description: materie insegnate dal professore
+          items:
+            type: string
+        argomenti: 
+          type: array
+          description: argomenti insegnati dal professore
+          items:
+            type: string
+        id_lezione:
+          type: object
+          description: id lezione
+      
+    lezione:
+      type: object
+      required:
+        - student_username
+        - prof_username
+        - date
+        - start_time
+        - end_time
+        - booked
+        - materie
+        - argomenti
+        - _id
+      properties:
+        student_username: 
+          type: string 
+          description: nome dello studente 
+        prof_username: 
+          type: string 
+          description: nome dell'insegnante
+        date:
+          type: string
+          description: giorno della lezione
+        start_time:
+          type: string
+          description: ora di inizio
+        end_time:
+          type: string
+          description: ora di fine
+        booked:
+          type: boolean
+          description: true se slot già prenotato 
+        materie:
+          type: array
+          description: materie insegnate dal professore
+          items:
+            type: string
+        argomenti: 
+          type: array
+          description: argomenti insegnati dal professore
+          items:
+            type: string
+        _id:
+          type: object
+          description: id lezione
+    
+    LectionToAdd:
+      type: object
+      required:
+        - starts
+        - ends
+        - token
+      properties:
+        starts:
+          type: string
+          description: data e ora di inizio della lezione
+        ends:
+          type: string
+          description: data e ora di fine della lezione
+        token: 
+          type: string
+          description: token di login dell'utente
+    
+    Ricarica:
+      type: object
+      required:
+        - cardNumber
+        - expirationDate
+        - cvv
+        - amount
+        - token
+      properties:
+        cardNumber:
+          type: integer
+          description: numero della carta di credito 
+        expirationDate:
+          type: string
+          description: data di scadenza della carta di credito
+        cvv:
+          type: integer
+          description: cvv della carta di credito
+        amount:
+          type: number
+          description: denaro da caricare sul conto dell'utente
+        token: 
+          type: string
+          description: token di login dell'utente
+    
+    lesson_payment:
+      type: object
+      required:
+        - id_lezione
+      properties:
+        id_lezione:
+          type: string
+          description: id della lezione da pagare
+
+    conto:
+      type: object
+      required:
+        - id
+        - nome
+        - cognome
+        - totale
+        - elenco_transazioni
+      properties:
+        id:
+          type: string
+          description: id del conto
+        nome:
+          type: string
+          description: nome proprietario del conto
+        cognome:
+          type: string
+          description: cognome proprietario del conto
+        totale:
+          type: number
+          description: somma totale denaro conto
+        elenco_transazioni:
+          type: object
+          description: id transazioni
+          
+  
